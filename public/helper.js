@@ -23,7 +23,7 @@ try {
 function signOut(){
   main();
   firebase.auth().signOut().then(function() {
-  // window.location = "authSignIn.html";
+   window.location = "authSignIn.html";
   console.log('Signed Outzzzzz');
 }, function(error) {
   console.error('Sign Out Error', error);
@@ -33,13 +33,13 @@ export { signOut }
 
 function homePage(){
 main()
-//window.location = "Homepage.html";
+window.location = "Homepage.html";
  console.log('Going to hompage'); //for testing
 }
 export { homePage };
 
 function returnAccountDetails(){
-  var details = [5];
+  var details = [];
 main();
 firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
@@ -49,14 +49,25 @@ firebase.auth().onAuthStateChanged(function(user) {
     //document.getElementById("displayName").innerHTML = user.displayName;
     details[0] = user.displayName
     details[1] = user.email;
-    console.log(details[1])
-    return details;
+    
+    let name = user.displayName
+    let email = user.email
+    console.log(name +email)
+    return [name,email]
   } else {
-    // User is not signed in.
+   
+    
   }
 });
+//return false;
      }
      export { returnAccountDetails }
+
+     function testFunction(){
+      var number =1;
+      return number;
+     }
+     export { testFunction }
   
 
 
