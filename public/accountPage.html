@@ -76,22 +76,30 @@
         }
         //test()
         auth()
-        fillAccountDetails();
+        //fillAccountDetails();
         
       });
       
     </script>
   <button id = signOut>Sign Out</button><br>
-  <button id = homePage>Return to Homepage</button>
-  <button id = accountDetails>test account button</button>
-  <button id = accountDetails1 onclick = fillAccoutDetails()>tfill account button</button>
-  <p>
+  <button id = homePage>Return to Homepage</button><br>
+  <button id = accountDetails>Testing button 1</button><br>
+  <button id = accountDetails1 onclick = fillAccountDetails()>Testing button 2</button> <br> <br> <br>
+ 
+<p>
     Account Details of <span id = name></span><br>
     Email:<span id = email></span><br>
     Display Name:<span id = displayName></span><br>
     TBD:<span></span><br>
     TBD:<span></span><br>
   </p>
+  <div>Enter new display name in the box provided</div>
+  <input  id = newDisplayName></input>
+  <button id = changeDisplayName onclick = changeDisplayName()>Click to change display name</button>
+
+  <div>Enter new email in the box provided</div>
+  <input  id = newEmail></input>
+  <button id = changeEmail onclick = changeEmail()>Click to change email</button>
 </head>
 <body>
    
@@ -102,6 +110,11 @@
 import   { signOut }  from './helper.js';
 import { homePage }  from './helper.js';
 import { returnAccountDetails } from './helper.js'
+import { testFunction } from './helper.js'
+window.testReturn1 = function testReturn(){
+    testFunction()
+}
+
 function signOutImport(){
     signOut()
 }     
@@ -126,36 +139,43 @@ document.getElementById("accountDetails").addEventListener('click',returnAccount
 </script>
 <script>
  function auth(){
-    var details = [];
-  console.log(123434546456)
-  //window.homePage()
- details = details.concat(accountDetails())
- console.log(details[0])
-  firebase.auth().onAuthStateChanged(function(user) {
+    console.log(window.testReturn1())
+ firebase.auth().onAuthStateChanged(function(user) {
   if (user) {
     console.log(user.displayName)
    document.getElementById("name").innerHTML = user.displayName
-  } else {
-    // User is not signed in.
+   fillAccountDetails()
+  } 
+  else {
+    console.log("Error signing in")
   }
 });
      }
 
 function fillAccountDetails(){
-   var details = []
-   details = details.concat(window.accountDetails())
-   console.log(details[0])
-   console.log(details[1])
-    document.getElementById("name").innerHTML = details[0]
-    document.getElementById("email").innerHTML = details[1]
-    document.getElementById("displayName").innerHTML = details[2]
- 
+   const user = firebase.auth().currentUser;
+   if(user !== null){
+    const displayName  = user.displayName
+    document.getElementById("displayName").innerHTML = displayName
+    document.getElementById("email").innerHTML = user.email
+   }
+    
      }
     console.log("Account Details");
     //const user = firebase.auth().currentUser;
 
-    
 
+function changeDisplayName(){
+    const user = firebase.auth().currentUser;
+    var newDisplayName = document.getElementById("newDisplayName").value
+    user.updateProfile({displayName: newDisplayName,})
+    
+}
+function changeEmail(){
+    const user = firebase.auth().currentUser;
+    var newEmail = document.getElementById("newEmail").value
+    user.updateProfile({email: newDisplayName,})
+}
    </script>
 </body>
 </html>
