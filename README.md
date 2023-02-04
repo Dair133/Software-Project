@@ -78,7 +78,7 @@ PLEASE NOTE: There are 3 totally different storage databases. **_Firestore_**(st
   
   •In the future we may want to reduce code repition by converting some functions into cloud functions so they can be called on any page easily.
   
-  Main.js
+  **Main.js**
   
   • Main.js contains functions which return the different firebase components as objects. This means that we can reduce repition of imports. IN order to call a             function you need to import test from main ( import test from '../main') no brackets. Then to call a function from main you use test.methods.desiredFunctionName()
     there is an example of this in the screnshots page within the uploadFile function in the getStorage function. At the time of writinhg this is on line 57
