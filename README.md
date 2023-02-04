@@ -71,6 +71,16 @@ PLEASE NOTE: There are 3 totally different storage databases. **_Firestore_**(st
  • This page is also a testing page. This was the page i was using to experiment with functions,nodejs and https requests. No clear intention for this page
  it was also used to complete class notes.
  
+ **Index.js**
+ 
+  •This page is monstly commented out because i wanted to upload functions without it taking 5 minutes everytime I deployed. Feel free to uncomment and deploy
+  as you wish most of the functions on that page function correctly. I believe the only page right now which relies on cloud functions is the test.vue page
+  
+  •In the future we may want to reduce code repition by converting some functions into cloud functions so they can be called on any page easily.
+  
+  Main.js
+  • Main.js contains functions which return the different firebase components as objects. This means that we can reduce repition of imports. IN order to call a             function you need to import test from main ( import test from '../main') no brackets. Then to call a function from main you use test.methods.desiredFunctionName()
+    there is an example of this in the screnshots page within the uploadFile function in the getStorage function. At the time of writinhg this is on line 57
 
 
 
