@@ -1,6 +1,8 @@
 # Software-Project
 **_General Notes_**
 
+Please excuse any typos
+
 PLEASE NOTE: There are 3 totally different storage databases. **_Firestore_**(storing strings,ints under certain ids) and **_storage_**(for storing files) and **_realtime database_**(for storing small amounts of data that we need to access frequently)
 
 The first section for each page will contain a short note on how to use the page from the user’s point of view. 
