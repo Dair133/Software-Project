@@ -14,11 +14,11 @@ PLEASE NOTE: There are 3 totally different storage databases. **_Firestore_**(st
 
 •	Confirmation input boxes have yet to be added this will get the user to type in their credentials twice
 
-•	If you want to test the page multiple times with the same email then make sure to go to ‘authentication’ on firebase and delete your previous account, this cam also be used to ensure that your account creation was successful.
+•	If you want to test the page multiple times with the same email then make sure to go to ‘authentication’ on firebase and delete your previous account, this can also be used to ensure that your account creation was successful.
 
 •	I have not tested if this works on the vue local server, it may have to be on the firebase server.
 
-• When you create an account it creates a firestore entry also in case any extra data needs to be stored.
+• When you create an account it creates a firestore entry also in case any extra data needs to be stored write now this just sotres placeholder text.
 
 **AuthSignIn.vue**
 
