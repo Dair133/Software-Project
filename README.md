@@ -57,6 +57,8 @@ PLEASE NOTE: There are 3 totally different storage databases. **_Firestore_**(st
 
 **Screenshot.vue**
 
+•**BREAKTHROUGH** we can now finally read in the content of java files into the browser meaning we SHOULD once the IDE is in be able to read directly from a java file into the IDE this gives us huge potential with users uploading their own files,more dyanicamic challenge storage,add challenegs without database knowledge etc
+
 • This is a experimental page which I was using to test the storage database currently this reads in text from a text file in the storage database and prints
  it to the console. It can also be very easily changed to take an image from the storage database and display it all i need to do is change one string
  
