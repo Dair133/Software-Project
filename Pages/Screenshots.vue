@@ -5,15 +5,16 @@
     <body>
       <p>This is the sceenshots page. Users will be able to upload screenshots here</p>
       <button @click="readFile()">test downloadFile function</button>
-      <button @click="readFile2()">test read function number 2</button>
+      <button @click="test()">test read function number 2</button>
         <button @click="uploadFile()">upload photo</button>
-        <button @click="nonCloudRead()"> not cloud file</button>
+        <button @click="getImage()"> not cloud file</button>
         <button @click="readTextFile()"> read text file</button>
         <p id =p1></p>
         <input id = fileItem type = file>
         <img id =myImg>
         <p id = wordText></p>
         <p id = wordText2></p>
+        <p id = javaText></p>
      <label>Type in the name you would like you file to be stored under</label>
         <input id = fileName>
     </body>
@@ -43,12 +44,23 @@ const readBlobAsText = (blob,encoding ='UTF-8') => {
   });
 };
     export default {
+      data() {
+      return {
+          fileText:'',
+           }
+              },
       emits: ["open-note"],
       props: {
-      note: {}
+      note: {},
+  
       },
-    
-      methods: {
+      created(){
+       this.readTextFile();
+       
+      },
+      
+     methods: {
+     
     uploadFile:function(){
 
         //var file =  new File(arrayStrings,'space.jpg');//second argument here is path of file you want to upload
@@ -83,14 +95,15 @@ console.log("successful downloadFile data property of result"+result.data);
 console.log("successful downloadFile normal result variable"+result);
 console.log("successful typeof is"+typeof(result));
 
-imageUrl = result.data.imageUrl
+imageUrl = result.data.imageUrl 
 document.getElementById("myImg").src = imageUrl;
 });
 },
-nonCloudRead:function(){
+
+getImage:function(){
     var storage = getStorage(test.methods.intialiseFirebase())
     
-getDownloadURL(ref(storage, 'Example.docx'))
+getDownloadURL(ref(storage, 'space2.jpg'))
   .then((url) => {
     // `url` is the download URL for 'images/stars.jpg'
     // This can be downloaded directly:
@@ -104,8 +117,6 @@ getDownloadURL(ref(storage, 'Example.docx'))
 
     // Or inserted into an <img> element
     const img = document.getElementById('myImg');
-   document.getElementById('wordText').src = url
-   document.getElementById('wordText2').innerHTML = url
     console.log(url)
     img.setAttribute('src', url);
   })
@@ -115,52 +126,52 @@ getDownloadURL(ref(storage, 'Example.docx'))
   
 
 },
-readTextFile:function(){
+readTextFile:function(){//functions correctly
 
 
     var storage = getStorage(test.methods.intialiseFirebase())
    
-    getDownloadURL(ref(storage, 'newer.txt'))
-  .then((url) => {
-    // `url` is the download URL for 'images/stars.jpg'
-    // This can be downloaded directly:
-
-    const xhr = new XMLHttpRequest();
-    xhr.responseType = 'blob';
-    xhr.onload = (event) => {
-      const blob = xhr.response;
-        console.log("The first blob"+blob); 
-        const reader = new FileReader();
-       reader.readAsText(blob);
-   
+   var textHolder = getDownloadURL(ref(storage, 'holder.java'))
+   .then((url) => {
     
-       reader.onload = function() {
-        console.log("this is inside the reader function"+typeof(blob))
-          const text = reader.result
-  console.log(text);
-};
+    const xhr = new XMLHttpRequest();
+    xhr.responseType = 'blob';//make sure that blob is the response file very important to ensure file can be read correctly
+
+    xhr.onload = (event) => {
+
+        const blob = xhr.response;
+        console.log("The first blob"+blob); //for testing
+
+        const reader = new FileReader();
+        reader.readAsText(blob);
+  
+         reader.onload = function getFile() {
+
+           const text = reader.result
+
+           console.log(text);
+
+           this.fileText = text //'returns' the text so it can be read in any function
+           console.log(this.fileText)
+   
+           document.getElementById('javaText').innerHTML = text
+     };
+
     };
     console.log("beofre get statment")
+    
     xhr.open('GET', url);
     xhr.send();
+  
 
     // Or inserted into an <img> element
-    console.log(url)
-    var blobUrl = url.getBlob()
-    console.log("The blobl url is"+blobUrl)
-   console.log("reached this poinst")
-      fetch(url)
-    .then(response => response.text())
-    .then(text => {
-      console.log(text);
-    });
-
+    
 
   })
   .catch((error) => {
     // Handle any errors
   });
-
+  
 
     },
    
