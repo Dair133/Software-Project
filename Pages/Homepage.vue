@@ -3,24 +3,141 @@
     
     </head>
     <body>
-      <H1>Input</H1>
-<textarea id="code"></textarea>
+      <main>
+    <header>
+      <Navbar />
+    </header>
+    <div class="container">
+      
+      <div>
+        <div class="main2"></div>
+        <h1 style = "color:hotpink">Welcome back <span id = name></span></h1>
+      <H2>Coding Challenge</H2>
+<textarea id="code" class = textArea></textarea>
+<textarea id="output1" class =outputTextArea></textarea>
+<button @click="readTextFile()">Activate Challenge</button>
 <button @click="build()">Compile</button>
-<H1>Code Output</H1>
+
 <p style="white-space: pre-line;" id='output'></p>
-        <input id =email>
-<p>You are on the Homepage of <span id="name"> </span></p>
-        <h2>PLAY GAME HERE?</h2>
-        
-        <label>Click here to sign out</label>
-        <button @click="signOut()"></button>
-        <button @click="accountPage()"></button>
-    </body>
+
+        <button @click="signOut()"  class="btn btn-primary">Sign Out</button><br>
+        <button @click="accountPage()"  class="btn btn-primary">Account Page</button><br>
+        <button @click="navigationPage()"  class="btn btn-primary">Navigation Page</button><br>
+        <router-link id = navigation to ="/play" style ="color:blue" >link to the play</router-link>
+   <p></p>
+      </div>
+      <div class="content">
+      
+      </div>
+    </div>
+  </main>
+
+  </body>
     
     </template>
+    <style scoped>
+  main {
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at 6.6% 12%, rgb(64, 0, 126) 20.8%, rgb(0, 255, 160) 100.2%);
+  /*background-image: radial-gradient(#800080, #700070);*/
+}
+.bt
+
+
+* {
+  font-family: 'Secular One', sans-serif;
+}
+.btn-primary{
+  
+  display: inline-block;
+  width: 50mm;
+  height: 50mm;
+                outline: 0;
+                border: 0;
+                cursor: pointer;
+                will-change: box-shadow,transform;
+                background: radial-gradient( 100% 100% at 100% 0%, #89E5FF 0%, #5468FF 100% );
+                box-shadow: 0px 2px 4px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px rgb(58 65 111 / 50%);
+                padding: 0 32px;
+                border-radius: 6px;
+                color: #fff;
+                height: 48px;
+                font-size: 14px;
+                text-shadow: 0 1px 0 rgb(0 0 0 / 40%);
+                transition: box-shadow 0.15s ease,transform 0.15s ease;
+                
+}
+                .btn-primary:hover {
+                    box-shadow: 0px 4px 8px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px #3c4fe0;
+                    transform: translateY(-2px);
+                }
+               .btn-primary:active{
+                    box-shadow: inset 0px 3px 7px #3c4fe0;
+                    transform: translateY(2px);
+                }
+              
+                
+
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.image1 {
+  width: 85vh;
+}
+
+.content {
+  margin-left: 10px;
+  color: magenta;
+  
+}
+.textArea{
+  overflow-y: scroll;
+  background-color:black;
+  color:white;
+  width:20cm;
+  height:9cm;
+}
+.outputTextArea{
+  background-color: black;
+  color:white;
+  width:20cm;
+  height: 3cm;
+}
+
+h1 {
+  font-size: 40px;
+}
+
+p {
+  color:blue;
+  font-size:5px;
+  
+}
+
+a {
+  color: black;
+  background-color: brown;
+  font-size: 25px;
+  padding: 7px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+</style>
     <script>
     import  firebase  from 'firebase/compat/app';
-    
+    import { getStorage,ref,uploadBytes } from 'firebase/storage';
+import { httpsCallable } from '@firebase/functions';
+import { getFunctions} from "firebase/functions";
+import {  getDownloadURL } from "firebase/storage";
+import test from '../main'
     
     export default {
       emits: ["open-note"],
@@ -31,6 +148,9 @@
       let recaptchaScript = document.createElement('script')
       recaptchaScript.setAttribute('src', "API-Handler.js")
       document.head.appendChild(recaptchaScript)
+    },
+    mounted(){
+      this.auth();
     },
     
       methods: {
@@ -45,6 +165,10 @@
     accountPage:function(){
         window.location = "/accountPage"//brings user to the accountPage
     },
+    navigationPage:function(){
+      window.location = "/"
+    },
+
 auth:function(){
     firebase.auth().onAuthStateChanged(function(user) {//gets 'user' onbject when it has been intialized 
   if (user) {
@@ -87,6 +211,7 @@ build:function(){
             codeOutput = data.output;
             if(codeOutput!="") {
                 document.getElementById("output").innerHTML = codeOutput;
+                document.getElementById("output1").value = codeOutput;
             }
             else
                 document.getElementById("output").innerHTML = "Failed to Compile, Error: "+data.error;
@@ -95,7 +220,54 @@ build:function(){
 
 
 
-}
+},
+readTextFile:function(){//functions correctly
+  var storage = getStorage(test.methods.intialiseFirebase())
+   
+   var textHolder = getDownloadURL(ref(storage, 'holder.java'))
+   .then((url) => {
+    
+    const xhr = new XMLHttpRequest();
+    xhr.responseType = 'blob';//make sure that blob is the response file very important to ensure file can be read correctly
+
+    xhr.onload = (event) => {
+
+        const blob = xhr.response;
+        console.log("The first blob"+blob); //for testing
+
+        const reader = new FileReader();
+        reader.readAsText(blob);
+  
+         reader.onload = function getFile() {
+
+           const text = reader.result
+
+           console.log(text);
+
+           this.fileText = text //'returns' the text so it can be read in any function
+           console.log(this.fileText)
+   
+         
+           document.getElementById('code').value = text
+     };
+
+    };
+    console.log("beofre get statment")
+    
+    xhr.open('GET', url);
+    xhr.send();
+  
+
+    // Or inserted into an <img> element
+    
+
+  })
+  .catch((error) => {
+    // Handle any errors
+  });
+  
+
+    }
 
     }
 }
