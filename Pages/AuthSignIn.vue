@@ -21,7 +21,7 @@
       <br>Sample email: alasdairjball@gmail.com
       <br>Sample password:zxcv!123
     </p>
-  
+    <router-link id = navigation to ="/navigationPage" style ="color:blue" >link to the navigation page</router-link>
 </body>
 </template>
 

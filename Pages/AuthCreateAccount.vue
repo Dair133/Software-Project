@@ -1,24 +1,54 @@
-<template>
+<template style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gtastic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Secular+One&display=swap">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     <head>
     
     </head>
-    <body>
-      
-        
+    <body class =bodyMain >
     
-
-    <label for="lname">Username(Display Name)</label>
-    <input id="displayName"><br><br>
-
-    <label for="fname">Email</label>
-    <input id="email"><br><br>
-    
-    <label for="lname">Password</label>
-    <input id="password0"><br><br>
-
-    <button id = createAccount @click="createAccount()">Create Account</button>
+    <div class="container">
+        <div class="signup-dox">
+           
+            <h1>Sign up</h1>
+            <form>
+                <div class="inputs">
+                    <div class="input-area">
+                        <i class="bi bi-person"></i>
+                        <label for="lname">Username (Display name)</label> th
+                        <input id="displayName" type="text" class="input" placeholder="Username">
+                    </div>
+                    <div class="input-area">
+                        <i class="bi bi-envelope"></i>
+                        <label for="fname">Email</label>
+                        <input id="email" type="email" class="input" placeholder="Email">
+                    </div>
+                    <div class="input-area">
+                        <i class="bi bi-lock"></i>
+                        <label for="lname">Password</label>
+                        <input id="password0" type="password" class="input" placeholder="Password">
+                    </div>
+                    <div class="button">
+                        <button id = createAccount @click="createAccount()">Create Account</button>
+                        <router-link id = navigation to ="/navigationPage" style ="color:blue" >link to the navigation page</router-link>
+                    </div>
+                </div>
+            </form>
+            <div class="login">
+                <p> Already have an account? <router-link id = signIn to ="/authSignIn" style="color:blue"> Log in </router-link></p>
+            </div>
+        </div>
+    </div>
 </body>
     </template>
+    <style>
+.bodyMain{
+  width:100%;
+  height: 100%;
+  background: radial-gradient(circle at 6.6% 12%, rgb(64, 0, 126) 20.8%, rgb(0, 255, 160) 100.2%);
+}
+</style>
     <script>
     import  firebase  from 'firebase/compat/app';
     import { doc, updateDoc, deleteField } from "firebase/firestore";

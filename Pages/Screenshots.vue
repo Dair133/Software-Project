@@ -17,6 +17,7 @@
         <p id = javaText></p>
      <label>Type in the name you would like you file to be stored under</label>
         <input id = fileName>
+        <router-link id = navigation to ="/navigationPage" style ="color:blue" >link to the navigation page</router-link>
     </body>
     </template>
     <script>
@@ -127,9 +128,7 @@ getDownloadURL(ref(storage, 'space2.jpg'))
 
 },
 readTextFile:function(){//functions correctly
-
-
-    var storage = getStorage(test.methods.intialiseFirebase())
+  var storage = getStorage(test.methods.intialiseFirebase())
    
    var textHolder = getDownloadURL(ref(storage, 'holder.java'))
    .then((url) => {

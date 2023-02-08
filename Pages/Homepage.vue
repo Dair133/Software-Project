@@ -2,57 +2,84 @@
     <head>
     
     </head>
-    <body>
-      <main>
+    <body class = bodyMain>
+      
     <header>
-      <Navbar />
+    
     </header>
-    <div class="container">
+    
       
       <div>
-        <div class="main2"></div>
-        <h1 style = "color:hotpink">Welcome back <span id = name></span></h1>
-      <H2>Coding Challenge</H2>
-<textarea id="code" class = textArea></textarea>
-<textarea id="output1" class =outputTextArea></textarea>
-<button @click="readTextFile()">Activate Challenge</button>
-<button @click="build()">Compile</button>
-
-<p style="white-space: pre-line;" id='output'></p>
-
-        <button @click="signOut()"  class="btn btn-primary">Sign Out</button><br>
-        <button @click="accountPage()"  class="btn btn-primary">Account Page</button><br>
-        <button @click="navigationPage()"  class="btn btn-primary">Navigation Page</button><br>
-        <router-link id = navigation to ="/play" style ="color:blue" >link to the play</router-link>
-   <p></p>
-      </div>
-      <div class="content">
       
+        <h1 style = "color:hotpink;border-bottom: crimson;">Welcome back <span id = name></span>
+          <button @click="signOut()" style="position:relative;left:0.5cm" class="btn btn-primary">Sign Out</button>
+        <button @click="accountPage()" style="position:relative;left:1cm" class="btn btn-primary">Account Page</button>
+        <button @click="navigationPage()" style="position:relative;left:1.5cm"  class="btn btn-primary">Navigation Page</button>
+      </h1>
+    <textarea id="code" class = textArea></textarea>Enter code here<br>
+<textarea id="outputDisplay" class =outputTextArea></textarea>Shell<br>
+<div id="languageSelector" style="position:absolute; left: 725px; top: 195px;">
+<H3 style="display: inline;position:relative;left:12cm">Language Selected: </H3><p style="display:inline;positition:relative;left:12cm" id="Language" >None</p>
+    <br>
+    <br>
+    <label style = "position:relative;left:12cm">Please select a Language:</label>
+    <br>
+    <label style ="position:relative;left:12cm" for="languages" ></label><select style="position:relative;left:12cm" class =select-primary name="Languages" id="languages" @change="select();">
+        <option value="">--Please choose an option--</option>
+        <option value="java">Java</option>
+        <option style ="position:relative;left:12cm" value="py">Python</option>
+        <option value="cpp">C++</option>
+        <option value="c">C</option>
+        <option value="go">GoLang</option>
+        <option value="cs">C#</option>
+        <option value="js">NodeJS</option>
+    </select>
+</div>
+<button class="btn btn-primary" @click="readTextFile();">Activate Challenge</button>
+<button class="btn btn-primary" style = "left:12cm;" @click="build()">Compile</button><br>
+<router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
+<router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
+
+       
+
+<p style="white-space: pre-line;height: 1.8cm;" id='output'></p>
+
+        
       </div>
-    </div>
-  </main>
+    
+   
+ 
 
   </body>
     
-    </template>
-    <style scoped>
+  </template>
+    <style>
   main {
   width: 100vw;
   height: 100vh;
   background: radial-gradient(circle at 6.6% 12%, rgb(64, 0, 126) 20.8%, rgb(0, 255, 160) 100.2%);
   /*background-image: radial-gradient(#800080, #700070);*/
 }
-.bt
+.bodyMain{
+  width:100%;
+  height: 100%;
+  background: radial-gradient(circle at 6.6% 12%, rgb(64, 0, 126) 20.8%, rgb(0, 255, 160) 100.2%);
+}
+.background{
+  background: radial-gradient(circle at 6.6% 12%, rgb(64, 0, 126) 20.8%, rgb(0, 255, 160) 100.2%);
+}
+
 
 
 * {
   font-family: 'Secular One', sans-serif;
 }
 .btn-primary{
-  
+  position: relative;
   display: inline-block;
-  width: 50mm;
-  height: 50mm;
+  width: 35mm;
+  height: 35mm;
+  left:10cm;
                 outline: 0;
                 border: 0;
                 cursor: pointer;
@@ -99,13 +126,16 @@
   
 }
 .textArea{
-  overflow-y: scroll;
-  background-color:black;
+  left:10cm;
+  position:relative;
+  background-color: black;
   color:white;
   width:20cm;
   height:9cm;
 }
 .outputTextArea{
+  position: relative;
+  left: 10cm;
   background-color: black;
   color:white;
   width:20cm;
@@ -177,8 +207,8 @@ auth:function(){
     console.log(user.displayName)
     
     document.getElementById("name").innerHTML = user.displayName
-    document.getElementById("displayName").innerHTML = user.displayName//displays
-    document.getElementById("email").innerHTML = user.email   
+    //document.getElementById("displayName").innerHTML = user.displayName//displays
+    //document.getElementById("email").innerHTML = user.email   
   } 
   else {
     console.log("Error signing in")
@@ -187,12 +217,27 @@ auth:function(){
 },
 build:function(){
  
+  let text = "";
+
+
     let codeOutput="";
+    let language = "";
     let code = document.getElementById("code").value;
+
+    if(code===""){
+        document.getElementById("output").innerHTML = "";
+        return null;
+    }
 
     const encodedParams = new URLSearchParams();
     encodedParams.append("code", code);
-    encodedParams.append("language", "py");
+
+    language = document.getElementById("languages").value;
+    if(language===""){
+        document.getElementById("output").innerHTML = "Please select a language";
+        return null
+    }
+    encodedParams.append("language", language);
 
     const options = {
         method: 'POST',
@@ -209,17 +254,27 @@ build:function(){
         .then(data => {
             console.log(data);
             codeOutput = data.output;
-            if(codeOutput!="") {
-                document.getElementById("output").innerHTML = codeOutput;
-                document.getElementById("output1").value = codeOutput;
+            document.getElementById("outputDisplay").value = text;
+            if(codeOutput===""&&data.error==="") {
+                document.getElementById("outputDisplay").value = "No Output";
+            }
+            else if(codeOutput!==""){
+                document.getElementById("outputDisplay").value= codeOutput;
             }
             else
-                document.getElementById("output").innerHTML = "Failed to Compile, Error: "+data.error;
+                document.getElementById("outputDisplay").value = "Failed to Compile, Error: "+data.error;
         })
-      .catch(err => console.error(err));
-
-
-
+        .catch(err => console.error(err));
+},
+select:function(){
+  var text;
+    let el = document.getElementById("languages");
+     text = el.options[el.selectedIndex].text;
+    if(text==="--Please choose an option--"){
+        document.getElementById("Language").innerHTML = "None";
+        return null;
+    }
+    document.getElementById("Language").innerHTML = text;
 },
 readTextFile:function(){//functions correctly
   var storage = getStorage(test.methods.intialiseFirebase())

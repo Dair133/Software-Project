@@ -12,6 +12,7 @@
     <button @click=sendPasswordResetEmail(); style = "width: 5000;height: 1500;color:blue;">Click to send password email</button>
     
 </body>
+<router-link id = navigation to ="/navigationPage" style ="color:blue" >link to the navigation page</router-link>
 </template>
 <script>
 import  firebase  from 'firebase/compat/app';

@@ -24,6 +24,8 @@ comments">
    
    
 <button type="button" class="btn btn-primary">Primary</button>
+<router-link id = navigation to ="/navigationPage" style ="color:blue" >link to the navigation page</router-link>
+<router-link id = navigation to ="/cssTest" style ="color:blue" >link to thedfdfdfdfdfpage</router-link>
 </div>
     </div>
    
