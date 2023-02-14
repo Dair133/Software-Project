@@ -19,7 +19,7 @@
     <textarea id="code" class = textArea></textarea>Enter code here<br>
 <textarea id="outputDisplay" class =outputTextArea></textarea>Shell<br>
 <div id="languageSelector" style="position:absolute; left: 725px; top: 195px;">
-<H3 style="display: inline;position:relative;left:12cm">Language Selected: </H3><p style="display:inline;positition:relative;left:12cm" id="Language" >None</p>
+<H3 style="display: inline;position:relative;left:12cm">Language Selected: </H3><p style="positition:relative;left:12cm" id="Language" >None</p>
     <br>
     <br>
     <label style = "position:relative;left:12cm">Please select a Language:</label>
@@ -255,6 +255,10 @@ build:function(){
             console.log(data);
             codeOutput = data.output;
             document.getElementById("outputDisplay").value = text;
+            if(codeOutput=="15\n"){
+              console.log("inside if statment")
+              document.getElementById("outputDisplay").value= codeOutput.output+"Well done challenge completed!";
+            }
             if(codeOutput===""&&data.error==="") {
                 document.getElementById("outputDisplay").value = "No Output";
             }

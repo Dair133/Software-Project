@@ -1,6 +1,6 @@
 <template>
     <body class="bodyMain">
-    <h1 style="color:white">This is the navigation page</h1>
+    <h1 style="color:white">Navigation Page</h1>
     <router-link to ="/accountPage" class =btn-primary > AccountPage</router-link><br>
 <router-link to ="/authSignIn" class =btn-primary>Sign In Page</router-link><br>
 <router-link to ="/authChangePassword" class =btn-primary>Change Password </router-link><br>
@@ -8,6 +8,7 @@
 <router-link to ="/homepage" class =btn-primary >Homepage</router-link><br>
 <router-link to ="/screenshots" class =btn-primary >Screenshots page(WIP)</router-link><br>
 <router-link to ="/test" class =btn-primary>Node Test Page</router-link><br>
+<router-link to ="/Realtime" class =btn-primary>Realtime test</router-link><br>
 <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
 <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
 <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>

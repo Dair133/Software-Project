@@ -12,7 +12,7 @@
   <br>
    <p  @click=html() id = p style ="color: blue;"></p>
    <div></div>
-   <router-link to ="/" class="btn-primary" >Navigation Page</router-link><br>
+   <router-link to ="/navigationPage" class="btn-primary" >Navigation Page</router-link><br>
    <router-link to ="/accountPage" class="btn-primary" >Account page</router-link>
    
 

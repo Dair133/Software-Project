@@ -1,18 +1,30 @@
 <template>
-<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Secular+One&display=swap" rel="stylesheet">
 
-</head>
-<body>
-    <label id =newEmail>Type in the email associated with your account</label>
-    <input id =email>
+  <header>
+    <Navbar />
+  </header>
+  <div class="container">
+    <div class="box">
+      <img src="../images/undraw_smiley-face.svg" alt="" class="image1">
+      <h1>Forgot your password?</h1>
+      <form>
+        <div class="inputs">
+          <div class="input-area">
+            <i class="bi bi-person"></i>
+            <input id="email" type="email" class="input" placeholder="Email">
+          </div>
+          <div class="button">
+           
+            <button class="btn-primary" @click="sendPasswordResetEmail()">Change Password</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 
-    
-    
-    <p id =p1></p>
-    <button @click=sendPasswordResetEmail(); style = "width: 5000;height: 1500;color:blue;">Click to send password email</button>
-    
-</body>
-<router-link id = navigation to ="/navigationPage" style ="color:blue" >link to the navigation page</router-link>
 </template>
 <script>
 import  firebase  from 'firebase/compat/app';
@@ -40,3 +52,89 @@ firebase.auth().sendPasswordResetEmail(email)
 }
 }
 </script>
+<style scoped>
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Secular One', sans-serif;
+  }
+
+  .container {
+    width: 100vw;
+    height: 90vh;
+    background-image: radial-gradient(#800080, #330433);
+  }
+  .box {
+    background-color: white;
+    width: 400px;
+    margin: 0 auto;
+    top: 30%;
+    text-align: center;
+    border-radius: 15px;
+    border-color: black;
+    border-style: solid;
+  }
+
+  h1 {
+    font-size: 35px;
+    margin-bottom: 30px;
+  }
+
+  .input {
+    width: 50%;
+    margin: 10px 0;
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  .btn {
+    color: black;
+    background-color: white;
+    border-radius: 5px;
+    border-style: solid;
+    padding: 9px 20px;
+    margin-top: 5px;
+    width: 40%;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .image1 {
+    margin-top: 10px;
+  }
+
+  .button {
+    margin-top: 20px;
+    margin-bottom: 30px;
+  }
+  .btn-primary{
+  position: relative;
+  display: inline-block;
+  width: 35mm;
+  height: 22mm;
+  
+                outline: 0;
+                border: 0;
+                cursor: pointer;
+                will-change: box-shadow,transform;
+                background: radial-gradient( 100% 100% at 100% 0%, #89E5FF 0%, #5468FF 100% );
+                box-shadow: 0px 2px 4px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px rgb(58 65 111 / 50%);
+                padding: 0 32px;
+                border-radius: 6px;
+                color: #fff;
+                height: 48px;
+                font-size: 14px;
+                text-shadow: 0 1px 0 rgb(0 0 0 / 40%);
+                transition: box-shadow 0.15s ease,transform 0.15s ease;
+                
+}
+                .btn-primary:hover {
+                    box-shadow: 0px 4px 8px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px #3c4fe0;
+                    transform: translateY(-2px);
+                }
+               .btn-primary:active{
+                    box-shadow: inset 0px 3px 7px #3c4fe0;
+                    transform: translateY(2px);
+                }
+</style>

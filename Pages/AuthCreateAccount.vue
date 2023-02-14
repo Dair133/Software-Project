@@ -16,27 +16,38 @@
                 <div class="inputs">
                     <div class="input-area">
                         <i class="bi bi-person"></i>
-                        <label for="lname">Username (Display name)</label> th
+                        <label style="color:white"   for="lname">Username (Display name)</label> 
                         <input id="displayName" type="text" class="input" placeholder="Username">
                     </div>
                     <div class="input-area">
                         <i class="bi bi-envelope"></i>
-                        <label for="fname">Email</label>
+                        <label style="color:white"  for="fname">Email</label>
                         <input id="email" type="email" class="input" placeholder="Email">
                     </div>
                     <div class="input-area">
                         <i class="bi bi-lock"></i>
-                        <label for="lname">Password</label>
+                        <label style="color:white"  for="lname">Password</label>
                         <input id="password0" type="password" class="input" placeholder="Password">
                     </div>
                     <div class="button">
-                        <button id = createAccount @click="createAccount()">Create Account</button>
+                        <button id = createAccount @click="createAccount()">Create Account</button><br>
                         <router-link id = navigation to ="/navigationPage" style ="color:blue" >link to the navigation page</router-link>
                     </div>
+                   
                 </div>
             </form>
             <div class="login">
                 <p> Already have an account? <router-link id = signIn to ="/authSignIn" style="color:blue"> Log in </router-link></p>
+                <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
+                    <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
+                    <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
+                    <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
+                    <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
+                    <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
+                    <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
+                    <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
+                    <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
+                    <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
             </div>
         </div>
     </div>
