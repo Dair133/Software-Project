@@ -10,8 +10,10 @@ import routes from './router/routes';
 import './assets/main.css'
 import "firebase/storage";
 import { getStorage } from 'firebase/storage';
-import { initializeApp } from "firebase/app";
+import { initializeApp } from "firebase/app";     
 import { getFirestore } from "firebase/firestore";
+import { getDatabase } from "firebase/database";
+
 //import  storage from 'firebase'; 
 
 
@@ -29,7 +31,7 @@ const config = {
   apiKey: "AIzaSyBKNnpPI9PosJFLGupjlz5IDbHUVOo98bk",
   authDomain: "software-engineering-d3376.firebaseapp.com",
   // The value of `databaseURL` depends on the location of the database
-  databaseURL: "https://software-engineering-d3376.firebaseio.com",
+  databaseURL: "https://software-engineering-d3376-default-rtdb.europe-west1.firebasedatabase.app/",
   projectId: "software-engineering-d3376",
   storageBucket: "gs://software-engineering-d3376.appspot.com",
   messagingSenderId: "SENDER_ID",
@@ -45,7 +47,7 @@ const storage  = getStorage(app1)
 
 
 
-export default{
+export default{//this must stay as export defualt as far as i know
   name:"app",
   
 methods: {
@@ -65,6 +67,20 @@ methods: {
   intialiseFirestore:function(){
     const db = firebase.firestore()
     return db;
+  },
+  intialiseVue:function(){
+    let router = createRouter({
+      history: createWebHistory(),
+      routes: routes
+      });
+      const app = createApp(App)
+      app.use(router);
+      app.mount('#app');
+      return app;
+  },
+  intaliseRealTimeDatabase:function(){
+      const realTimeDatabase = getDatabase(app1)
+      return realTimeDatabase
   }
   
 }
