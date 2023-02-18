@@ -1,13 +1,23 @@
 import { createApp } from 'vue'
-import Vue from 'vue'
+import App from './App.vue'
+import { createRouter, createWebHistory } from
+'vue-router';
+import routes from './router/routes'
+import './assets/main.css'
+
+
+
+
+
+
 //import { firebase } from '@firebase/app'
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import App from './App.vue'
-import { createRouter, createWebHistory } from 'vue-router';
-import routes from './router/routes';
-import './assets/main.css'
+
+
+
+
 import "firebase/storage";
 import { getStorage } from 'firebase/storage';
 import { initializeApp } from "firebase/app";     
