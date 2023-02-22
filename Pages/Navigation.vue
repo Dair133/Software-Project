@@ -9,6 +9,7 @@
 <router-link to ="/screenshots" class =btn-primary >Screenshots page(WIP)</router-link><br>
 <router-link to ="/test" class =btn-primary>Node Test Page</router-link><br>
 <router-link to ="/Realtime" class =btn-primary>Realtime test</router-link><br>
+<router-link to ="/ideTest" class =btn-primary>New IDE test</router-link><br>
 <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
 <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
 <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
