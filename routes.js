@@ -15,4 +15,5 @@ function loadPage (component) {
     {path:'/play',component:loadPage('Play')},
     {path:'/random',component:loadPage('Random')},
     {path:'/realtime',component:loadPage('Realtime')},
+    {path:'/ideTest',component:loadPage('IdeTest')},
     ]
