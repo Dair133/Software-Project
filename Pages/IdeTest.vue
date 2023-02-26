@@ -176,7 +176,7 @@ build:function(){
                console.log("The text contained inside the Outputs.text file is"+this.desiredOutput)//contains the tect from the outputs file for the respective challenges
                document.getElementById("outputDisplay").value= codeOutput;
                this.challengesCompleted +=1;
-               this.chooseChallenge()
+               this.chooseChallenge()//run choose challenge function if correct output recieved. Choose challenge activates the next function in the queue
            }
            else
                document.getElementById("outputDisplay").value = "Failed to Compile, Error: "+data.error;
