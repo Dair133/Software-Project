@@ -172,8 +172,12 @@ build:function(){
                document.getElementById("outputDisplay").value = "No Output";
            }
            else if(codeOutput!==""){
-            //add check for correct output here
-               console.log("The text contained inside the Outputs.text file is"+this.desiredOutput)//contains the tect from the outputs file for the respective challenges
+            //check for the code can be anywhere just create global variable,assign the code output and run the function here using that variable although not necesarry to have seperate function
+            //you could possibly use a combination of the content from the outputs.text file and completed version to form a check if you need extra data in the databse then let me know
+            //just make sure that the checks are not hard coded because right all the rest of the content to do with challemnges are not hard-coded
+            //please let me know if you are confused by any of the variables I may have forgot to comment something. The choose challemge function moves to the next challemge and should be used if the user is correct
+            //right now the choosechallenge function runs as long as the code compiles
+               console.log("The text contained inside the Outputs.text file is"+this.desiredOutput)//contains the text from the outputs file for the respective challenges
                document.getElementById("outputDisplay").value= codeOutput;
                this.challengesCompleted +=1;
                this.chooseChallenge()//run choose challenge function if correct output recieved. Choose challenge activates the next function in the queue
