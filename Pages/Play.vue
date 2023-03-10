@@ -5,13 +5,17 @@
 
   <div class="container">
     <div class="grid-item grid-item-1">
-      <div class="grid-item grid-item-8">
-        <h1 class="logo">MMoguls</h1>
-      </div>
       <div class="grid-item grid-item-9">
         <div class="img">
           <img src="../images/user.svg" alt="" class="image1">
+          <div class="dropdown">
+            <router-link to="/settings" class="drop">Settings</router-link><br>
+            <router-link to="/" class="drop">Log out</router-link>
+          </div>
         </div>
+      </div>
+      <div class="grid-item grid-item-8">
+        <h1 class="logo">MMoguls</h1>
       </div>
     </div>
     <div class="grid-item grid-item-2">
@@ -20,7 +24,7 @@
           <img src="../images/survival.svg" alt="" class="image2">
         </div>
         <div class="button grid-item-11">
-          <router-link class="btn" to="/play">Survival</router-link>
+          <router-link class="btn" to="/homepage">Survival</router-link>
         </div>
       </div>
       <div class="grid-item-play grid-item-5">
@@ -28,15 +32,15 @@
           <img src="../images/time.svg" alt="" class="image2">
         </div>
         <div class="button grid-item-13">
-          <router-link class="btn" to="/play">Time-Trial</router-link>
+          <router-link class="btn" to="/homepage">Time-Trial</router-link>
         </div>
       </div>
       <div class="grid-item-play grid-item-6">
         <div class="image grid-item-14">
-          <img src="../images/question-mark.svg" alt="" class="image2">
+          <img src="../images/connected.svg" alt="" class="image2">
         </div>
         <div class="button grid-item-15">
-          <router-link class="btn" to="/play">Coming soon</router-link>
+          <router-link class="btn" to="/homepage">Battle Royale</router-link>
         </div>
       </div>
 <!--      <div class="grid-item-play grid-item-7">
@@ -48,7 +52,11 @@
         </div>
       </div>-->
     </div>
-    <div class="grid-item grid-item-3"></div>
+    <div class="grid-item grid-item-3">
+      <div>
+        <router-link id = navigation to ="/navigationPage" style ="color:blue" >link to the navigation page</router-link>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -85,7 +93,7 @@
 
   .grid-item-1 {
     display: grid;
-    grid-template-columns: auto 0.05fr;
+    grid-template-columns: 0.05fr auto;
     align-content: center;
   }
 
@@ -97,7 +105,7 @@
   .grid-item-8 {
     display: grid;
     justify-items: center;
-    padding-left: 50px;
+    padding-right: 140px;
   }
 
 
@@ -134,4 +142,31 @@
     color: #e8dede;
     padding: 8px 15px;
   }
+
+  .dropdown {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+
+  .dropdown a {
+    color: black;
+    padding: 5px 5px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .dropdown a:hover {background-color: #f1f1f1}
+
+  .img:hover .dropdown {
+    display: block;
+  }
+
+  .drop {
+    font-size: 15px;
+  }
+
 </style>

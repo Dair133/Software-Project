@@ -20,44 +20,44 @@ admin.initializeApp();
 //}); 
 
 
-  exports.downloadFile = functions.https.onCall(async (req, res) => {
-     
-    
-      const storage = new Storage();
-    
-      const bucketName = 'gs://software-engineering-d3376.appspot.com';
-      const fileName = 'space.jpg';
-      
-   
+exports.downloadFile = functions.https.onCall(async (req, res) => {
 
 
-     const imageRef = storage.bucket(bucketName).file('space2.jpg');
-     return imageRef
-     
-   //  const imageRef = admin.storage().bucket().file('images/image.jpg');
- //    return imageRef.getSignedUrl({
-   //    action: 'read',
-   //    expires: '03-09-2491'
-   //  }).then(signedUrls => {
-   //    return {imageUrl: signedUrls[0]};
-  //   });
-   });
-  
-     
-      //const stream = file.createReadStream();
-      
-      //  file.createReadStream()
-       // .on('error', (err) => {
-      //    res.status(500).send(err);
-      //  })
-       // .pipe(stream);
-      
-        
-       // while(stream!= null){
-    //      console.log("inside while loop")
-     //     console.log(stream._read());
-     // }
-  
+    const storage = new Storage();
+
+    const bucketName = 'gs://software-engineering-d3376.appspot.com';
+    const fileName = 'space.jpg';
+
+
+
+
+    const imageRef = storage.bucket(bucketName).file('space2.jpg');
+    return imageRef
+
+    //  const imageRef = admin.storage().bucket().file('images/image.jpg');
+    //    return imageRef.getSignedUrl({
+    //    action: 'read',
+    //    expires: '03-09-2491'
+    //  }).then(signedUrls => {
+    //    return {imageUrl: signedUrls[0]};
+    //   });
+});
+
+
+//const stream = file.createReadStream();
+
+//  file.createReadStream()
+// .on('error', (err) => {
+//    res.status(500).send(err);
+//  })
+// .pipe(stream);
+
+
+// while(stream!= null){
+//      console.log("inside while loop")
+//     console.log(stream._read());
+// }
+
 //  exports.getcomments = functions.https.onRequest((request,
 //response) => {
 //cors(request, response, () => {

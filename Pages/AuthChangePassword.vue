@@ -4,7 +4,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Secular+One&display=swap" rel="stylesheet">
 
   <header>
-    <Navbar />
+    <Navbar></Navbar>
   </header>
   <div class="container">
     <div class="box">
@@ -28,9 +28,10 @@
 </template>
 <script>
 import  firebase  from 'firebase/compat/app';
-
+import Navbar from '../components/Navbar.vue';
 
 export default {
+  components: {Navbar},
   emits: ["open-note"],
   props: {
   note: {}
@@ -109,32 +110,30 @@ firebase.auth().sendPasswordResetEmail(email)
     margin-bottom: 30px;
   }
   .btn-primary{
-  position: relative;
-  display: inline-block;
-  width: 35mm;
-  height: 22mm;
-  
-                outline: 0;
-                border: 0;
-                cursor: pointer;
-                will-change: box-shadow,transform;
-                background: radial-gradient( 100% 100% at 100% 0%, #89E5FF 0%, #5468FF 100% );
-                box-shadow: 0px 2px 4px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px rgb(58 65 111 / 50%);
-                padding: 0 32px;
-                border-radius: 6px;
-                color: #fff;
-                height: 48px;
-                font-size: 14px;
-                text-shadow: 0 1px 0 rgb(0 0 0 / 40%);
-                transition: box-shadow 0.15s ease,transform 0.15s ease;
-                
-}
-                .btn-primary:hover {
-                    box-shadow: 0px 4px 8px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px #3c4fe0;
-                    transform: translateY(-2px);
-                }
-               .btn-primary:active{
-                    box-shadow: inset 0px 3px 7px #3c4fe0;
-                    transform: translateY(2px);
-                }
+    position: relative;
+    display: inline-block;
+    width: 45%;
+    height: 40px;
+    color:white;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+    will-change: box-shadow,transform;
+    background: radial-gradient(#800080, #330433);
+    box-shadow: 0px 2px 4px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px rgb(58 65 111 / 50%);
+    padding: 0 32px;
+    border-radius: 4px;
+    font-size: 12px;
+    text-shadow: 0 1px 0 rgb(0 0 0 / 40%);
+    transition: box-shadow 0.15s ease,transform 0.15s ease;
+
+  }
+  .btn-primary:hover {
+    box-shadow: 0px 4px 8px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px #490849;
+    transform: translateY(-2px);
+  }
+  .btn-primary:active{
+    box-shadow: inset 0px 3px 7px #490849;
+    transform: translateY(2px);
+  }
 </style>

@@ -11,7 +11,7 @@
         <router-link class="underline" to="/">Home</router-link>
         <router-link class="underline" to="/aboutus">About us</router-link>
         <router-link class="underline" to="/help">Help</router-link>
-        <router-link class="btn" to="/AuthSignIn">Log in</router-link>
+        <router-link class="btn" to="/AuthCreateAccount">Sign up</router-link>
       </ul>
     </nav>
   </div>
@@ -100,10 +100,5 @@ a {
   border-style: solid;
   border-color: #800080;
   padding: 9px 20px;
-}
-
-.btn:hover {
-
-  border-color: #181818;
 }
 </style>
