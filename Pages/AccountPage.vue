@@ -8,6 +8,7 @@
     Account Details of <span id = name >z</span><br>
     Email:<span id = email></span><br>
     Display Name:<span id = displayName></span><br>
+    <div id="uid"></div>
   </p>
   <br>
    <p  @click=html() id = p style ="color: blue;"></p>
@@ -28,10 +29,16 @@
   <button  style ="background-color: #FFFFFF;background-image: linear-gradient(271deg, #FFFFFF 0%, #6284FF 6%, #FF0000 100%);" id = changeEmail @click=changeEmail()>Change email</button><br>
   <br>
   <br>
+
+    
+  <div style="color:white">Enter picture link box provided(Currently WIP)</div>
+  <input  id = "newPhoto">
+  <button  style ="background-color: #FFFFFF;background-image: linear-gradient(271deg, #FFFFFF 0%, #6284FF 6%, #FF0000 100%);" id = changeEmail @click=changeProfilePic()>Change Profile Pic</button><br>
+  <br>
+  <br>
   
  
   <button style="background-color: #FFFFFF;background-image: linear-gradient(271deg, #FFFFFF 0%, #6284FF 6%, #FF0000 100%);" id = defineFirebase @click=tempPassword()>Change password page</button>
- 
   <br>
   <br>
   <br>
@@ -98,7 +105,17 @@ export default {
   note: {}
   },
   mounted:function(){//as far as i know the 'mounted' keyword causes this function to be called onload.
-    this.auth()//this bit of code cannot go below the 'methods' keyword or it doesnt work
+  test.methods.auth()
+
+setTimeout(() => {
+
+   if(test.methods.checkEntryExistence()){
+             console.log("User Entry Exists")
+    }
+  else{
+    test.methods.createUserEntry() 
+   }
+  },500)
    
   },
   methods: {
@@ -150,6 +167,11 @@ test(){
   const user = firebase.auth().currentUser;
 const db =test.methods.intialiseFirestore();
 console.log(db.collection('Users').doc(user.uid).Pl)
+},
+changeProfilePic:function(){
+  const user = firebase.auth().currentUser;
+ var newPhoto = document.getElementById("newPhoto").value
+  user.updateProfile({photoURL: newPhoto,});
 }
 
 
