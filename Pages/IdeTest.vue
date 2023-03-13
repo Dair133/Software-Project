@@ -16,6 +16,9 @@
 <div id="name"></div>
 <div id="uid"></div>
 <div id="numPlayers"></div>
+<div id="editorIncrement">Null</div>
+<div id="currentIncrement"></div>
+<div id="checker">0</div>
 <button v-on:click="cycleThroughEditor()">Cyclye through editors</button>
 <p>Inputs:</p><label for="inp1"></label><input id="inp1">
 
@@ -74,11 +77,12 @@ export default {
     desiredOutput:"",
     numPlayers:null,
     incrementInstanceProperty:1,//content of the Outputs.text file in the database which contains the answer for the code.
-    currentDatabaseEditor:null,
+    currentDatabaseEditor:1,
     editorOne:null,
     editorTwo:null,
     editorthree:null,
-    editorCycle:1
+    editorCycle:1,
+    checker:0
 
     }
   },
@@ -125,19 +129,28 @@ else{
  },500)
 
  setTimeout(() => {
-  this.getNumPlayers()
+  this.getNumPlayers()//increments number of players in the database and assigns it to the html value
+  //this.chooseEditor() //assigns number of players value to the global variable numOf
 
- },1000)
+ },400)
 
  
  setTimeout(() => {
-  this.instance()
-  this.chooseEditor()
- this.incrementInstance()
- this.testingRealTime()
- this.createOtherEditors()
+ 
+  this.chooseEditor() 
+  this.checkInstanceCorrect()
+  // this.increme ntInstance()
+                              
 
- },2000)
+ //this.testingRealTime()
+ },1500)
+
+ setTimeout(() => {
+ 
+  this.createOtherEditors()
+ // this.instance() //creates new instance does ont need to run on start up if instance has already been created
+  //this.ensureCorrectDatabase()
+},2500)
 
 
 
@@ -381,7 +394,6 @@ console.log("Current Page is "+onThisPage.val())
   const playerRef1 = sref(db,'Online/'+document.getElementById('name').innerHTML)
   off(playerRef1)
 
-
   update(sref(db,'GameData/'),{
           numPlayers:document.getElementById('numPlayers').innerHTML
         
@@ -392,43 +404,57 @@ console.log("Current Page is "+onThisPage.val())
 })
 
 
-})
+}).bind(this)
 
 
 },
 instance:function(){
-//   console.log("inside gamedata")
+
 //   var db = getDatabase()
 //   const currentUserRef = sref(db,'GameData');
 //   const Parent= child(currentUserRef,'Instances')
-//         const InstanceOne= (child (Parent,'Instance-1',));
-//         const  InstanceTwo = (child (Parent,'Instance-2',));
-//         const  InstanceThree = (child (Parent,'Instance-3',));
+//         var InstanceOne= (child (Parent,'Instance-'+this.incrementInstanceProperty,));
 
 //         const EditorOne = child(InstanceOne,'Editor-1')
 //         const EditorTwo = child(InstanceOne,'Editor-2')
 //         const EditorThree = child(InstanceOne,'Editor-3')
 //         const EditorFour = child(InstanceOne,'Editor-4')
 
+//         //adding connected values
+//         const startedbool = child(InstanceOne,'Started')
+//         const settingStartedBool = set(startedbool,false)
+        
+
+
+     
 // const createEditorOneName = child(EditorOne,'Name')
 // const createEditorOneValue = child(EditorOne,'Value')
+// const createEditorOneBool = child(EditorOne,'Connected')
 // const settingEditorOneName = set(createEditorOneName,'Empty Name')
 // const settingEditorOneValue = set(createEditorOneValue,'zzz')
-
+// const settingBoolOne = set(createEditorOneBool,false)
+        
+      
 // const createEditorTwoName = child(EditorTwo,'Name')
 // const createEditorTwoValue = child(EditorTwo,'Value')
+// const createEditorTwoBool = child(EditorTwo,'Connected')
 // const settingEditorTwoName = set(createEditorTwoName,'Empty Name')
 // const settingEditorTwoValue = set(createEditorTwoValue,'zzz')
-
+// const settingBoolTwo = set(createEditorTwoBool,false)
+        
 // const createEditorThreeName = child(EditorThree,'Name')
 // const createEditorThreeValue = child(EditorThree,'Value')
+// const createEditorThreeBool = child(EditorThree,'Connected')
 // const settingEditorThreeName = set(createEditorThreeName,'Empty Name')
 // const settingEditorThreeValue = set(createEditorThreeValue,'zzz')   
+// const settingBoolThree = set(createEditorThreeBool,false)
 
 // const createEditorFourName = child(EditorFour,'Name')
 // const createEditorFourValue = child(EditorFour,'Value')
+// const createEditorFourBool = child(EditorFour,'Connected')
 // const settingEditorFourName = set(createEditorFourName,'Empty Name')
-// const settingEditorFourValue = set(createEditorFourValue,'zzz')   
+// const settingEditorFourValue = set(createEditorFourValue,'zzz')  
+// const settingBoolFour = set(createEditorFourBool,false) 
 
    
   
@@ -438,17 +464,7 @@ instance:function(){
 
 
 
-//Important notes for when i start again
-//currently i have just added an incrementing instance property which updates every time the modulus of four is equal to Z_ERRNO
-//The next thing i need to add is a new instance being created with the nextInstance value in the databasen i.e. if th next instanvce calue is 3
-//then a new 'instance-3' is created with 4 editors
-//the next step should then be setting up the 'secondary editor' for each user with th e other four editor properties int he database and allowing the users to 
-//see what each user is doing while also see their own code.
-//then we need someway to keep track of challeneg completion time,number of points,but this should be easy enough 
-//Note we may have to change the structure of the database so that each editor has properties maybe ach editor parent keeps track of the number of points for that player/editor may be easiest way although
-//it will be annoying to have to change around some of the existing code.
-//also ensure that no values are hard-coded for testing 
-//need to make code above dynamic at least a little bit . at least dynamic instance creation
+// //Important notes for when i start again
 
         
 },
@@ -456,22 +472,14 @@ testingRealTime:function(){
 
   var db = getDatabase()
      var text = document.getElementById("code").value
-     var editorAdjustment = this.numPlayers
-     var instanceAdjustment=0;
-     editorAdjustment = editorAdjustment %4;
-     if(editorAdjustment == 0){
-        instanceAdjustment++;
-     }
-     if(editorAdjustment ==0){//ensures that a new eidotr editor-0 zero is not created after modulus calculation
-      editorAdjustment++;
-     }
-     this.currentDatabaseEditor = editorAdjustment
-     console.log("editroe adjustment is"+editorAdjustment)
-      update(sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-'+editorAdjustment),{
-       Name:document.getElementById('name').innerHTML,
+      
+     this.currentDatabaseEditor =   document.getElementById('editorIncrement').innerHTML
+       update(sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-'+this.currentDatabaseEditor),{
+       Name:document.getElementById('name').innerHTML,//this probably needs to be moved.
        Value: text,
         
       })
+    
   
   },
   chooseEditor:function(){
@@ -480,14 +488,41 @@ testingRealTime:function(){
     get(editorNumber).then((snapshot) =>{
       console.log("snapshot value is"+snapshot.val())
       this.numPlayers = snapshot.val()
-      console.log(this.numPlayers)
+      console.log("The number of players is "+this.numPlayers)
   })
-  setTimeout(() => {
-    console.log(this.numPlayers)
-  },500)
+
+  // this.currentDatabaseEditor = document.getElementById('numPlayers').innerHTML
+console.log("we are checking instance "+this.incrementInstanceProperty)
+  var checkEntryExistence = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty);
 
 
-  },
+
+  get(checkEntryExistence).then((snapshot =>{
+    var currentIncrement=0;
+    snapshot.forEach(function (snapshot){
+      currentIncrement+=1;
+      console.log(currentIncrement);
+if(snapshot.child('Connected').val() == false){
+  console.log("The disconnected increment is"+currentIncrement)
+  document.getElementById('editorIncrement').innerHTML = currentIncrement
+
+  return true;
+}
+else{
+
+
+  update(checkEntryExistence,{
+   
+         Started:true
+        })
+     
+    
+}
+
+    } )
+  }).bind(this)
+
+  ) },
   incrementInstance:function(){
     const db = getDatabase()
 console.log("number of players inside incrementinstance function "+this.numPlayers)
@@ -503,16 +538,63 @@ if(snapshot.val() % 4 == 0 ){
 }).bind(this)
 
   },
+checkInstanceCorrect:function(){
+  const db = getDatabase();
+var instanceCheck = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty)
+
+get(instanceCheck).then((snapshot =>{
+  if(snapshot.child('Started').val() == true){
+  
+  this.incrementInstanceProperty++;
+  console.log("adter instance increment"+this.incrementInstanceProperty)
+  this.instance()//creates new instance need to add check of the instance already exists or not
+  this.chooseEditor()//checks all the 'connected' of the individual editors
+ 
+console.log("inside value check "+this.currentDatabaseEditor)
+
+  }
+}).bind(this)
+)
+
+
+
+
+},
+
+
+
 
   createOtherEditors:function(){
     const db = getDatabase()
-    var clientEditor
+ 
     onValue(sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty),(snapshot) => {
 
-            //use main editor html tag make change incremen of main editor tag based on current editor which it is connected too.
 
+// if(snapshot.child('Started').val() == true){
+  
+//   this.incrementInstanceProperty++;
+//   console.log("adter instance increment"+this.incrementInstanceProperty)
+//   this.instance()//creates new instance need to add check of the instance already exists or not
+//   this.chooseEditor()//checks all the 'connected' of the individual editors
+ 
+// console.log("inside value check "+this.currentDatabaseEditor)
+
+// }
+
+if(document.getElementById('editorIncrement').innerHTML == 'Null'){
+  console.log("editor is equal to null")
+  return true;
+}
+            //use main editor html tag make change incremen of main editor tag based on current editor which it is connected too.
+            
+console.log(this.currentDatabaseEditor +'current database ditor is')
+            var editorHolder = this.currentDatabaseEditor;
+            this.testingRealTime()//updates database with user name and the value of the IDE
            if(this.currentDatabaseEditor ==1){
-            console.log("mmmmmmmmmmm")
+            console.log("adter instance increment after incrmeent"+this.incrementInstanceProperty)
+            var setBool = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-1/Connected')
+            set(setBool,true)
+            console.log("INSIDE EDIOTR ONE")
             var editorTwoValue = snapshot.child('Editor-2/Value').val()
        
             var editorThreeValue = snapshot.child('Editor-3/Value').val()
@@ -521,6 +603,7 @@ if(snapshot.val() % 4 == 0 ){
           
        
            document.getElementById('name1').innerHTML  = snapshot.child('Editor-2/Name').val() 
+           console.log(editorTwoValue)
            monaco.editor.getModels()[1].setValue(editorTwoValue)
           // this.editorOne.setValue("asasd")
           //this.editorObject.setValue(this.fileText)
@@ -529,11 +612,21 @@ if(snapshot.val() % 4 == 0 ){
            
            document.getElementById('name3').innerHTML  = snapshot.child('Editor-4/Name').val() 
            monaco.editor.getModels()[3].setValue(editorFourValue)
-           var removeEntry = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-1/Name')
-           onDisconnect(removeEntry).set('Waiting For Player')
+           var removeName = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-1/Name')
+           var removeValue = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-1/Value')
+           var removeBool = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-1/Connected')
+           onDisconnect(removeName).set('Waiting For Player')
+           onDisconnect(removeValue).set('Waiting For Player')
+           onDisconnect(removeBool).set(false)
            }
+
+
            if(this.currentDatabaseEditor ==2){
-            console.log("mmmmmmmmmmm")
+            console.log("INSIDE EDIOTR two")
+            var setBool2 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-2/Connected')
+            set(setBool2,true)
+            
+
             var editorOneValue = snapshot.child('Editor-1/Value').val()
              editorThreeValue = snapshot.child('Editor-3/Value').val()
              editorFourValue = snapshot.child('Editor-4/Value').val()
@@ -543,8 +636,23 @@ if(snapshot.val() % 4 == 0 ){
            monaco.editor.getModels()[1].setValue(editorOneValue)
            monaco.editor.getModels()[2].setValue(editorThreeValue)
            monaco.editor.getModels()[3].setValue(editorFourValue)
+
+
+
+
+           var removeName2 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-2/Name')
+           var removeValue2= sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-2/Value')
+           var removeBool2 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-2/Connected')
+           onDisconnect(removeName2).set('Waiting For Player')
+           onDisconnect(removeValue2).set('Waiting For Player')
+           onDisconnect(removeBool2).set(false)
+
+
            }
            if(this.currentDatabaseEditor ==3){
+            var setBool3 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-3/Connected')
+            set(setBool3,true)
+            
             console.log("mmmmmmmmmmm")
              editorOneValue = snapshot.child('Editor-1/Value').val()
              editorTwoValue = snapshot.child('Editor-2/Value').val()
@@ -555,8 +663,19 @@ if(snapshot.val() % 4 == 0 ){
            monaco.editor.getModels()[1].setValue(editorOneValue)
            monaco.editor.getModels()[2].setValue(editorTwoValue)
            monaco.editor.getModels()[3].setValue(editorFourValue)
+
+           var removeName3 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-3/Name')
+           var removeValue3= sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-3/Value')
+           var removeBool3 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-3/Connected')
+           onDisconnect(removeName3).set('Waiting For Player')
+           onDisconnect(removeValue3).set('Waiting For Player')
+           onDisconnect(removeBool3).set(false)
+
+
            }
            if(this.currentDatabaseEditor ==4){
+            var setBool4 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-1/Connected')
+            set(setBool4,true)
             console.log("mmmmmmmmmmm")
              editorOneValue = snapshot.child('Editor-1/Value').val()
              editorTwoValue = snapshot.child('Editor-2/Value').val()
@@ -567,6 +686,14 @@ if(snapshot.val() % 4 == 0 ){
            monaco.editor.getModels()[1].setValue(editorOneValue)
            monaco.editor.getModels()[2].setValue(editorTwoValue)
            monaco.editor.getModels()[3].setValue(editorValue)
+
+           
+           var removeName4 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-3/Name')
+           var removeValue4= sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-3/Value')
+           var removeBool4 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-3/Connected')
+           onDisconnect(removeName4).set('Waiting For Player')
+           onDisconnect(removeValue4).set('Waiting For Player')
+           onDisconnect(removeBool4).set(false)
            }
      
 
@@ -592,10 +719,8 @@ if(this.editorCycle == 4){
 }
 
 
-  }
+  },
 
-
-  
    
   
   }
