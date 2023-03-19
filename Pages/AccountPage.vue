@@ -156,16 +156,4 @@ console.log(db.collection('Users').doc(user.uid).Pl)
   }
 }
 
-
-
-
-
-    
-
-
-   
-    
-
-
-
 </script>

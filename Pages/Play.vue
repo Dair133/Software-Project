@@ -40,7 +40,7 @@
           <img src="../images/connected.svg" alt="" class="image2">
         </div>
         <div class="button grid-item-15">
-          <router-link class="btn" to="/homepage">Battle Royale</router-link>
+          <router-link class="btn" to="/idetest">Battle Royale</router-link>
         </div>
       </div>
 <!--      <div class="grid-item-play grid-item-7">
@@ -58,10 +58,38 @@
       </div>
     </div>
   </div>
+
+  <div id="myModal" class="modal"  v-bind:style='{"display" : (isActive? "block" : "none" )}'>
+    <div class="modal-background" @click="closeModal"></div>
+    <div class="modal-content">
+      <p>Some text in the Modal...... test test .... test .test est est </p>
+    </div>
+  </div>
+
+  <div class="sidebar" @click="showModal()" v-bind:style='{"display" : (isActive? "none" : "block" )}'>
+    <div class="sidebar-content">
+
+    </div>
+  </div>
+
 </template>
 
-<script setup>
-
+<script>
+  export default {
+    data() {
+      return {
+        isActive: false
+      }
+    },
+    methods: {
+      showModal: function () {
+        this.isActive = true;
+      },
+      closeModal: function () {
+        this.isActive = false;
+      }
+    }
+  }
 </script>
 
 <style scoped>
@@ -78,14 +106,13 @@
 
   .container {
     background-image: radial-gradient(#800080, #330433);
+    position: absolute;
     height: 100vh;
     width: 100vw;
-  }
-
-  .container {
     display: grid;
     grid-template-rows: 0.15fr 1fr 0.4fr;
   }
+
   .grid-item-2 {
     display: grid;
     grid-template-columns: 0.33fr 0.33fr 0.33fr;
@@ -154,7 +181,6 @@
 
   .dropdown a {
     color: black;
-    padding: 5px 5px;
     text-decoration: none;
     display: block;
   }
@@ -168,5 +194,39 @@
   .drop {
     font-size: 15px;
   }
+
+  .modal-background {
+    display: block; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.2); /* Black w/ opacity */
+  }
+
+  .modal-content {
+    z-index: 10;
+    position: fixed;
+    right: 0px;
+    width: 12%;
+    height: 100%;
+    background-color: purple;
+    display: block;
+  }
+
+  .sidebar {
+    z-index: 10;
+    position: fixed;
+    right: 0px;
+    width: 4%;
+    height: 100%;
+    background-color: purple;
+    display: block;
+  }
+
 
 </style>

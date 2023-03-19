@@ -17,7 +17,6 @@
             <input id="email" type="email" class="input" placeholder="Email">
           </div>
           <div class="button">
-           
             <button class="btn-primary" @click="sendPasswordResetEmail()">Change Password</button>
           </div>
         </div>
