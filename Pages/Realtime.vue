@@ -6,7 +6,8 @@
     <div id="dataStorage">Example database storage</div>
     <div id="uid">Example database storage</div>    
     <div id="name">Example database storage</div>  
-    <div id="numPlayers" style="visibility:hidden;">Example database storage</div>  
+    <div>Num Players On this Page is<span id="numPlayers"></span></div>
+
     <div id="listOfNames"></div>
         
         <p id =p1></p>
@@ -17,12 +18,12 @@
     </template>
     
     <script>
-    import { getDatabase, ref, set,onValue,get, onDisconnect,onChildRemoved,child,onChildAdded,update } from "firebase/database";
+    import { getDatabase, ref, set,onValue,get, onDisconnect,onChildRemoved,child,onChildAdded,update, equalTo } from "firebase/database";
    import test from '../main';
    import loader from "@monaco-editor/loader";
 import { listen } from "vscode-ws-jsonrpc";
 import  firebase  from 'firebase/compat/app';
-import {  push,serverTimestamp } from "firebase/database";
+import {  push,serverTimestamp,off,query } from "firebase/database";
 
     import {  getDownloadURL } from "firebase/storage";
 
@@ -66,29 +67,26 @@ export default{
     }
   },
   mounted(){
-    const db = getDatabase();
-firebase.auth().onAuthStateChanged(function(user) {//gets 'user' onbject when it has been intialized 
-  if (user) {
- 
-    console.log(user.uid)
-    console.log(user.displayName)
-    
-    document.getElementById("name").innerHTML = user.displayName
-    document.getElementById("uid").innerHTML = user.uid
-    //document.getElementById("displayName").innerHTML = user.displayName//displays
-    //document.getElementById("email").innerHTML = user.email   
-    
 
-    update(ref(db,'Online/'+user.displayName),{
-      CurrentPage: window.location.href
-    })
-   
-    return user.displayName
-  } 
-  else {
-    console.log("Error signing in")
-  }
-  }).bind(this)
+    test.methods.auth()
+
+
+setTimeout(() => {
+
+if(test.methods.checkEntryExistence()){
+  console.log("User Entry Exists")
+}
+else{
+  test.methods.createUserEntry() 
+}
+ },500)
+
+ setTimeout(() => {
+  this.getNumPlayers()
+
+ },1000)
+
+
   },
 methods:{
     testingRealTime:function(){
@@ -100,11 +98,7 @@ methods:{
       })
       
 },
-awaitPlayerData: async function(){
-var promise = await this.getCorrectData()
-console.log("inside await player dayta"+promise.numberOfPlayers)
 
-},
 testingRealTime2:function(){
   var text = document.getElementById("realTime1").value
       const realTime = test.methods.intaliseRealTimeDatabase();//intialises relatime database with imported function from main
@@ -113,34 +107,43 @@ testingRealTime2:function(){
         
       })
       },
-      getCorrectData:async function(){
-        const db = test.methods.intaliseRealTimeDatabase();
- var user;
-  const snapshot = await get(ref(db, '/globalPageData'))
-  user = snapshot.val();
-  console.log(user)
-  return user
+getNumPlayers:function(){
+
+const db = getDatabase()
+const playerRef = ref(db,'Online/')
+const queryVar = query(playerRef,equalTo('http://localhost:5173/Realtime'))
 
 
-      },
-      auth:function(){
-    firebase.auth().onAuthStateChanged(function(user) {//gets 'user' onbject when it has been intialized 
-  if (user) {
+onValue(playerRef,(snapshot) =>{
+  var holder=0
+  snapshot.forEach(function (snapshot){
+  
+var name = snapshot.child('Name')   
+var onThisPage = snapshot.child('CurrentPage') 
+console.log("THe main val is "+name.val())
+console.log("Current Page is "+onThisPage.val())
+
+if(onThisPage.val() == "http://localhost:5173/Realtime"){
+  holder+=1
+  document.getElementById('numPlayers').innerHTML = holder
+  const playerRef1 = ref(db,'Online/'+document.getElementById('name').innerHTML)
+  off(playerRef1)
+
+
+  update(ref(db,'GameData/'),{
+          numPlayers:   document.getElementById('numPlayers').innerHTML
+        })
  
-    console.log(user.uid)
-    console.log(user.displayName)
-    
-    document.getElementById("name").innerHTML = user.displayName
-    //document.getElementById("displayName").innerHTML = user.displayName//displays
-    //document.getElementById("email").innerHTML = user.email   
-    return user.displayName
-  } 
-  else {
-    console.log("Error signing in")
-  }
-  }).bind(this)
-},
-     
+}
+
+})
+
+
+})
+
+
+}
+
 }
 }
     

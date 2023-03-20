@@ -19,7 +19,7 @@
     <textarea id="code" class = textArea></textarea>Enter code here<br>
 <textarea id="outputDisplay" class =outputTextArea></textarea>Shell<br>
 <div id="languageSelector" style="position:absolute; left: 725px; top: 195px;">
-<H3 style="display: inline;position:relative;left:12cm">Language Selected: </H3><p style="position:absolute;left:720px;top:7px;" id="Language" >None</p>
+<H3 style="display: inline;position:relative;left:12cm">Language Selected: </H3><p style="positition:relative;left:12cm" id="Language" >None</p>
     <br>
     <br>
     <label style = "position:relative;left:12cm">Please select a Language:</label>
@@ -37,6 +37,8 @@
 </div>
 <button class="btn btn-primary" @click="readTextFile();">Activate Challenge</button>
 <button class="btn btn-primary" style = "left:12cm;" @click="build()">Compile</button><br>
+<div id=" name"></div>
+<div id="uid"></div>
 <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
 <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
 
@@ -53,7 +55,8 @@
   </body>
     
   </template>
-    <style>
+  <style>
+
   main {
   width: 100vw;
   height: 100vh;
@@ -148,7 +151,7 @@ h1 {
 
 p {
   color:blue;
-  font-size:15px;
+  font-size:5px;
   
 }
 
@@ -174,15 +177,34 @@ import test from '../main'
       props: {
       note: {}
       },
+      data(){
+        return{
+          username:""
+        }
+      },
       mounted() {
+
+test.methods.auth()
+
+setTimeout(() => {
+
+   if(test.methods.checkEntryExistence()){
+             console.log("User Entry Exists")
+    }
+  else{
+    test.methods.createUserEntry() 
+   }
+  },500)
+
+
+
+
+
       let recaptchaScript = document.createElement('script')
       recaptchaScript.setAttribute('src', "API-Handler.js")
       document.head.appendChild(recaptchaScript)
     },
-    mounted(){
-      this.auth();
-    },
-    
+
       methods: {
     signOut:function(){
       firebase.auth().signOut().then(function() {//signs user out
@@ -213,7 +235,7 @@ auth:function(){
   else {
     console.log("Error signing in")
   }
-  })
+  }).bind(this)
 },
 build:function(){
  
@@ -243,7 +265,7 @@ build:function(){
         method: 'POST',
         headers: {
             'content-type': 'application/x-www-form-urlencoded',
-            'X-RapidAPI-Key': '',
+            'X-RapidAPI-Key': '7f5ebdc991msh779918a8b5d23a9p10d434jsne9e7e4a1586e',
             'X-RapidAPI-Host': 'codex7.p.rapidapi.com'
         },
         body: encodedParams
@@ -327,6 +349,7 @@ readTextFile:function(){//functions correctly
   
 
     }
+
 
     }
 }

@@ -1,6 +1,18 @@
 <template>
-    <body class="bodyMain">
-    <h1 style="color:white">Navigation Page</h1>
+    <Navbar2>
+        
+    </Navbar2>
+    <body class="body">
+      HTML CSSResult Skip Results Iframe
+EDIT ON
+<div class="container">
+    <h1 class="neonText">
+        Script Sphere
+    </h1>
+    <h2 class="neonText">Page Not Found</h2> 
+<div class="logo"></div>
+ </div>
+
     <router-link to ="/accountPage" class =btn-primary > AccountPage</router-link><br>
 <router-link to ="/authSignIn" class =btn-primary>Sign In Page</router-link><br>
 <router-link to ="/authChangePassword" class =btn-primary>Change Password </router-link><br>
@@ -9,12 +21,16 @@
 <router-link to ="/screenshots" class =btn-primary >Screenshots page(WIP)</router-link><br>
 <router-link to ="/test" class =btn-primary>Node Test Page</router-link><br>
 <router-link to ="/Realtime" class =btn-primary>Realtime test</router-link><br>
-<router-link to ="/ideTest" class =btn-primary>New IDE test</router-link><br>
+<router-link to ="/cssTest" class =btn-primary>Css test</router-link><br>
+<a href=/ideTest>link</a>
+<!-- <img id="profilePic" src="https://firebasestorage.googleapis.com/v0/b/software-engineering-d3376.appspot.com/o/File%20Number%201?alt=media&token=c4cdfe21-658e-4964-b941-6fe7af57fe05"> -->
 <div id="name">z</div>
 <div id="numPlayers">z</div>
+<!-- <div id="profilePic">z</div> -->
 <div id="uid">z</div><br><br>
-<div load id="listOfNames">z<span id="location"></span></div>
-
+<div class="neonText" id="listOfNames">z</div>
+<div class = bodyNeon><button class="neonButton">
+</button></div>
 <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
 <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
 <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
@@ -28,9 +44,9 @@
 </body>
     </template>
     <style scoped>
-    .btn-primary{
+    /* .btn-primary{
   position: relative;
-  display: inline-block;
+  display: inline-block;r
   width: 35mm;
   height: 35mm;
 color:white;
@@ -61,77 +77,51 @@ color:white;
   width:100%;
   height:100%;
   background: radial-gradient(circle at 6.6% 12%, rgb(64, 0, 126) 20.8%, rgb(0, 255, 160) 100.2%);
+} */
+.neonText {
+  color: #fff;
+  text-shadow:
+      0 0 7px #a949cc,
+      0 0 10px #a949cc,
+      0 0 21px #a949cc,
+      0 0 42px rgb(160, 18, 153),
+      0 0 82px rgb(160, 18, 153),
+      0 0 92px rgb(160, 18, 153),
+      0 0 102px rgb(160, 18, 153),
+      0 0 151px rgb(160, 18, 153);
 }
-        </style>
+
+/* Additional styling */
+  
+body {
+  font-size: 18px;
+  font-family: "Vibur", sans-serif;
+  background-color: #010a01;
+}  
+
+
+
+
+
+  </style>
         <script>
+     
           import { getDatabase, ref, set,onValue,get, onDisconnect,onChildRemoved,child,onChildAdded } from "firebase/database";
    import test from '../main';
    import loader from "@monaco-editor/loader";
 import { listen } from "vscode-ws-jsonrpc";
 import  firebase  from 'firebase/compat/app';
 import {  push,serverTimestamp,update } from "firebase/database";
+import { getFunctions, httpsCallable } from "firebase/functions";
+import { connectFunctionsEmulator } from "@firebase/functions";
+import Navbar2 from "../components/Navbar2.vue";
+
 const db = getDatabase();
 const currentUserRef = ref(db,'Online');
 const listOfPlayers = ref(db,'ListOfPLayers/names');
     
   
-
-
-//maybe get rid of numOfUsers child as it may not be necessary
-const connectedRef = ref(db,".info/connected");
-onValue(connectedRef,(snap) =>{
-  console.log(snap)
-  if(snap.val() ==true){
-    const realTime = test.methods.intaliseRealTimeDatabase();
-    // const con = push(child(currentUserRef,document.getElementById("name").innerHTML),'inside child');
-  const Parent= child(currentUserRef,document.getElementById("name").innerHTML)
-    const creatingName= (child (Parent,'Name',));
-    const  creatingUid = (child (Parent,'Uid',));
-    const  creatingCurrentPage = (child (Parent,'CurrentPage',));
-    const settingUid = set(creatingUid,document.getElementById("uid").innerHTML)
-    const settingName= set(creatingName,document.getElementById("name").innerHTML)//working kinda at least
-    console.log(window.location.href)
-   // const settingCurrentPage = set(creatingCurrentPage,window.location.href)
-     const con2 = push(listOfPlayers,document.getElementById("name").innerHTML)
-     onDisconnect(con2).remove()
-     onDisconnect(Parent).remove()
-    // onDisconnect(con).remove();
-     //set(con,true)
-    }
-    if(snap.val() == false){
-      // const realTime = test.methods.intaliseRealTimeDatabase();
-      // set(ref(realTime,'user33/'),{
-      //   numberOfPlayers:10,
-      //   status:"offline"
-      // })
-
-    }
-    
-    onValue(listOfPlayers,(snapshot) =>{
-      var holder =0;
-snapshot.forEach(function (snapshot){
-holder+=1;
-document.getElementById("numPlayers").innerHTML = holder;
-
-})
-
-}).bind(this)
-
-// onValue(listOfPlayers,(snapshot) =>{
-//   document.getElementById("listOfNames").innerHTML ="";
-// var name ="";
-// snapshot.forEach(function (snapshot){//goes through list /ListOfPLayers in realtime database and adds them to the html tag 
-//   console.log("name snapshot "+snapshot.val())
-//   name = snapshot.val()
-//   document.getElementById("listOfNames").innerHTML +="<br>"+name+;
-// })
-
-// })
-
-
-
-
-   setTimeout(() =>{
+ setTimeout(() =>{
     const OnlineRef = ref(db,'Online/');
 onValue(OnlineRef,(snapshot) =>{
   document.getElementById("listOfNames").innerHTML ="";
@@ -140,7 +130,8 @@ onValue(OnlineRef,(snapshot) =>{
   console.log("current final page is"+snapObject.CurrentPage)
 
 
-snapshot.forEach(function (snapshot){//goes through list /ListOfPLayers in realtime database and adds them to the html tag 
+snapshot.forEach(function (snapshot){//goes through list /online in realtime database and adds them to the html tag 
+  
 var snapObject = snapshot.val()
 var name = snapObject.Name
 var url  =  snapObject.CurrentPage
@@ -149,43 +140,40 @@ document.getElementById("listOfNames").innerHTML += "<br>"+name+" "+url+"<br>"
 
 })
     document.getElementById("numPlayers").style.visibility = "visible"
-    //const con2 = push(listOfPlayers,document.getElementById("name").innerHTML)
+  
 },1000)
-}).bind(this)
+
 
 export default {
-
-mounted(){
-  firebase.auth().onAuthStateChanged(function(user) {//gets 'user' onbject when it has been intialized 
-  if (user) {
- 
-    console.log(user.uid)
-    console.log(user.displayName)
-    
-    document.getElementById("name").innerHTML = user.displayName
-    document.getElementById("uid").innerHTML = user.uid
-    //document.getElementById("displayName").innerHTML = user.displayName//displays
-    //document.getElementById("email").innerHTML = user.email   
-    update(ref(db,'Online/'+user.displayName),{
-        CurrentPage: window.location.href
-      })
-
-    return user.displayName
-  } 
-  else {
-    console.log("Error signing in")
-  }
-  }).bind(this)
-
-},
-
-
-  methods: {
-
-
-
-
-  }
+    mounted() {
+        test.methods.auth();
+        setTimeout(() => {
+            if (test.methods.checkEntryExistence()) {
+                console.log("User Entry Exists");
+            }
+            else {
+                test.methods.createUserEntry();
+            }
+        }, 500);
+    },
+    methods: {
+        createUserEntry: function () {
+            //       const db  = getDatabase()
+            //       const user = firebase.auth().currentUser;//gets the user which is currently logged in
+            //       const functions = getFunctions(test.methods.intialiseFirebase());
+            // const createUserEntry1 = httpsCallable(functions,'createUserEntry');
+            // createUserEntry1().then((result) => {
+            // console.log(result);
+            // });
+            //const functions = getFunctions(test.methods.intialiseFirebase());
+            // connectFunctionsEmulator(functions,'localhost',5001);
+            //  const secureFunction = httpsCallable(functions,'createUserEntry');
+            //  secureFunction().then((result) =>{
+            // console.log(result)
+            //  })
+        }
+    },
+    components: { Navbar2 }
 }
 
 
