@@ -14,6 +14,7 @@
     <div id="name3"></div>
     <div v-on:keyup="testForMonaco(),testingRealTime()"  id="editor3" style="width:200px; height: 200px;position:absolute;left: 19cm;visibility: hidden;"></div>
     </div>
+    
 <div id="name"></div>
 <div id="uid"></div>
 <div id="numPlayers"></div>
