@@ -123,10 +123,10 @@ test.methods.auth()
 
 setTimeout(() => {
 
-if(test.methods.checkEntryExistence()){
+if(test.methods.checkEntryExistence()){//checks if database entry for user exists 
   console.log("User Entry Exists")
 }
-else{
+else{//if doesnt exist then create one (The function to create the entry amd check for its existence is called from main.js)
   test.methods.createUserEntry() 
 }
  },500)
@@ -383,21 +383,21 @@ const playerRef = sref(db,'Online/')
 
 onValue(playerRef,(snapshot) =>{
   var holder=0
-  snapshot.forEach(function (snapshot){
+  snapshot.forEach(function (snapshot){//goes through each entry andc ounts the number of entries whose current page is the IDE page
   
 var name = snapshot.child('Name')   
 var onThisPage = snapshot.child('CurrentPage') 
 
-
+//if current page is ide page then increment number of players
 if(onThisPage.val() == "http://localhost:5173/ideTest" || onThisPage.val() =='http://127.0.0.1:5173/ideTest' ){//needs to be switched to online url
   console.log("THe main val is "+name.val())
 console.log("Current Page is "+onThisPage.val())
-  holder+=1
+  holder+=1  //counts number of players with correct url and increment variable to update the database with
   document.getElementById('numPlayers').innerHTML = holder
   const playerRef1 = sref(db,'Online/'+document.getElementById('name').innerHTML)
   off(playerRef1)
 
-  update(sref(db,'GameData/'),{
+  update(sref(db,'GameData/'),{//updates database with new value
           numPlayers:document.getElementById('numPlayers').innerHTML
         
         })
@@ -412,6 +412,8 @@ console.log("Current Page is "+onThisPage.val())
 
 },
 instance:function(){
+//PLEASE IGNORE THIS CODE IT IS NOT RELEVANT AND WONT BE NEEDED IN FINAL PROJECT
+
 
 //   var db = getDatabase()
 //   const currentUserRef = sref(db,'GameData');
@@ -467,25 +469,25 @@ instance:function(){
 
 
 
-// //Important notes for when i start again
+
 
         
 },
-testingRealTime:function(){
+testingRealTime:function(){//this function updates the databse with the current iteration of the user's code
 
   var db = getDatabase()
-     var text = document.getElementById("code").value
+     var text = document.getElementById("code").value //code html tag is invisible text area which takes in the code from the moncaco editor
       
-     this.currentDatabaseEditor =   document.getElementById('editorIncrement').innerHTML
+     this.currentDatabaseEditor =   document.getElementById('editorIncrement').innerHTML//gets players current editor
        update(sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-'+this.currentDatabaseEditor),{
        Name:document.getElementById('name').innerHTML,//this probably needs to be moved.
-       Value: text,
+       Value: text,//updates code in the database
         
       })
     
   
   },
-  chooseEditor:function(){
+  chooseEditor:function(){ //no longer used needs to be removed
     const db = getDatabase();
   const editorNumber = sref(db,'GameData/numPlayers');
     get(editorNumber).then((snapshot) =>{
@@ -496,24 +498,24 @@ testingRealTime:function(){
 
   // this.currentDatabaseEditor = document.getElementById('numPlayers').innerHTML
 console.log("we are checking instance "+this.incrementInstanceProperty)
-  var checkEntryExistence = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty);
+  var checkEntryExistence = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty);//path to entry in database
 
 
-
+//the following code decided which editor the player should connect to
   get(checkEntryExistence).then((snapshot =>{
     var currentIncrement=0;
-    snapshot.forEach(function (snapshot){
-      currentIncrement+=1;
+    snapshot.forEach(function (snapshot){ 
+      currentIncrement+=1;//incrememnts every time that a editor is connected
       console.log(currentIncrement);
-if(snapshot.child('Connected').val() == false){
+if(snapshot.child('Connected').val() == false){ //when editor is found that is not taken then it 'connects' to that editor
   console.log("The disconnected increment is"+currentIncrement)
-  document.getElementById('editorIncrement').innerHTML = currentIncrement
+  document.getElementById('editorIncrement').innerHTML = currentIncrement //saves value of editor it has connected to
 
   return true;
 }
 else{
 
-
+//no longer needed after ready up added will remove once im sure
   // update(checkEntryExistence,{
    
   //        Started:true
@@ -526,7 +528,7 @@ else{
   }).bind(this)
 
   ) },
-  incrementInstance:function(){
+  incrementInstance:function(){//should also no longer be needed
     const db = getDatabase()
 console.log("number of players inside incrementinstance function "+this.numPlayers)
 onValue(sref(db,'GameData/numPlayers'),(snapshot) => {
@@ -541,19 +543,19 @@ if(snapshot.val() % 4 == 0 ){
 }).bind(this)
 
   },
-checkInstanceCorrect:function(){
+checkInstanceCorrect:function(){//makes sure that the instance you're connecting too has not  yet started 
   const db = getDatabase();
 var instanceCheck = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty)
 
 get(instanceCheck).then((snapshot =>{
-  if(snapshot.child('Started').val() == true){
+  if(snapshot.child('Started').val() == true){ //if instance started then move into next instance
   
-  this.incrementInstanceProperty++;
+  this.incrementInstanceProperty++; //increments the instance the user should connect to
   console.log("adter instance increment"+this.incrementInstanceProperty)
   this.instance()//creates new instance need to add check of the instance already exists or not
  
 console.log("inside value check "+this.currentDatabaseEditor)
-  this.checkInstanceCorrect()
+  this.checkInstanceCorrect()//uses recursion to continue iterating through instances if one that has not started has not been found
   }
   this.chooseEditor()//checks all the 'connected' of the individual editors
  
@@ -566,7 +568,8 @@ console.log("inside value check "+this.currentDatabaseEditor)
 },
 
 
-
+//this code correctly assigns each ide 'screen' i.e. ensures each user has access to the left ide and that the other 3 
+//belong to the other 3 players 
 
   createOtherEditors:function(){
     const db = getDatabase()
@@ -584,18 +587,18 @@ if(document.getElementById('editorIncrement').innerHTML == 'Null'){
 console.log(this.currentDatabaseEditor +'current database ditor is')
             var editorHolder = this.currentDatabaseEditor;
             this.testingRealTime()//updates database with user name and the value of the IDE
-           if(this.currentDatabaseEditor ==1){
+           if(this.currentDatabaseEditor ==1){//if your editor is one
             console.log("adter instance increment after incrmeent"+this.incrementInstanceProperty)
             var setBool = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-1/Connected')
             set(setBool,true)
             console.log("INSIDE EDIOTR ONE")
-            var editorTwoValue = snapshot.child('Editor-2/Value').val()
+            var editorTwoValue = snapshot.child('Editor-2/Value').val() //assigns other 3 ides to editors 2 3 4. if you ide was 2 other 3 ides would be 1,3,4
        
             var editorThreeValue = snapshot.child('Editor-3/Value').val()
             var editorFourValue = snapshot.child('Editor-4/Value').val()
          console.log(editorTwoValue)
           
-       
+       //picks out name associated with each respective editor so each player can see the names of the other players who are playing and the code they are writing
            document.getElementById('name1').innerHTML  = snapshot.child('Editor-2/Name').val() 
            monaco.editor.getModels()[1].setValue(editorTwoValue)
       
@@ -613,6 +616,7 @@ console.log(this.currentDatabaseEditor +'current database ditor is')
            onDisconnect(removeValue).set('Waiting For Player')
            onDisconnect(removeBool).set(false)
            onDisconnect(resetReady).set(false)
+           //resets values to default when user disconnects and prepares for next game
            }
 
 
