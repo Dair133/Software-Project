@@ -30,27 +30,23 @@ export default {
   margin: 0;
   padding: 0;
 }
-
 .container {
   width:100%;
   background-image: linear-gradient(#800080, #330433);
   /*background-color: #700070;*/
   /*background-color: #330433;*/
 }
-
 .navbar {
   display: grid;
   grid-template-columns: 0.2fr auto;
   align-items: center;
   height: 75px;
 }
-
 .logo {
   color: white;
   justify-self: start;
   margin-left: 20px;
 }
-
 .menu {
   display: flex;
   grid-template-columns: repeat(4, auto);
@@ -60,7 +56,6 @@ export default {
   justify-self: end;
   padding-right: 50px;
 }
-
 a {
   font-size: 20px;
   text-decoration: none;
@@ -68,7 +63,6 @@ a {
   /* Temp fix to other 3 moving up when changing the padding of the Login button */
   padding: 8px 15px;
 }
-
 .underline:after {
   content: "";
   position: absolute;
@@ -83,13 +77,11 @@ a {
   color: white;
   /*font-size: 18px;*/
 }
-
 .btn:hover {
   /* moves everything */
   /*padding: 9px 16px;*/
   border-color: #181818;
 }
-
 .underline:hover:after {
   width: 100%;
 }

@@ -3,7 +3,7 @@ function loadPage (component) {
     return () => import(/* webpackChunkName: "[request]" */
     `@/pages/${component}.vue`)}
     export default [
-    { path: '/', component:loadPage('Home') },
+    { path: '/', component:loadPage('AuthSignIn') },
     { path: '/accountPage', component:loadPage('AccountPage') },
     { path: '/navigationPage',component:loadPage('Navigation')},
     { path: '/authSignIn',component:loadPage('AuthSignIn')},
@@ -15,6 +15,7 @@ function loadPage (component) {
     {path:'/play',component:loadPage('Play')},
     {path:'/random',component:loadPage('Random')},
     {path:'/realtime',component:loadPage('Realtime')},
-        {path:'/settings',component:loadPage('Settings')},
-        {path:'/stats',component:loadPage('Statistics')},
+    {path:'/ideTest',component:loadPage('IdeTest')},
+    {path:'/cssTest',component:loadPage('CssTest')},
     ]
+    //beforeEnter:isAuth()

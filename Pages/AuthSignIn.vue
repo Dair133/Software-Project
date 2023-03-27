@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
   <main>
     <header>
-      <Navbar2></Navbar2>
+      <Navbar />
     </header>
     <div class="container">
       <div class="signup-box">
@@ -27,17 +27,18 @@
           </div>
         </form>
         <div class="login">
-          <button class="btn-primary" @click="login()">Login</button>
-          <div class="forgotpassword">
-            <router-link to="/AuthChangePassword">Forgot Password?</router-link>
-<!--        <p><span style ="text-decoration: underline; cursor: pointer"  @click="changePasswordPage()">Forgot password?</span></p>-->
-          </div>
-          <div class="signup">
-            <p>New user? <router-link to="/AuthCreateAccount">Sign up</router-link></p>
-<!--        <p>New user? <span style ="text-decoration: underline; cursor: pointer"  @click="createAccountPage()">Sign up</span></p>-->
-          </div>
+          <button class="btn-primary" @click="login()">Login</button><br>
+          <br>
+          <p>Dont have an account?<br><span style ="text-decoration: underline;"  @click="createAccountPage()">Create One</span></p><br>
+          <br>
+          <p>Forgot Password?<br><span style ="text-decoration: underline;"  @click="changePasswordPage()">Change Here</span></p>
         </div>
       </div>
+    <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
+    <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
+    <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
+    <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
+    <router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
     </div>
    
   </main>
@@ -52,8 +53,8 @@
   }
   
   .container {
-    width: 100vw;
-    height: 90vh;
+    width: 90%;
+    height: 100%;
     background-image: radial-gradient(#800080, #330433);
   }
   
@@ -91,24 +92,15 @@
     cursor: pointer;
     text-decoration: none;
   }
-
-  .forgotpassword {
-    margin-top: 20px;
-    margin-bottom: 5px;
-  }
-
-  .signup {
-    margin-bottom: 10px;
-  }
+  
   
   .login {
-    margin-top: 20px;
+    margin-top: 30px;
     margin-bottom: 10px;
   }
   
   a {
     color: black;
-    cursor: pointer;
   }
   
   .image1 {
@@ -119,37 +111,43 @@
     margin-top: 20px;
   }
   .btn-primary{
-    position: relative;
-    display: inline-block;
-    width: 40%;
-    height: 40px;
-    color:white;
-    outline: 0;
-    border: 0;
-    cursor: pointer;
-    will-change: box-shadow,transform;
-    background: radial-gradient(#800080, #330433);
-    box-shadow: 0px 2px 4px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px rgb(58 65 111 / 50%);
-    padding: 0 32px;
-    border-radius: 4px;
-    font-size: 12px;
-    text-shadow: 0 1px 0 rgb(0 0 0 / 40%);
-    transition: box-shadow 0.15s ease,transform 0.15s ease;
+  position: relative;
+  display: inline-block;
+  width: 35mm;
+  height: 35mm;
+color:white;
+                outline: 0;
+                border: 0;
+                cursor: pointer;
+                will-change: box-shadow,transform;
+                background: radial-gradient( 100% 100% at 100% 0%, #89E5FF 0%, #5468FF 100% );
+                box-shadow: 0px 2px 4px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px rgb(58 65 111 / 50%);
+                padding: 0 32px;
+                border-radius: 4px;
+                color: #fff;
+                height: 40px;
+                font-size: 12px;
+                text-shadow: 0 1px 0 rgb(0 0 0 / 40%);
+                transition: box-shadow 0.15s ease,transform 0.15s ease;
                 
 }
-  .btn-primary:hover {
-    box-shadow: 0px 4px 8px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px #490849;
-    transform: translateY(-2px);
-  }
-  .btn-primary:active{
-    box-shadow: inset 0px 3px 7px #490849;
-    transform: translateY(2px);
-  }
+                .btn-primary:hover {
+                    box-shadow: 0px 4px 8px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px #3c4fe0;
+                    transform: translateY(-2px);
+                }
+               .btn-primary:active{
+                    box-shadow: inset 0px 3px 7px #3c4fe0;
+                    transform: translateY(2px);
+                }
+                .bodyMain{
+  width:100%;
+  height:100%;
+  background: radial-gradient(circle at 6.6% 12%, rgb(64, 0, 126) 20.8%, rgb(0, 255, 160) 100.2%);
+}
   
   </style>
 <script>
 import firebase from 'firebase/compat/app';
-import Navbar2 from '../components/Navbar2.vue';
 
  function getUsername(){
   var username = document.getElementById("username0").value;
@@ -162,7 +160,6 @@ function getPassword(){
 
 
 export default {
-  components: {Navbar2},
   emits: ["open-note"],
   props: {
     note: {}
@@ -187,7 +184,7 @@ login:function(){
     var uid = user.uid;
     console.log(uid);
     console.log("wewewewewewe")
-    window.location = "/play";//beings user to their homepage
+    window.location = "/navigationPage";//beings user to their homepage
     // ...
   })
   .catch((error) => {//catches errors and prints appropriate error code
@@ -206,4 +203,6 @@ login:function(){
   }
 }
 }
+
+
 </script>

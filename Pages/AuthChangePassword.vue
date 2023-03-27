@@ -4,7 +4,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Secular+One&display=swap" rel="stylesheet">
 
   <header>
-    <Navbar></Navbar>
+    <Navbar2></Navbar2>
   </header>
   <div class="container">
     <div class="box">
@@ -27,10 +27,10 @@
 </template>
 <script>
 import  firebase  from 'firebase/compat/app';
-import Navbar from '../components/Navbar.vue';
+import Navbar2 from '../components/Navbar2.vue';
 
 export default {
-  components: {Navbar},
+  components: {Navbar2},
   emits: ["open-note"],
   props: {
   note: {}
