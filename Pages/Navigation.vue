@@ -119,27 +119,27 @@ const currentUserRef = ref(db,'Online');
 const listOfPlayers = ref(db,'ListOfPLayers/names');
     
   
- setTimeout(() =>{
-    const OnlineRef = ref(db,'Online/');
-onValue(OnlineRef,(snapshot) =>{
-  document.getElementById("listOfNames").innerHTML ="";
-  console.log(snapshot.val())
-  var snapObject = snapshot.val()
-  console.log("current final page is"+snapObject.CurrentPage)
+//  setTimeout(() =>{
+//     const OnlineRef = ref(db,'Online/');
+// onValue(OnlineRef,(snapshot) =>{
+//   document.getElementById("listOfNames").innerHTML ="";
+//   console.log(snapshot.val())
+//   var snapObject = snapshot.val()
+//   console.log("current final page is"+snapObject.CurrentPage)
 
 
-snapshot.forEach(function (snapshot){//goes through list /online in realtime database and adds them to the html tag 
+// snapshot.forEach(function (snapshot){//goes through list /online in realtime database and adds them to the html tag 
   
-var snapObject = snapshot.val()
-var name = snapObject.Name
-var url  =  snapObject.CurrentPage
-document.getElementById("listOfNames").innerHTML += "<br>"+name+" "+url+"<br>"
-})
+// var snapObject = snapshot.val()
+// var name = snapObject.Name
+// var url  =  snapObject.CurrentPage
+// document.getElementById("listOfNames").innerHTML += "<br>"+name+" "+url+"<br>"
+// })
 
-})
-    document.getElementById("numPlayers").style.visibility = "visible"
+// })
+//     document.getElementById("numPlayers").style.visibility = "visible"
   
-},1000)
+// },1000)
 
 
 export default {
@@ -153,6 +153,10 @@ export default {
                 test.methods.createUserEntry();
             }
         }, 500);
+        setTimeout(() => {
+              test.methods.getOnlinePlayers();
+        }, 750);
+
     },
     methods: {
         createUserEntry: function () {

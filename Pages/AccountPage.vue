@@ -24,9 +24,9 @@
           <div class="acc-text">
             <h2>Account info of <span id = name></span></h2>
             <div style="display: flex; justify-content: space-between;">
-              <img src="../images/user.svg" alt="" class="image1">
-              <button type="button" class="btn btn-secondary btn-sm">
-                <img src="../images/note.svg" alt="" class="image"></button>
+              <img id="ProfilePic" src="../images/user.svg" alt="" class="image1">
+              <button @click="displayModal1()" type="button" class="btn btn-secondary btn-sm">
+                <img  src="../images/note.svg" alt="" class="image">profile button</button>
             </div>
             <div style="display: flex; justify-content: space-between;">
             <h3>Display name: <span id = displayName ></span></h3>
@@ -84,16 +84,28 @@
       </div>
     </div>
 
+    <div id="myModal" class="modal" v-bind:style='{"display" : (isActive1? "block" : "none" )}'>
+      <div class="modal-background" @click="closeModal1"></div>
+      <div class="modal-content">
+        <h2>Change Profile Picture</h2>
+        <input id="newProfilePic" type="file" class="input" placeholder="Profile Picture">
+        <div class="button">
+          <button class="btn-primary" @click="updateProfilePic()">Change Profile Picture</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
 import firebase from "firebase/compat/app";
-
+import { getStorage, ref ,uploadBytes,getMetadata,getDownloadURL} from "firebase/storage";
 export default {
   name: "Settings",
   data() {
     return {
+      isActive1:false,
       isActive2: false,
       isActive3: false,
       isActive4: false
@@ -107,21 +119,30 @@ export default {
     auth:function(){
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
-
+            user.photoURL
           console.log(user.uid)
           console.log(user.displayName)
 
           document.getElementById("name").innerHTML = user.displayName
           document.getElementById("displayName").innerHTML = user.displayName
           document.getElementById("emailAddress").innerHTML = user.email
+          console.log(user.photoURL)
+          document.getElementById("ProfilePic").src= user.photoURL
         }
         else {
           console.log("Error signing in")
         }
       })
     },
-    displayModal2:function () {
+   displayModal1:function(){
+      this.isActive1 =true
+   },
+   displayModal2:function () {
       this.isActive2 = true
+    },
+
+   closeModal1:function(){
+      this.isActive1 =false;
     },
     closeModal2:function () {
       this.isActive2 = false
@@ -171,11 +192,51 @@ export default {
       user.updateProfile({displayName: newDisplayName,});//updates display name obejct from the user profile
 
     },
+    updateProfilePic:function(){
+const storage = getStorage();
+const user = firebase.auth().currentUser;
 
+const metadata = {
+  contentType: 'image/jpeg',
+};
 
+const imagesRef = ref(storage,'/ProfilePictures/'+user.displayName)
+
+var file =  document.getElementById("newProfilePic").files[0]
+uploadBytes(imagesRef, file).then((snapshot) => {
+  console.log('Uploaded a blob or file!');
+});
+  
+const profilePicRef = ref(storage, 'ProfilePictures/'+user.displayName);
+
+getDownloadURL(ref(storage, 'ProfilePictures/'+user.displayName))
+  .then((url) => {
+    // `url` is the download URL for 'images/stars.jpg'
+
+    // This can be downloaded directly:
+    const xhr = new XMLHttpRequest();
+    xhr.responseType = 'blob';
+    xhr.onload = (event) => {
+      const blob = xhr.response;
+    };
+    xhr.open('GET', url);
+    xhr.send();
+
+    // Or inserted into an <img> element
+    const img = document.getElementById('ProfilePic');
+    img.setAttribute('src', url);
+    user.updateProfile({photoURL: url,});
+  })
+  .catch((error) => {
+    // Handle any errors
+  })
+      user.updateProfile({photoURL: document.getElementById("ProfilePic").src,});//updates display name obejct from the user profile
+console.log(user.photoURL)
+
+     // document.getElementById("ProfilePic").src = user.photoURL
   }
 }
-
+}
 </script>
 
 <style scoped>
@@ -314,10 +375,11 @@ h1 {
 }
 
 .input {
-  width: 50%;
-  margin: 10px 0;
-  border-radius: 10px;
+  width: 90%;
+  margin: 15px 0;
+  border-radius: 15px;
   padding: 10px;
+
 }
 
 .btn-primary{

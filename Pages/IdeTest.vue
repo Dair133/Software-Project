@@ -1,4 +1,5 @@
 <template>
+<Sidenavbar></Sidenavbar>
 <body style="background-color: aqua;height: 100vh;margin-left: 30vh;background: linear-gradient(135.8deg, rgb(26, 26, 29) 27.1%, rgb(111, 34, 50) 77.5%);">
 <p  id = holder >Example paragraph</p>
 
@@ -12,7 +13,7 @@
 <div id="name2" class="name" style="top:84vh"></div>
 <div id="name3" class="name" style="top:88vh"></div>
 
-<div id="ready" class="ready" style="top:76vh">Not Ready</div>
+<div id="ready0" class="ready" style="top:76vh">Not Ready</div>
 <div id="ready1" class="ready" style="top:80vh"></div>
 <div id="ready2" class="ready" style="top:84vh"></div>
 <div id="ready3" class="ready" style="top:88vh"></div>
@@ -42,7 +43,10 @@
 <button id="readyButton" class="button-54"  style = "position:absolute;left:100vh;top:56vh;width: 20vh;height: 7vh;"   v-on:click="readyUp">Ready Up</button>
 <button class="button-54" style = "position:absolute;left: 77vh;top:56vh;width: 20vh;height: 7vh;" @click="test()">Compile</button><br>
 
-<header  style="position:absolute;top:72vh;left:160vh;width:45.5vh;height: 20vh;font-size:large;text-decoration: underline;text-align: center;color:crimson;">Score tracker will go below here</header>
+<header  style="position:absolute;top:60vh;left:160vh;width:45.5vh;height: 20vh;font-size:large;text-decoration: underline;text-align: center;color:crimson;">Score</header>
+<div  style="top:65vh" class=score id="score">holder div maybe remove?</div>
+
+
 
 <div id="descriptionWrapper">
 <header  style="position:absolute;top:72vh;left:55vh;width:45.5vh;height: 20vh;font-size:large;text-decoration: underline;text-align: center;color:crimson;">Challenge Description</header>
@@ -54,12 +58,104 @@
 <div id="desiredCodeOutput">zzzzzzzzz</div>
 <textarea id="code" style="visibility:hidden;width:0cm;height: 0cm;"></textarea><br>
 </body>
-
+<div class="chart">
+        <div id=barOne class="bar" style="height: 0vh;">
+            <span id="labelOne" class="label">Label 1</span>
+            <span id="scoreOne" class="value">0</span>
+        </div>
+        <div id="barTwo" class="bar" style="height: 0vh;">
+            <span id="labelTwo" class="label">Label 2</span>
+            <span id="scoreTwo" class="value">0</span>
+        </div>
+        <div  id=barThree class="bar" style="height: 0vh;">
+            <span id="labelThree" class="label">Label 3</span>
+            <span id="scoreThree" class="value">0</span>
+        </div>
+        <div id="barFour" class="bar" style="height: 0vh;">
+            <span id=labelFour class="label">Label 4</span>
+            <span id=scoreFour class="value">0</span>
+        </div>
+    </div>
+    <div id="topBorder" style="position:absolute;top:91vh;left:75vw;background-color:white;width: 40vh;height: 0.02vh;"></div>  
+    <div id="topBorder" style="position:absolute;top:72vh;left:75vw;background-color:white;width: 40vh;height: 0.02vh;"></div>  
+    <div  style="top:70.5vh;left: 74.2vw;" class=score id="score">5</div>
 </template>
 <RouterView :key="$router.url"/>
 <style>
+*,
+*::before,
+*::after {
+  position: static;
+}
+.label {
+    position: absolute;
+    bottom: -9vh;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color:white;
+   
+    
+}
 
+.value {
+    position: absolute;
+    top: -20px;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color:white
+}
+body {
+    font-family: Arial, sans-serif;
+}
 
+.chart {
+  position: absolute;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    top:77vh;
+    left: 160vh;
+    width: 42vh;
+    height: 15vh;
+
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.bar {
+    position: relative;
+    width: 30px;
+    background-color: #555;
+    margin: 0 5px;
+}
+
+.bar:nth-child(1) {
+    background-color: #1abc9c;
+}
+
+.bar:nth-child(2) {
+    background-color: #3498db;
+}
+
+.bar:nth-child(3) {
+    background-color: #9b59b6;
+}
+.score{
+position: absolute;
+color: white;
+left:175vh;
+
+}
+#my-chart.bar {
+  height: 200px;
+  max-width: 300px;
+  margin: 0 auto;
+  columns:5cm;
+  column-width: 3cm;
+
+}
 
 
 .name{
@@ -105,7 +201,11 @@ color:white
     padding: 0.25em 0.75em;
   }
 }
+@keyframes logoOut{
+from {border-bottom-left-radius: 3cm;border-bottom-right-radius: 3cm;}
+to {  border-bottom-left-radius: 0cm;border-bottom-right-radius: 0cm;}
 
+}
 
 
 
@@ -121,7 +221,8 @@ import  firebase  from 'firebase/compat/app';
     import {  getDownloadURL } from "firebase/storage";
     import { getDatabase, ref as sref,set,onValue,get,onDisconnect,onChildRemoved,child,onChildAdded,update, equalTo,off,remove } from "firebase/database";
 import { calculateBackoffMillis } from "@firebase/util";
-
+import Sidenavbar from '../components/Sidenavbar.vue'
+import LeftMargin from "../components/LeftMargin.vue";
 window.setImmediate = window.setTimeout;
 const storage = getStorage();
 window.readFile = function readFile(path) {
@@ -150,9 +251,25 @@ else{
 
 
 }
+function adjustLabel(labelNumber,currentValue){
+if(currentValue != "Waiting For Player"){
+  document.getElementById('label'+labelNumber).style.bottom = '-6vh'
 
+}
+
+}
+function adjustBarChart(barChartNumber,newScore){
+  var newHeight = newScore *4;
+  console.log("bar chart score is"+barChartNumber)
+  document.getElementById('score'+barChartNumber).innerHTML = newScore
+  document.getElementById('bar'+barChartNumber).style.height = newHeight+"vh"
+
+}
 
 export default {
+  components:{
+Sidenavbar
+  },
   name: "Editor",
   editorObject:null,
   text:"zz",
@@ -182,7 +299,7 @@ export default {
     }
   },
   async mounted() {
-
+    
     loader.init().then((monaco) => {
       const editorOptions = {
            language: "python",
@@ -222,6 +339,7 @@ if(test.methods.checkEntryExistence()){
 else{
   test.methods.createUserEntry() 
 }
+test.methods.getOnlinePlayers()
  },500)
 
  setTimeout(() => {
@@ -497,8 +615,6 @@ console.log("inside value check "+this.currentDatabaseEditor)
 },
 
 
-
-
   createOtherEditors:function(){
     const db = getDatabase()
  
@@ -519,24 +635,41 @@ console.log(this.currentDatabaseEditor +'current database ditor is')
             console.log("adter instance increment after incrmeent"+this.incrementInstanceProperty)
             var setBool = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-1/Connected')
             set(setBool,true)
-            console.log("INSIDE EDIOTR ONE")
+            checkReady(snapshot.child('Editor-1/Ready').val(),0)
+
+         
             var editorTwoValue = snapshot.child('Editor-2/Value').val()
        
             var editorThreeValue = snapshot.child('Editor-3/Value').val()
             var editorFourValue = snapshot.child('Editor-4/Value').val()
-         console.log(editorTwoValue)
-          
-       
+            document.getElementById('labelOne').innerHTML = document.getElementById('name').innerHTML
+            
+
+           //synchronises naming correctly across different editors
            document.getElementById('name1').innerHTML  = snapshot.child('Editor-2/Name').val() 
+           document.getElementById('labelTwo').innerHTML = snapshot.child('Editor-2/Name').val() 
+         // adjustLabel('Two', document.getElementById('labelTwo').innerHTML)
            monaco.editor.getModels()[1].setValue(editorTwoValue)
       
            document.getElementById('name2').innerHTML  = snapshot.child('Editor-3/Name').val() 
+           document.getElementById('labelThree').innerHTML = snapshot.child('Editor-3/Name').val() 
            monaco.editor.getModels()[2].setValue(editorThreeValue)
            
            document.getElementById('name3').innerHTML  = snapshot.child('Editor-4/Name').val() 
+           document.getElementById('labelFour').innerHTML = snapshot.child('Editor-4/Name').val() 
            monaco.editor.getModels()[3].setValue(editorFourValue)
 
 
+
+          //correctly synchronises scoring across different players
+          document.getElementById('scoreTwo').innerHTML  = snapshot.child('Editor-2/Score').val() 
+          adjustBarChart('Two',document.getElementById('scoreTwo').innerHTML)
+
+          document.getElementById('scoreThree').innerHTML  = snapshot.child('Editor-3/Score').val() 
+          adjustBarChart('Three',document.getElementById('scoreThree').innerHTML)
+
+          document.getElementById('scoreFour').innerHTML  = snapshot.child('Editor-4/Score').val() 
+          adjustBarChart('Four',document.getElementById('scoreFour').innerHTML)
            //correctly adjusts and keeps track of other user's ready status from the database
            checkReady(snapshot.child('Editor-2/Ready').val(),1)
            checkReady(snapshot.child('Editor-3/Ready').val(),2)
@@ -547,10 +680,12 @@ console.log(this.currentDatabaseEditor +'current database ditor is')
            var removeValue = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-1/Value')
            var removeBool = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-1/Connected')
            var resetReady = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-1/Ready')
+           var resetScore = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-1/Score')
            onDisconnect(removeName).set('Waiting For Player')
            onDisconnect(removeValue).set('Waiting For Player')
            onDisconnect(removeBool).set(false)
            onDisconnect(resetReady).set(false)
+           onDisconnect(resetScore).set(0)
            }
 
 
@@ -558,7 +693,8 @@ console.log(this.currentDatabaseEditor +'current database ditor is')
             console.log("INSIDE EDIOTR two")
             var setBool2 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-2/Connected')
             set(setBool2,true)
-            
+            checkReady(snapshot.child('Editor-2/Ready').val(),0)
+        
 
             var editorOneValue = snapshot.child('Editor-1/Value').val()
              editorThreeValue = snapshot.child('Editor-3/Value').val()
@@ -566,6 +702,8 @@ console.log(this.currentDatabaseEditor +'current database ditor is')
        
           
            //this.editorOne.getModel().setValue('some value');
+      
+           document.getElementById('labelOne').innerHTML = document.getElementById('name').innerHTML
 
            document.getElementById('name1').innerHTML  = snapshot.child('Editor-1/Name').val() 
            monaco.editor.getModels()[1].setValue(editorOneValue)
@@ -576,7 +714,21 @@ console.log(this.currentDatabaseEditor +'current database ditor is')
            document.getElementById('name3').innerHTML  = snapshot.child('Editor-4/Name').val() 
            monaco.editor.getModels()[3].setValue(editorFourValue)
  
+
+          //correctly synchronises scoring across different players
+          document.getElementById('scoreTwo').innerHTML  = snapshot.child('Editor-1/Score').val() 
+          adjustBarChart('Two',document.getElementById('scoreTwo').innerHTML)
+
+          document.getElementById('scoreThree').innerHTML  = snapshot.child('Editor-2/Score').val() 
+          adjustBarChart('Three',document.getElementById('scoreThree').innerHTML)
+
+          document.getElementById('scoreFour').innerHTML  = snapshot.child('Editor-4/Score').val() 
+          adjustBarChart('Four',document.getElementById('scoreFour').innerHTML)
+
+
+
           //updates ready values correctly
+          console.log("Editor One value "+snapshot.child('Editor-1/Ready').val())
           checkReady(snapshot.child('Editor-1/Ready').val(),1)
            checkReady(snapshot.child('Editor-3/Ready').val(),2)
            checkReady(snapshot.child('Editor-4/Ready').val(),3)
@@ -585,23 +737,24 @@ console.log(this.currentDatabaseEditor +'current database ditor is')
            var removeValue2= sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-2/Value')
            var removeBool2 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-2/Connected')
            var resetReady2 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-2/Ready')
+           var resetScore2 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-2/Score')
            onDisconnect(removeName2).set('Waiting For Player')
            onDisconnect(removeValue2).set('Waiting For Player')
            onDisconnect(removeBool2).set(false)
            onDisconnect(resetReady2).set(false)
-
+           onDisconnect(resetScore2).set(0)
 
            }
            if(this.currentDatabaseEditor ==3){
             var setBool3 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-3/Connected')
             set(setBool3,true)
-            
-            console.log("mmmmmmmmmmm")
+            checkReady(snapshot.child('Editor-3/Ready').val(),0)
+         
              editorOneValue = snapshot.child('Editor-1/Value').val()
              editorTwoValue = snapshot.child('Editor-2/Value').val()
              editorFourValue = snapshot.child('Editor-4/Value').val()
        
-          
+             document.getElementById('labelOne').innerHTML = document.getElementById('name').innerHTML
            //this.editorOne.getModel().setValue('some value');
            document.getElementById('name1').innerHTML  = snapshot.child('Editor-1/Name').val() 
            monaco.editor.getModels()[1].setValue(editorOneValue)
@@ -611,6 +764,21 @@ console.log(this.currentDatabaseEditor +'current database ditor is')
 
            document.getElementById('name3').innerHTML  = snapshot.child('Editor-4/Name').val() 
            monaco.editor.getModels()[3].setValue(editorFourValue)
+
+
+          //correctly synchronises scoring across different players
+          document.getElementById('scoreTwo').innerHTML  = snapshot.child('Editor-1/Score').val() 
+          adjustBarChart('Two',document.getElementById('scoreTwo').innerHTML)
+
+          document.getElementById('scoreThree').innerHTML  = snapshot.child('Editor-2/Score').val() 
+          adjustBarChart('Three',document.getElementById('scoreThree').innerHTML)
+
+          document.getElementById('scoreFour').innerHTML  = snapshot.child('Editor-4/Score').val() 
+          adjustBarChart('Four',document.getElementById('scoreFour').innerHTML)
+
+
+
+
 
            checkReady(snapshot.child('Editor-1/Ready').val(),1)
            checkReady(snapshot.child('Editor-2/Ready').val(),2)
@@ -622,25 +790,42 @@ console.log(this.currentDatabaseEditor +'current database ditor is')
            var removeValue3= sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-3/Value')
            var removeBool3 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-3/Connected')
            var resetReady3 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-3/Ready')
+           var resetScore3 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-3/Score')
            onDisconnect(removeName3).set('Waiting For Player')
            onDisconnect(removeValue3).set('Waiting For Player')
            onDisconnect(removeBool3).set(false)
            onDisconnect(resetReady3).set(false)
+           onDisconnect(resetScore3).set(0)
 
 
            }
            if(this.currentDatabaseEditor ==4){
             var setBool4 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-4/Connected')
             set(setBool4,true)
-            console.log("mmmmmmmmmmm")
+            checkReady(snapshot.child('Editor-4/Ready').val(),0)
              editorOneValue = snapshot.child('Editor-1/Value').val()
              editorTwoValue = snapshot.child('Editor-2/Value').val()
              editorThreeValue = snapshot.child('Editor-3/Value').val()
        
+
+           //correctly synchronises scoring across different players
+          document.getElementById('scoreTwo').innerHTML  = snapshot.child('Editor-1/Score').val() 
+          adjustBarChart('Two',document.getElementById('scoreTwo').innerHTML)
+
+          document.getElementById('scoreThree').innerHTML  = snapshot.child('Editor-2/Score').val() 
+          adjustBarChart('Three',document.getElementById('scoreThree').innerHTML)
+          
+          document.getElementById('scoreFour').innerHTML  = snapshot.child('Editor-3/Score').val() 
+          adjustBarChart('Four',document.getElementById('scoreFour').innerHTML)
+
+
+
            checkReady(snapshot.child('Editor-1/Ready').val(),1)
            checkReady(snapshot.child('Editor-2/Ready').val(),2)
            checkReady(snapshot.child('Editor-3/Ready').val(),3)
           
+
+           document.getElementById('labelOne').innerHTML = document.getElementById('name').innerHTML
            //this.editorOne.getModel().setValue('some value');
            document.getElementById('name1').innerHTML  = snapshot.child('Editor-1/Name').val() 
            monaco.editor.getModels()[1].setValue(editorOneValue)
@@ -656,10 +841,12 @@ console.log(this.currentDatabaseEditor +'current database ditor is')
            var removeValue4= sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-4/Value')
            var removeBool4 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-4/Connected')
            var resetReady4 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-4/Ready')
+           var resetScore4 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-4/Score')
            onDisconnect(removeName4).set('Waiting For Player')
            onDisconnect(removeValue4).set('Waiting For Player')
            onDisconnect(removeBool4).set(false)
            onDisconnect(resetReady4).set(false)
+           onDisconnect(resetScore4).set(0)
            }
      
 
@@ -698,11 +885,11 @@ if(this.editorCycle == 4){
 
 if(this.ready == false){
   document.getElementById('readyButton').innerHTML = "Cancel"
-  document.getElementById('ready').innerHTML = "Ready"
+  document.getElementById('ready1').innerHTML = "Ready"
 }
 else{
   document.getElementById('readyButton').innerHTML = "Ready Up"
-  document.getElementById('ready').innerHTML = ""
+  document.getElementById('ready1').innerHTML = ""
 }
 this.ready = !this.ready
 console.log("inside ready function")
@@ -768,19 +955,24 @@ test:async function() {
     output = output.split(/\r?\n/);
 
     let pass = 0
-
+var passed=  false;
     for(let i = 0; i<5; i++) {
         if(await this.build(input[i],output[i])){
             document.getElementById("info").insertAdjacentHTML('beforeend', "Test "+(i+1)+" passed\n");
             pass++;
         }
-        else
+        else{
             document.getElementById("info").insertAdjacentHTML('beforeend', "Test " + (i + 1) + " failed\n");
-
+            //await this.next()
+            passed=true;
+        }
         if(pass===5){
             document.getElementById("info").textContent="All tests passed, next challenge!";
-            await next();
+            passed= true;
         }
+    }
+    if(passed == true){
+      await this.next();
     }
     },
    random:function(){
@@ -794,40 +986,40 @@ test:async function() {
     return randomChallenge+"_Challenge/";
 },
 next: async function() {
-    this.challCompleted++;
-    document.getElementById("score").textContent="Score: "+challCompleted;
+  const db = getDatabase()
+  console.log("inside the next funciton")
+  this.challCompleted++;
+    document.getElementById("score").innerHTML=this.challCompleted;
+  update(sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-'+this.currentDatabaseEditor),{
+           Score: document.getElementById("score").innerHTML
+      })
+    
+
     if (this.challCompleted === 5) {
         //Resetting play data if user wants to play again
         this.challCompleted = 0;
         this.challenges = ['1', '2', '3', '4', '5'];
 
-        //Remove everything from the screen
-        document.getElementById("intro").remove();
-        document.getElementById("code").remove();
-        document.getElementById("btn").remove();
-        document.getElementById("info").remove();
+        //let h1 = document.createElement("H1");
+       // //h1.textContent="Congratulations noob, you've passed all the challenges, consider yourself a true MAGA Python pro!"
+       // nBody.appendChild(h1);
 
-        //Generate a congratulations screen and a button to play again.
-        let h1 = document.createElement("H1");
-        h1.textContent="Congratulations noob, you've passed all the challenges, consider yourself a true MAGA Python pro!"
-        nBody.appendChild(h1);
+       // let bt = document.createElement("button");
+       // bt.textContent = "Play Again?";
+       // bt.onclick = begin;
+       // bt.style.fontSize="50px";
 
-        let bt = document.createElement("button");
-        bt.textContent = "Play Again?";
-        bt.onclick = begin;
-        bt.style.fontSize="50px";
-
-        nBody.style.textAlign="center"
-        nBody.appendChild(bt);
+       // nBody.style.textAlign="center"
+       // nBody.appendChild(bt);
 
     } else {
-        this.chall = random();
-        document.getElementById("intro").textContent = "Challenge " + this.chall.charAt(0) + ": ";
+        this.chall = this.random();
+       // document.getElementById("intro").textContent = "Challenge " + this.chall.charAt(0) + ": ";
 
-        temp = await readFile(this.chall + "description.txt");
-        document.getElementById("intro").insertAdjacentHTML('beforeend', temp);
+        var temp = await readFile("Challenges/"+this.chall + "description.txt");
+        document.getElementById("info").insertAdjacentHTML('beforeend', temp);
 
-        temp = await readFile(this.chall + "startCode.txt");
+        temp = await readFile("Challenges/"+this.chall + "startCode.txt");
         
 
   }
