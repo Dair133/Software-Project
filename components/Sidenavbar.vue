@@ -10,23 +10,27 @@
           <img src="../images/home.svg" class="pic">
           <p class="txt">Home</p>
         </router-link>
-        <router-link to="/aboutus" class="ilink">
+        <router-link to="/" class="ilink">
           <img src="../images/about.svg" class="pic">
           <p class="txt">About</p>
         </router-link>
-        <router-link to="/help" class="ilink">
+        <router-link to="/" class="ilink">
           <img src="../images/support.svg" class="pic">
           <p class="txt">Support</p>
         </router-link>
       </div>
-      <div class="players">
+      <div class="mainuser">
         <div class="ilink">
           <img src="../images/user.svg" class="mainuserpic">
           <p class="txt" style="left: 20%" id="displayName"></p>
         </div>
-        <div class="ilink" >
-          <img src="../images/user.svg" class="pic">
-          <p class="txt">sample user--------</p>
+        <div class="players">
+          <div class="scrollabblearea">
+            <div class="ilink">
+              <img src="../images/user.svg" class="pic">
+              <p class="txt">sample user</p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="extra">
@@ -101,16 +105,17 @@ a {
   height: 100%;
   overflow: auto;
   background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0,0,0,0.1);
 }
 
 .modal-content {
   z-index: 10;
   position: fixed;
   left: 0px;
-  width: 12%;
+  width: 30vh;
   height: 100%;
   background-color: purple;
+  background-image: linear-gradient(#1a0d70 30%, #14148c 50%, purple);
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 0.25fr 0.25fr 0.4fr 0.1fr;
@@ -123,6 +128,7 @@ a {
   width: 4%;
   height: 100%;
   background-color: purple;
+  background-image: linear-gradient(#1a0d70 30%, #14148c 50%, purple);
   display: block;
 }
 
@@ -131,10 +137,22 @@ hr {
   border-color: #690a69;
 }
 
+.mainuser {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 60px auto;
+}
+
+.scrollabblearea {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 50px;
+}
+
+
 .players {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 60px;
   grid-auto-rows: 50px;
   overflow: auto;
   overflow-x: hidden;
