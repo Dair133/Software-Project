@@ -1,4 +1,9 @@
 <template>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Secular+One&display=swap" rel="stylesheet">
+
   <div id="myModal" class="modal"  v-bind:style='{"display" : (isActive? "block" : "none" )}'>
     <div class="modal-background" @click="closeModal"></div>
     <div class="modal-content">
@@ -10,11 +15,11 @@
           <img src="../images/home.svg" class="pic">
           <p class="txt">Home</p>
         </router-link>
-        <router-link to="/" class="ilink">
+        <router-link to="/About" class="ilink">
           <img src="../images/about.svg" class="pic">
           <p class="txt">About</p>
         </router-link>
-        <router-link to="/" class="ilink">
+        <router-link to="/Help" class="ilink">
           <img src="../images/support.svg" class="pic">
           <p class="txt">Support</p>
         </router-link>
@@ -38,7 +43,7 @@
           <p style="left: 30%">Settings</p>
         </router-link>
         <router-link to="/" class="extras">
-          <p style="left: 32%">Logout</p>
+          <p style="left: 32%" @click="logout">Logout</p>
         </router-link>
       </div>
     </div>
@@ -50,7 +55,10 @@
 </template>
 
 <script>
+import app from "/firebase";
 import firebase from "firebase/compat/app";
+
+import {getAuth, onAuthStateChanged, signOut} from "firebase/auth";
 
 export default {
   data() {
@@ -81,12 +89,22 @@ export default {
     },
     closeModal: function () {
       this.isActive = false;
+    },
+    logout(){
+      const auth = getAuth();
+      signOut(auth).then(() => {
+// Send them back to the home page!
+        this.$router.push("/");});
     }
   }
 }
 </script>
 
 <style scoped>
+
+  * {
+    font-family: 'Secular One', sans-serif;
+  }
 
 a {
   font-size: 20px;
