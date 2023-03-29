@@ -5,6 +5,7 @@
 
 
   <div class="container">
+
     <nav class="navbar">
       <h1 class="logo">MMoguls</h1>
       <ul class="menu">
@@ -33,8 +34,8 @@ export default {
 
 .container {
   width:100%;
-  background-image: linear-gradient(#800080, #330433);
-  /*background-color: #700070;*/
+  /*background-image: linear-gradient(#800080, #330433);*/
+  background-color: transparent;
   /*background-color: #330433;*/
 }
 
@@ -72,7 +73,7 @@ a {
 .underline:after {
   content: "";
   position: absolute;
-  background-color: #800080;
+  background-color: #270f72;
   height: 3px;
   width: 0;
   left: 0;
@@ -98,7 +99,7 @@ a {
   background-color: white;
   border-radius: 5px;
   border-style: solid;
-  border-color: #800080;
+  border-color: #270f72;
   padding: 9px 20px;
 }
 
