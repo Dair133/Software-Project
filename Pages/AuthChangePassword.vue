@@ -4,9 +4,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Secular+One&display=swap" rel="stylesheet">
 
   <header>
-    <Navbar></Navbar>
+
   </header>
   <div class="container">
+    <Navbar></Navbar>
     <div class="box">
       <img src="../images/undraw_smiley-face.svg" alt="" class="image1">
       <h1>Forgot your password?</h1>
@@ -17,7 +18,13 @@
             <input id="email" type="email" class="input" placeholder="Email">
           </div>
           <div class="button">
-            <button class="btn-primary" @click="sendPasswordResetEmail()">Change Password</button>
+            <button @click="sendPasswordResetEmail">
+              <div>
+                <div class="btn-one">
+                  <span style="font-size: 30px">Send Email</span>
+                </div>
+              </div>
+            </button>
           </div>
         </div>
       </form>
@@ -60,16 +67,27 @@ firebase.auth().sendPasswordResetEmail(email)
     font-family: 'Secular One', sans-serif;
   }
 
+  button, input[type="submit"], input[type="reset"] {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+  }
+
   .container {
     width: 100vw;
-    height: 90vh;
-    background-image: radial-gradient(#800080, #330433);
+    height: 100vh;
+    /*background-image: radial-gradient(#800080, #330433);*/
+    background-image: url("../images/blockdrop.jpg");
   }
   .box {
     background-color: white;
     width: 400px;
     margin: 0 auto;
-    top: 30%;
+    top: 13%;
     text-align: center;
     border-radius: 15px;
     border-color: black;
@@ -135,4 +153,63 @@ firebase.auth().sendPasswordResetEmail(email)
     box-shadow: inset 0px 3px 7px #490849;
     transform: translateY(2px);
   }
+
+  .btn-one {
+    color: #000000;
+    transition: all 0.3s;
+    position: relative;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-top-color: rgba(80, 59, 59, 0.5);
+    border-bottom-color: rgba(105, 81, 81, 0.5);
+
+  }
+  .btn-one span {
+    transition: all 0.3s;
+  }
+  .btn-one::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0;
+    transition: all 0.3s;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-top-color: rgba(80, 59, 59, 0.5);
+    border-bottom-color: rgba(105, 81, 81, 0.5);
+    transform: scale(0.1, 1);
+  }
+  .btn-one:hover span {
+    letter-spacing: 2px;
+  }
+  .btn-one:hover::before {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+  .btn-one::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    transition: all 0.3s;
+    background-color: rgba(255,255,255,0.1);
+  }
+  .btn-one:hover::after {
+    opacity: 0;
+    transform: scale(0.1, 1);
+  }
+
+
+
 </style>

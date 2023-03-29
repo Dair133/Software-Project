@@ -13,7 +13,7 @@ import Navbar from '../components/Navbar.vue';
     </header>
     <div class="container">
       <div>
-        <img src="../images/homepic2.svg" alt="" class="image1">
+        <img src="../images/circuit.svg" alt="" class="image1">
       </div>
       <div class="content">
         <h1>Competitives Programming</h1>
@@ -28,7 +28,8 @@ import Navbar from '../components/Navbar.vue';
 main {
   width: 100vw;
   height: 100vh;
-  background-image: radial-gradient(#800080, #330433);
+  /*background-image: radial-gradient(#800080, #330433);*/
+  background-image: url("../images/blockdrop.jpg");
 }
 
 * {
@@ -68,7 +69,7 @@ a {
   font-size: 25px;
   border-radius: 5px;
   border-style: solid;
-  border-color: #800080;
+  border-color: #270f72;
   padding: 7px 20px;
   text-decoration: none;
 }

@@ -22,7 +22,7 @@
       <div class="acc-info">
         <div class="text">
           <div class="acc-text">
-            <h2>Account info of <span id = name></span></h2>
+            <h2>Account info</h2>
             <div style="display: flex; justify-content: space-between;">
               <img src="../images/user.svg" alt="" class="image1">
               <button type="button" class="btn btn-secondary btn-sm">
@@ -111,7 +111,6 @@ export default {
           console.log(user.uid)
           console.log(user.displayName)
 
-          document.getElementById("name").innerHTML = user.displayName
           document.getElementById("displayName").innerHTML = user.displayName
           document.getElementById("emailAddress").innerHTML = user.email
         }
@@ -185,7 +184,8 @@ export default {
 }
 
 .container {
-  background-image: radial-gradient(#46a0e0, #2565AE, #0F5298);
+  /*background-image: radial-gradient(#46a0e0, #2565AE, #0F5298);*/
+  background-image: url("../images/blockdrop.jpg");
   height: 100vh;
   width: 100vw;
 }
@@ -206,7 +206,8 @@ export default {
 
 .header {
   grid-area: 1/1/2/4;
-  background-image: radial-gradient(#306bab, #174d86);
+  /*background-image: radial-gradient(#306bab, #174d86);*/
+  background-color: transparent;
   color: white;
   border-radius: 5px;
 }

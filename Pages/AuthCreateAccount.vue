@@ -5,10 +5,8 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
   <main>
-    <header>
-      <Navbar/>
-    </header>
     <div class="container">
+      <Navbar/>
       <div class="signup-box">
         <img src="../images/undraw_smiley-face.svg" alt="" class="image1">
         <h1>Sign up</h1>
@@ -31,13 +29,18 @@
               <input type="password" class="input" placeholder=" Confirm Password">
             </div>
             <div class="button">
-              <button id = createAccount @click="createAccount()" class="btn-primary">Create Account</button>
+              <button @click="createAccount">
+                <div>
+                  <div class="btn-one">
+                    <span style="font-size: 30px">Create Account</span>
+                  </div>
+                </div>
+              </button>
             </div>
-            <router-link id = navigation to ="/navigationPage" style ="color:blue" >link to the navigation page</router-link>
           </div>
         </form>
         <div class="login">
-          <p>Have an account? <router-link to="/login">Login</router-link></p>
+          <p>Have an account? <router-link to="/AuthSignIn">Login</router-link></p>
         </div>
       </div>
     </div>
@@ -54,8 +57,9 @@
 
     .container {
       width: 100vw;
-      height: 90vh;
-      background-image: radial-gradient(#800080, #330433);
+      height: 100vh;
+      /*background-image: radial-gradient(#800080, #330433);*/
+      background-image: url("../images/blockdrop.jpg");
     }
 
     .signup-box {
@@ -111,32 +115,70 @@
       margin-top: 20px;
     }
 
-    .btn-primary{
+    .btn-one {
+      color: #000000;
+      transition: all 0.3s;
       position: relative;
-      display: inline-block;
-      width: 40%;
-      outline: 0;
-      border: 0;
-      cursor: pointer;
-      will-change: box-shadow,transform;
-      background: radial-gradient(#800080, #330433);
-      box-shadow: 0px 2px 4px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px rgb(58 65 111 / 50%);
-      padding: 0 32px;
-      border-radius: 4px;
-      color: #fff;
-      height: 40px;
-      font-size: 12px;
-      text-shadow: 0 1px 0 rgb(0 0 0 / 40%);
-      transition: box-shadow 0.15s ease,transform 0.15s ease;
+      border-top-width: 1px;
+      border-bottom-width: 1px;
+      border-top-style: solid;
+      border-bottom-style: solid;
+      border-top-color: rgba(80, 59, 59, 0.5);
+      border-bottom-color: rgba(105, 81, 81, 0.5);
 
     }
-    .btn-primary:hover {
-      box-shadow: 0px 4px 8px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px #490849;
-      transform: translateY(-2px);
+    .btn-one span {
+      transition: all 0.3s;
     }
-    .btn-primary:active{
-      box-shadow: inset 0px 3px 7px #490849;
-      transform: translateY(2px);
+    .btn-one::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 0;
+      transition: all 0.3s;
+      border-top-width: 1px;
+      border-bottom-width: 1px;
+      border-top-style: solid;
+      border-bottom-style: solid;
+      border-top-color: rgba(80, 59, 59, 0.5);
+      border-bottom-color: rgba(105, 81, 81, 0.5);
+      transform: scale(0.1, 1);
+    }
+    .btn-one:hover span {
+      letter-spacing: 2px;
+    }
+    .btn-one:hover::before {
+      opacity: 1;
+      transform: scale(1, 1);
+    }
+    .btn-one::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      transition: all 0.3s;
+      background-color: rgba(255,255,255,0.1);
+    }
+    .btn-one:hover::after {
+      opacity: 0;
+      transform: scale(0.1, 1);
+    }
+
+    button, input[type="submit"], input[type="reset"] {
+      background: none;
+      color: inherit;
+      border: none;
+      padding: 0;
+      font: inherit;
+      cursor: pointer;
+      outline: inherit;
     }
 </style>
 
