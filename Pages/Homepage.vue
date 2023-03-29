@@ -1,357 +1,232 @@
 <template>
-    <head>
-    
-    </head>
-    <body class = bodyMain>
-      
-    <header>
-    
-    </header>
-    
-      
-      <div>
-      
-        <h1 style = "color:hotpink;border-bottom: crimson;">Welcome back <span id = name></span>
-          <button @click="signOut()" style="position:relative;left:0.5cm" class="btn btn-primary">Sign Out</button>
-        <button @click="accountPage()" style="position:relative;left:1cm" class="btn btn-primary">Account Page</button>
-        <button @click="navigationPage()" style="position:relative;left:1.5cm"  class="btn btn-primary">Navigation Page</button>
-      </h1>
-    <textarea id="code" class = textArea></textarea>Enter code here<br>
-<textarea id="outputDisplay" class =outputTextArea></textarea>Shell<br>
-<div id="languageSelector" style="position:absolute; left: 725px; top: 195px;">
-<H3 style="display: inline;position:relative;left:12cm">Language Selected: </H3><p style="positition:relative;left:12cm" id="Language" >None</p>
-    <br>
-    <br>
-    <label style = "position:relative;left:12cm">Please select a Language:</label>
-    <br>
-    <label style ="position:relative;left:12cm" for="languages" ></label><select style="position:relative;left:12cm" class =select-primary name="Languages" id="languages" @change="select();">
-        <option value="">--Please choose an option--</option>
-        <option value="java">Java</option>
-        <option style ="position:relative;left:12cm" value="py">Python</option>
-        <option value="cpp">C++</option>
-        <option value="c">C</option>
-        <option value="go">GoLang</option>
-        <option value="cs">C#</option>
-        <option value="js">NodeJS</option>
-    </select>
-</div>
-<button class="btn btn-primary" @click="readTextFile();">Activate Challenge</button>
-<button class="btn btn-primary" style = "left:12cm;" @click="build()">Compile</button><br>
-<div id=" name"></div>
-<div id="uid"></div>
-<router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
-<router-link to ="/test" style="visibility:hidden" class =btn-primary>Node Test Page</router-link><br>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Secular+One&display=swap" rel="stylesheet">
 
-       
-
-<p style="white-space: pre-line;height: 1.8cm;" id='output'></p>
-
-        
+  <div class="container">
+    <div class="grid-item grid-item-1">
+      <div class="grid-item grid-item-9">
+        <div class="img">
+          <img src="../images/user.svg" alt="" class="image1">
+          <div class="dropdown">
+            <router-link to="/settings" class="drop">Settings</router-link><br>
+            <router-link to="/" class="drop">Log out</router-link>
+          </div>
+        </div>
       </div>
-    
-   
- 
+      <div class="grid-item grid-item-8">
+        <h1 class="logo">MMoguls</h1>
+      </div>
+    </div>
+    <div class="grid-item grid-item-2">
+      <div class="grid-item-play grid-item-4">
+        <div class="image grid-item-10">
+          <img src="../images/survival.svg" alt="" class="image2">
+        </div>
+        <div class="button grid-item-11">
+          <router-link class="btn" to="/homepage">Survival</router-link>
+        </div>
+      </div>
+      <div class="grid-item-play grid-item-5">
+        <div class="image grid-item-12">
+          <img src="../images/time.svg" alt="" class="image2">
+        </div>
+        <div class="button grid-item-13">
+          <router-link class="btn" to="/homepage">Time-Trial</router-link>
+        </div>
+      </div>
+      <div class="grid-item-play grid-item-6">
+        <div class="image grid-item-14">
+          <img src="../images/connected.svg" alt="" class="image2">
+        </div>
+        <div class="button grid-item-15">
+          <router-link class="btn" to="/idetest">Battle Royale</router-link>
+        </div>
+      </div>
+<!--      <div class="grid-item-play grid-item-7">
+        <div class="image grid-item-16">
+          <img src="images/question-mark.svg" alt="" class="image2">
+        </div>
+        <div class="button grid-item-17">
+          <router-link class="btn" to="/play">Coming soon</router-link>
+        </div>
+      </div>-->
+    </div>
+    <div class="grid-item grid-item-3">
+      <div>
+        <router-link id = navigation to ="/navigationPage" style ="color:blue" >link to the navigation page</router-link>
+      </div>
+    </div>
+  </div>
 
-  </body>
-    
-  </template>
-  <style>
+  <div id="myModal" class="modal"  v-bind:style='{"display" : (isActive? "block" : "none" )}'>
+    <div class="modal-background" @click="closeModal"></div>
+    <div class="modal-content">
+      <p>Some text in the Modal...... test test .... test .test est est </p>
+    </div>
+  </div>
 
-  main {
-  width: 100vw;
-  height: 100vh;
-  background: radial-gradient(circle at 6.6% 12%, rgb(64, 0, 126) 20.8%, rgb(0, 255, 160) 100.2%);
-  /*background-image: radial-gradient(#800080, #700070);*/
-}
-.bodyMain{
-  width:100%;
-  height: 100%;
-  background: radial-gradient(circle at 6.6% 12%, rgb(64, 0, 126) 20.8%, rgb(0, 255, 160) 100.2%);
-}
-.background{
-  background: radial-gradient(circle at 6.6% 12%, rgb(64, 0, 126) 20.8%, rgb(0, 255, 160) 100.2%);
-}
+  <div class="sidebar" @click="showModal()" v-bind:style='{"display" : (isActive? "none" : "block" )}'>
+    <div class="sidebar-content">
 
+    </div>
+  </div>
 
+</template>
 
-* {
-  font-family: 'Secular One', sans-serif;
-}
-.btn-primary{
-  position: relative;
-  display: inline-block;
-  width: 35mm;
-  height: 35mm;
-  left:10cm;
-                outline: 0;
-                border: 0;
-                cursor: pointer;
-                will-change: box-shadow,transform;
-                background: radial-gradient( 100% 100% at 100% 0%, #89E5FF 0%, #5468FF 100% );
-                box-shadow: 0px 2px 4px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px rgb(58 65 111 / 50%);
-                padding: 0 32px;
-                border-radius: 6px;
-                color: #fff;
-                height: 48px;
-                font-size: 14px;
-                text-shadow: 0 1px 0 rgb(0 0 0 / 40%);
-                transition: box-shadow 0.15s ease,transform 0.15s ease;
-                
-}
-                .btn-primary:hover {
-                    box-shadow: 0px 4px 8px rgb(45 35 66 / 40%), 0px 7px 13px -3px rgb(45 35 66 / 30%), inset 0px -3px 0px #3c4fe0;
-                    transform: translateY(-2px);
-                }
-               .btn-primary:active{
-                    box-shadow: inset 0px 3px 7px #3c4fe0;
-                    transform: translateY(2px);
-                }
-              
-                
-
-
-.container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  width: 100%;
-  margin: 0 auto;
-  height: 100%;
-}
-
-.image1 {
-  width: 85vh;
-}
-
-.content {
-  margin-left: 10px;
-  color: magenta;
-  
-}
-.textArea{
-  left:10cm;
-  position:relative;
-  background-color: black;
-  color:white;
-  width:20cm;
-  height:9cm;
-}
-.outputTextArea{
-  position: relative;
-  left: 10cm;
-  background-color: black;
-  color:white;
-  width:20cm;
-  height: 3cm;
-}
-
-h1 {
-  font-size: 40px;
-}
-
-p {
-  color:blue;
-  font-size:5px;
-  
-}
-
-a {
-  color: black;
-  background-color: brown;
-  font-size: 25px;
-  padding: 7px 20px;
-  border-radius: 5px;
-  text-decoration: none;
-}
-</style>
-    <script>
-    import  firebase  from 'firebase/compat/app';
-    import { getStorage,ref,uploadBytes } from 'firebase/storage';
-import { httpsCallable } from '@firebase/functions';
-import { getFunctions} from "firebase/functions";
-import {  getDownloadURL } from "firebase/storage";
-import test from '../main'
-    
-    export default {
-      emits: ["open-note"],
-      props: {
-      note: {}
+<script>
+  export default {
+    data() {
+      return {
+        isActive: false
+      }
+    },
+    methods: {
+      showModal: function () {
+        this.isActive = true;
       },
-      data(){
-        return{
-          username:""
-        }
-      },
-      mounted() {
-
-test.methods.auth()
-
-setTimeout(() => {
-
-   if(test.methods.checkEntryExistence()){
-             console.log("User Entry Exists")
+      closeModal: function () {
+        this.isActive = false;
+      }
     }
-  else{
-    test.methods.createUserEntry() 
-   }
-  },500)
-
-
-
-
-
-      let recaptchaScript = document.createElement('script')
-      recaptchaScript.setAttribute('src', "API-Handler.js")
-      document.head.appendChild(recaptchaScript)
-    },
-
-      methods: {
-    signOut:function(){
-      firebase.auth().signOut().then(function() {//signs user out
-
-        window.location = "/authSignIn";//brings user to the sign in page
-        console.log('Signed Out');
-        });
-    },
-
-    accountPage:function(){
-        window.location = "/accountPage"//brings user to the accountPage
-    },
-    navigationPage:function(){
-      window.location = "/"
-    },
-
-auth:function(){
-    firebase.auth().onAuthStateChanged(function(user) {//gets 'user' onbject when it has been intialized 
-  if (user) {
- 
-    console.log(user.uid)
-    console.log(user.displayName)
-    
-    document.getElementById("name").innerHTML = user.displayName
-    //document.getElementById("displayName").innerHTML = user.displayName//displays
-    //document.getElementById("email").innerHTML = user.email   
-  } 
-  else {
-    console.log("Error signing in")
   }
-  }).bind(this)
-},
-build:function(){
- 
-  let text = "";
+</script>
+
+<style scoped>
+
+  * {
+    font-family: 'Secular One', sans-serif;
+  }
+
+  .logo {
+    display: grid;
+    color: white;
+    margin-left: 20px;
+  }
+
+  .container {
+    background-image: radial-gradient(#800080, #330433);
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-template-rows: 0.15fr 1fr 0.4fr;
+  }
+
+  .grid-item-2 {
+    display: grid;
+    grid-template-columns: 0.33fr 0.33fr 0.33fr;
+  }
+
+  .grid-item-1 {
+    display: grid;
+    grid-template-columns: 0.05fr auto;
+    align-content: center;
+  }
+
+  .grid-item-play {
+    display: grid;
+    grid-template-rows: 1fr 0.2fr;
+  }
+
+  .grid-item-8 {
+    display: grid;
+    justify-items: center;
+    padding-right: 140px;
+  }
 
 
-    let codeOutput="";
-    let language = "";
-    let code = document.getElementById("code").value;
+  .image1 {
+    width: 50px;
+    height: 50px;
+  }
 
-    if(code===""){
-        document.getElementById("output").innerHTML = "";
-        return null;
-    }
+  .image2 {
+    width: 300px;
+    height: 300px;
+  }
 
-    const encodedParams = new URLSearchParams();
-    encodedParams.append("code", code);
+  .image, .button {
+    display: grid;
+    align-items: end;
+    justify-items: center;
+  }
 
-    language = document.getElementById("languages").value;
-    if(language===""){
-        document.getElementById("output").innerHTML = "Please select a language";
-        return null
-    }
-    encodedParams.append("language", language);
+  .btn {
+    color: black;
+    background-color: white;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: black;
+    padding: 9px;
+    width: 200px;
+    text-align: center;
+  }
 
-    const options = {
-        method: 'POST',
-        headers: {
-            'content-type': 'application/x-www-form-urlencoded',
-            'X-RapidAPI-Key': '7f5ebdc991msh779918a8b5d23a9p10d434jsne9e7e4a1586e',
-            'X-RapidAPI-Host': 'codex7.p.rapidapi.com'
-        },
-        body: encodedParams
-    };
+  a {
+    font-size: 20px;
+    text-decoration: none;
+    color: #e8dede;
+    padding: 8px 15px;
+  }
 
-    fetch('https://codex7.p.rapidapi.com/', options)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            codeOutput = data.output;
-            document.getElementById("outputDisplay").value = text;
-            if(codeOutput=="15\n"){
-              console.log("inside if statment")
-              document.getElementById("outputDisplay").value= codeOutput.output+"Well done challenge completed!";
-            }
-            if(codeOutput===""&&data.error==="") {
-                document.getElementById("outputDisplay").value = "No Output";
-            }
-            else if(codeOutput!==""){
-                document.getElementById("outputDisplay").value= codeOutput;
-            }
-            else
-                document.getElementById("outputDisplay").value = "Failed to Compile, Error: "+data.error;
-        })
-        .catch(err => console.error(err));
-},
-select:function(){
-  var text;
-    let el = document.getElementById("languages");
-     text = el.options[el.selectedIndex].text;
-    if(text==="--Please choose an option--"){
-        document.getElementById("Language").innerHTML = "None";
-        return null;
-    }
-    document.getElementById("Language").innerHTML = text;
-},
-readTextFile:function(){//functions correctly
-  var storage = getStorage(test.methods.intialiseFirebase())
-   
-   var textHolder = getDownloadURL(ref(storage, 'holder.java'))
-   .then((url) => {
-    
-    const xhr = new XMLHttpRequest();
-    xhr.responseType = 'blob';//make sure that blob is the response file very important to ensure file can be read correctly
+  .dropdown {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
 
-    xhr.onload = (event) => {
+  .dropdown a {
+    color: black;
+    text-decoration: none;
+    display: block;
+  }
 
-        const blob = xhr.response;
-        console.log("The first blob"+blob); //for testing
+  .dropdown a:hover {background-color: #f1f1f1}
 
-        const reader = new FileReader();
-        reader.readAsText(blob);
-  
-         reader.onload = function getFile() {
+  .img:hover .dropdown {
+    display: block;
+  }
 
-           const text = reader.result
+  .drop {
+    font-size: 15px;
+  }
 
-           console.log(text);
+  .modal-background {
+    display: block; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.2); /* Black w/ opacity */
+  }
 
-           this.fileText = text //'returns' the text so it can be read in any function
-           console.log(this.fileText)
-   
-         
-           document.getElementById('code').value = text
-     };
+  .modal-content {
+    z-index: 10;
+    position: fixed;
+    right: 0px;
+    width: 12%;
+    height: 100%;
+    background-color: purple;
+    display: block;
+  }
 
-    };
-    console.log("beofre get statment")
-    
-    xhr.open('GET', url);
-    xhr.send();
-  
-
-    // Or inserted into an <img> element
-    
-
-  })
-  .catch((error) => {
-    // Handle any errors
-  });
-  
-
-    }
+  .sidebar {
+    z-index: 10;
+    position: fixed;
+    right: 0px;
+    width: 4%;
+    height: 100%;
+    background-color: purple;
+    display: block;
+  }
 
 
-    }
-}
-    </script>
-
+</style>

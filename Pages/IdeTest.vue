@@ -1,56 +1,267 @@
 <template>
-<header style="height: 1.5cm;">
+<Sidenavbar></Sidenavbar>
+<body style="background-color: aqua;height: 100vh;margin-left: 30vh;background: linear-gradient(135.8deg, rgb(26, 26, 29) 27.1%, rgb(111, 34, 50) 77.5%);">
 <p  id = holder >Example paragraph</p>
-<div id="description"></div>
 
-</header>
-    <div v-on:keyup="testForMonaco(),testingRealTime()"  id="editor" style="width:600px; height: 500px;position: relative;left: 4.5cm;"></div>
+<div id="info"></div>
+<div id="score"></div>
+
+<div style="top:72vh;position:absolute;left: 110vh;color:crimson;text-align: center;text-decoration: underline;width: 45.5vh;height: 7vh;">Players</div>
+
+
+<div id="name" class="name" style="top:76vh"></div>
+<img src="../images/arrow.png" style="top:80vh;visibility: visible;" class=arrow id="arrow1"><div id="name1" class="name" style="top:80vh"></div>
+<img src="../images/arrow.png" style="top:84vh;visibility: hidden;" class=arrow id="arrow2"><div id="name2" class="name" style="top:84vh"></div>
+<img src="../images/arrow.png" style="top:88vh;visibility: hidden" class=arrow id="arrow3"><div id="name3" class="name" style="top:88vh"></div>
+
+<div id="ready0" class="ready" style="top:76vh">Not Ready</div>
+<div id="ready1" class="ready" style="top:80vh"></div>
+<div id="ready2" class="ready" style="top:84vh"></div>
+<div id="ready3" class="ready" style="top:88vh"></div>
+
+    <div id="personalEditor">
+    <div v-on:keyup="updateCodeAPIArea(),testingRealTime()"  id="editor" style="width:91vh; height: 55vh;position: absolute;left:31.5vh;top:0.5vh"></div>
+  </div>
     <div style ="pointer-events: none;" >
-      <div style="top:5vh;position:absolute;left: 140vh;"> example name position</div>
-    <div id="name1"></div>
-    <div v-on:keyup="testForMonaco(),testingRealTime()"  id="editor1" style="width:600px; height: 500px;position:absolute;left:21cm;top:1.5cm;visibility:visible;"></div>
-    <div id="name2"></div>
-    <div v-on:keyup="testForMonaco(),testingRealTime()"  id="editor2" style="width:200px; height: 200px;position:absolute;left: 17cm;visibility: hidden;"></div>
-    <div id="name3"></div>
-    <div v-on:keyup="testForMonaco(),testingRealTime()"  id="editor3" style="width:200px; height: 200px;position:absolute;left: 19cm;visibility: hidden;"></div>
+  
+     
+    <div v-on:keyup="updateCodeAPIArea(),testingRealTime()"  id="editor1" style="width:91vh; height: 55vh;position:absolute;right:1vh;top:0.5vh;visibility:visible;"></div>
+ 
+    <div v-on:keyup="updateCodeAPIArea(),testingRealTime()"  id="editor2" style="width:91vh; height: 55vh;position:absolute;right:1vh;top:0.5vh;visibility:hidden;"></div>
+
+    <div v-on:keyup="updateCodeAPIArea(),testingRealTime()"  id="editor3" style="width:91vh; height: 55vh;position:absolute;right:1vh;top:0.5vh;visibility: hidden;"></div>
     </div>
-    
 <div id="name"></div>
 <div id="uid"></div>
 <div id="numPlayers"></div>
 <div id="editorIncrement">Null</div>
 <div id="currentIncrement"></div>
+<div id="instanceIncrement"></div>
 <div id="checker">0</div>
-<button v-on:click="cycleThroughEditor()">Cyclye through editors</button>
-<button id="readyButton" v-on:click="readyUp">Ready Up</button>
+<button class=button-54 style = "font-size: 10px; position:absolute;left:123vh;top:56vh;width: 20vh;height: 7vh;;" v-on:click="cycleThroughEditor()">Cycle through editors</button>
+
 <p>Inputs:</p><label for="inp1"></label><input id="inp1">
 
-   
-<textarea id="outputDisplay" style="background-color:rgb(30, 30, 30);color:white;width: 600px;height: 2.5cm;position: relative;left:10cm;"></textarea><br>
-<button class="btn btn-primary" style = "left:10cm;position:relative" @click="build()">Compile</button><br>
-<button class="btn btn-primary" style="left:10cm;position:relative" @click="chooseChallenge();">Activate Challenge</button>
-<div id="desiredCodeOutput">zzzzzzzzz</div>
-<div id="languageSelector" style="position:absolute; left: 725px; top: 195px;">
 
-<H3 style="display: inline;position:relative;left:12cm">Language Selected: </H3><p style="positition:relative;left:12cm" id="Language" >None</p>
-    <br>
-    <br>
-    <label style = "position:relative;left:12cm">Please select a Language:</label>
-    <br>
-    <label style ="position:relative;left:12cm" for="languages" ></label><select style="position:relative;left:12cm" class =select-primary name="Languages" id="languages" @change="select();">
-        <option value="">--Please choose an option--</option>
-        <option value="java">Java</option>
-        <option style ="position:relative;left:12cm" value="py">Python</option>
-        <option value="cpp">C++</option>
-        <option value="c">C</option>
-        <option value="go">GoLang</option>
-        <option value="cs">C#</option>
-        <option value="js">NodeJS</option>
-    </select>
+<textarea id="outputDisplay" style="background-color:rgb(30, 30, 30);color:white;width: 45.5vh;height: 7vh;position: absolute;left:31vh;top:56vh"></textarea><br>
+<button id="readyButton" class="button-54"  style = "position:absolute;left:100vh;top:56vh;width: 20vh;height: 7vh;"   v-on:click="readyUp">Ready Up</button>
+<button class="button-54" style = "position:absolute;left: 77vh;top:56vh;width: 20vh;height: 7vh;" @click="test()">Compile</button><br>
+
+<header  style="position:absolute;top:60vh;left:160vh;width:45.5vh;height: 20vh;font-size:large;text-decoration: underline;text-align: center;color:crimson;">Score</header>
+<div  style="top:65vh" class=score id="score">holder div maybe remove?</div>
+
+
+
+<div id="descriptionWrapper">
+<header  style="position:absolute;top:72vh;left:55vh;width:45.5vh;height: 20vh;font-size:large;text-decoration: underline;text-align: center;color:crimson;">Challenge Description</header>
+<div style="position:absolute;top:76vh;left:50vh;width:60vh;height: 20vh;;color: white;text-align:center;font-family: Verdana, Geneva, Tahoma, sans-serif" id="description"></div>
+<div id="leftBorder" style="position:absolute;top:77vh;left:48.5vh;background-color:darkred;width: 0.02vh;height: 16vh;"></div>   
+<div id="rightBorder" style="position:absolute;top:77vh;left:111.5vh;background-color:darkred;width: 0.02vh;height: 16vh;"></div>  
+<div id="topBorder" style="position:absolute;top:71.5vh;left:54vh;background-color:darkred;width: 48vh;height: 0.02vh;"></div>  
 </div>
+<div id="desiredCodeOutput">zzzzzzzzz</div>
 <textarea id="code" style="visibility:hidden;width:0cm;height: 0cm;"></textarea><br>
+</body>
+<div class="chart">
+        <div id=barOne class="bar" style="height: 0vh;">
+            <span id="labelOne" class="label">Label 1</span>
+            <span id="scoreOne" class="value">0</span>
+        </div>
+        <div id="barTwo" class="bar" style="height: 0vh;">
+            <span id="labelTwo" class="label">Label 2</span>
+            <span id="scoreTwo" class="value">0</span>
+        </div>
+        <div  id=barThree class="bar" style="height: 0vh;">
+            <span id="labelThree" class="label">Label 3</span>
+            <span id="scoreThree" class="value">0</span>
+        </div>
+        <div id="barFour" class="bar" style="height: 0vh;">
+            <span id=labelFour class="label">Label 4</span>
+            <span id=scoreFour class="value">0</span>
+        </div>
+    </div>
+    <div id="topBorder" style="position:absolute;top:91vh;left:75vw;background-color:white;width: 40vh;height: 0.02vh;"></div>  
+    <div id="topBorder" style="position:absolute;top:72vh;left:75vw;background-color:white;width: 40vh;height: 0.02vh;"></div>  
+    <div  style="top:70.5vh;left: 74.2vw;" class=score id="score">5</div>
+
+
+    <div id="myModal" class="modal" v-bind:style='{"display" : (windowVisible? "block" : "none" )}'>
+      <div class="modal-backgroundWindow" @click="removeWindow()"></div>
+      <div class="modal-contentWindow">
+        <h2>The winner is <div id="winner"></div></h2>
+       
+        <div class="button">
+          <button >Ok</button>
+        </div>
+      </div>
+    </div>
+
+
+
+
 </template>
 <RouterView :key="$router.url"/>
+<style>
+*,
+*::before,
+*::after {
+  position: static;
+}
+.label {
+    position: absolute;
+    bottom: -9vh;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color:white;
+   
+    
+}
+.arrow{
+  width: 3vh;
+  height: 3vh;
+  position: absolute;
+  left: 115vh;
+}
+
+
+.modal-backgroundWindow {
+  display: block; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 10; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-contentWindow {
+  text-align: center;
+  z-index: 15;
+  background-color: #fefefe;
+  margin-top: 150px;
+  margin-left: 35%;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 30%;
+}
+.value {
+    position: absolute;
+    top: -20px;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color:white
+}
+body {
+    font-family: Arial, sans-serif;
+}
+
+.chart {
+  position: absolute;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    top:77vh;
+    left: 160vh;
+    width: 42vh;
+    height: 15vh;
+
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.bar {
+    position: relative;
+    width: 30px;
+    background-color: #555;
+    margin: 0 5px;
+}
+
+.bar:nth-child(1) {
+    background-color: #1abc9c;
+}
+
+.bar:nth-child(2) {
+    background-color: #3498db;
+}
+
+.bar:nth-child(3) {
+    background-color: #9b59b6;
+}
+.score{
+position: absolute;
+color: white;
+left:175vh;
+
+}
+#my-chart.bar {
+  height: 200px;
+  max-width: 300px;
+  margin: 0 auto;
+  columns:5cm;
+  column-width: 3cm;
+
+}
+
+
+.name{
+
+  position: absolute;
+  left:120vh;
+  color:white
+}
+.ready{
+
+position:absolute;
+left:140vh;
+color:white
+
+}
+
+/* CSS */
+.button-54 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #000;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-54:active {
+  box-shadow: 0px 0px 0px 0px;
+  top: 5px;
+  left: 5px;
+}
+
+@media (min-width: 768px) {
+  .button-54 {
+    padding: 0.25em 0.75em;
+  }
+}
+@keyframes logoOut{
+from {border-bottom-left-radius: 3cm;border-bottom-right-radius: 3cm;}
+to {  border-bottom-left-radius: 0cm;border-bottom-right-radius: 0cm;}
+
+}
+
+
+
+
+
+</style>
 <script>
 import loader from "@monaco-editor/loader";
 import { listen } from "vscode-ws-jsonrpc";
@@ -58,13 +269,59 @@ import test from '../main'
 import  firebase  from 'firebase/compat/app';
     import { getStorage,uploadBytes,ref } from 'firebase/storage';
     import {  getDownloadURL } from "firebase/storage";
-    import { getDatabase, ref as sref,set,onValue,get,onDisconnect,onChildRemoved,child,onChildAdded,update, equalTo,off,remove } from "firebase/database";
+    import { getDatabase, ref as sref,set,onValue,get,onDisconnect,onChildRemoved,child,onChildAdded,update, equalTo,off,remove,onChildChanged } from "firebase/database";
 import { calculateBackoffMillis } from "@firebase/util";
-
+import Sidenavbar from '../components/Sidenavbar.vue'
+import LeftMargin from "../components/LeftMargin.vue";
 window.setImmediate = window.setTimeout;
+const storage = getStorage();
+window.readFile = function readFile(path) {
+    let pathReference = ref(storage, path);
+    return getDownloadURL(pathReference)
+        .then(function (url) {
+            return fetch(url);
+        })
+        .then(function (response) {
+            return response.text();
+        })
+        .catch(function (error) {
+            console.error(error);
+        });
+  
+   
+  
+  }
+  function checkReady(ready,playerNum){
+if(ready == false){
+  document.getElementById('ready'+playerNum).innerHTML = "Not Ready"
+}
+else{
+  document.getElementById('ready'+playerNum).innerHTML = "Ready"
+}
+
+
+}
+function adjustLabel(labelNumber,currentValue){
+if(currentValue != "Waiting For Player"){
+  document.getElementById('label'+labelNumber).style.bottom = '-6vh'
+
+}
+
+}
+function adjustBarChart(barChartNumber,newScore){
+  var newHeight = newScore *4;
+  console.log("bar chart score is"+barChartNumber)
+  document.getElementById('score'+barChartNumber).innerHTML = newScore
+  document.getElementById('bar'+barChartNumber).style.height = newHeight+"vh"
+
+}
+
 
 
 export default {
+  components:{
+Sidenavbar
+  },
   name: "Editor",
   editorObject:null,
   text:"zz",
@@ -86,12 +343,20 @@ export default {
     editorthree:null,
     editorCycle:1,
     checker:0,
-    ready:false
-
-    }
+    ready:false,
+    challenges:['1', '2', '3', '4', '5'],
+    chall:null,
+    challCompleted:null,
+    windowVisible:false,
+    score:null,
+    editorWinner:null,
+    editorWinnerName:null,
+    firstKey:'7f5ebdc991msh779918a8b5d23a9p10d434jsne9e7e4a1586e',
+    secondKey:"6a345df0ebmshc70b1a4dd44080bp1609b0jsn772f92b873c2" ,
+  begun:0  }
   },
   async mounted() {
-
+    
     loader.init().then((monaco) => {
       const editorOptions = {
            language: "python",
@@ -117,19 +382,21 @@ export default {
      this.editorOne = monaco.editor.create(document.getElementById("editor1"),   editorOptions);
       monaco.editor.create(document.getElementById("editor2"),   editorOptions);
       monaco.editor.create(document.getElementById("editor3"),   editorOptions);
-this.chooseChallenge()
+//this.chooseChallenge()
+
 
 test.methods.auth()
 
 
 setTimeout(() => {
 
-if(test.methods.checkEntryExistence()){//checks if database entry for user exists 
+if(test.methods.checkEntryExistence()){
   console.log("User Entry Exists")
 }
-else{//if doesnt exist then create one (The function to create the entry amd check for its existence is called from main.js)
+else{
   test.methods.createUserEntry() 
 }
+test.methods.getOnlinePlayers()
  },500)
 
  setTimeout(() => {
@@ -150,7 +417,9 @@ else{//if doesnt exist then create one (The function to create the entry amd che
  },1500)
 
  setTimeout(() => {
- 
+  this.cycleThroughEditor()
+ this.winListener()
+ this.startListener()
   this.createOtherEditors()
  // this.instance() //creates new instance does ont need to run on start up if instance has already been created
   //this.ensureCorrectDatabase()
@@ -160,12 +429,14 @@ else{//if doesnt exist then create one (The function to create the entry amd che
 
 });
     
-    
+ 
     
   },
   methods:{
 
-testForMonaco:function(){
+//
+
+updateCodeAPIArea:function(){
  this.fileText = document.getElementById("holder").innerHTML
   var text = this.editorObject.getValue();
    this.text = text;
@@ -174,208 +445,50 @@ testForMonaco:function(){
   
 
 },
-insertCode:function(){
-  this.fileText = document.getElementById("holder").innerHTML
-  var text = this.editorObject.getValue();
-   this.text = text;
-   console.log(this.text)
-// console.log(this.textObject.text)
-//console.log(document.getElementById("zz").innerHTML)
-  // document.getElementById("code").value = text;
-//code for inserting text into the IDE
-
-this.editorObject.setValue(this.fileText)
 
 
-},
+build:function(input,output){
+  const randomNumber = Math.floor(Math.random() * 2) + 1;
+        let chosenAPIKey;
+        if(randomNumber === 1){
+            chosenAPIKey = this.firstKey;
+        }
+        else
+            chosenAPIKey = this.secondKey;
+  return new Promise((resolve, reject) => {
+        const encodedParams = new URLSearchParams();
+        let code = document.getElementById("code").value;
 
-
-
-
-
-build:function(){
- 
- let text = "";
-
-
-   let codeOutput="";
-   let language = "";
-   let input = "";
-   let code = document.getElementById("code").value
-
-   if(code==""){
-    console.log("asdsfsdfsdf")
-       document.getElementById("outputDisplay").value = "";
-       return null;
-   }
-
-   const encodedParams = new URLSearchParams();
-   encodedParams.append("code", code);
-
-   language = document.getElementById("languages").value;
-   if(language==""){
-    console.log("dfsdfsdf")
-       document.getElementById("outputDisplay").value = "Please select a language";
-       return null
-   }
-  //  language = "py"
-   encodedParams.append("language", language);
-
-   input = document.getElementById("inp1").value;
-    if(input!==""){
+        encodedParams.append("code", code);
+        encodedParams.append("language", "py");
         encodedParams.append("input", input);
-    }
 
+        const options = {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+                'X-RapidAPI-Key': chosenAPIKey,
+                'X-RapidAPI-Host': 'codex7.p.rapidapi.com'
+            },
+            body: encodedParams
+        };
 
-   const options = {
-       method: 'POST',
-       headers: {
-           'content-type': 'application/x-www-form-urlencoded',
-           'X-RapidAPI-Key': '7f5ebdc991msh779918a8b5d23a9p10d434jsne9e7e4a1586e',
-           'X-RapidAPI-Host': 'codex7.p.rapidapi.com'
-       },
-       body: encodedParams
-   };
-
-   fetch('https://codex7.p.rapidapi.com/', options)
-       .then(response => response.json())
-       .then(data => {
-           console.log(data);
-           codeOutput = data.output;
-           document.getElementById("outputDisplay").value = text;
-           if(codeOutput=="15\n"){
-             console.log("inside if statment")
-             document.getElementById("outputDisplay").value= codeOutput.output+"Well done challenge completed!";
-           }
-           if(codeOutput==""&&data.error=="") {
-               document.getElementById("outputDisplay").value = "No Output";
-           }
-           else if(codeOutput!==""){
-            //check for the code can be anywhere just create global variable,assign the code output and run the function here using that variable although not necesarry to have seperate function
-            //you could possibly use a combination of the content from the outputs.text file and completed version to form a check if you need extra data in the databse then let me know
-            //just make sure that the checks are not hard coded because right all the rest of the content to do with challemnges are not hard-coded
-            //please let me know if you are confused by any of the variables I may have forgot to comment something. The choose challemge function moves to the next challemge and should be used if the user is correct
-            //right now the choosechallenge function runs as long as the code compiles
-               console.log("The text contained inside the Outputs.text file is"+this.desiredOutput)//contains the text from the outputs file for the respective challenges
-               document.getElementById("outputDisplay").value= codeOutput;
-               this.challengesCompleted +=1;
-               this.chooseChallenge()//run choose challenge function if correct output recieved. Choose challenge activates the next function in the queue
-           }
-           else
-               document.getElementById("outputDisplay").value = "Failed to Compile, Error: "+data.error;
-       }).bind(this)
-       .catch(err => console.error(err));
+        fetch('https://codex7.p.rapidapi.com/', options)
+            .then(response => response.json())
+            .then(data => {
+                let codeOutput = data.output;
+                console.log(codeOutput)
+                codeOutput = codeOutput.toLowerCase().replace(/(\r\n|\n|\r)/gm, "");
+                document.getElementById("outputDisplay").innerHTML = codeOutput
+                resolve(codeOutput === output);
+           
+            })
+            .catch(err => reject(err));
+    });
 },
 
-select:function(){
-  var text;
-    let el = document.getElementById("languages");
-     text = el.options[el.selectedIndex].text;
-    if(text==="--Please choose an option--"){
-        document.getElementById("Language").innerHTML = "None";
-        return null;
-    }
-    document.getElementById("Language").innerHTML = text;
-},
-
-readTextFile: async function(){//functions correctly
- 
-  var storage = getStorage(test.methods.intialiseFirebase())
-
-   var textHolder = getDownloadURL(ref(storage,this.filePath))
-   .then((url) => {
-    
-    const xhr = new XMLHttpRequest();
-    xhr.responseType = 'blob';//make sure that blob is the response file very important to ensure file can be read correctly
-
-    xhr.onload =  (event) => {
-
-        const blob = xhr.response;
-        console.log("The first blob"+blob); //for testing
-
-        const reader = new FileReader();
-        reader.readAsText(blob);
-  
-      
-         reader.onload =  function getFile() {
-
-const text = reader.result;
-console.log("isnide the reader function"+text);
-
-this.fileText = text; //'returns' the text so it can be read in any function
-console.log(this.fileText);
-document.getElementById(this.locationofReadText).innerHTML = this.fileText; //stores the data in a html tag so it can be used again.
-this.insertCode()
-this.testForMonaco()
 
 
-
-
-
-}.bind(this);
-
-    };
-    
-    xhr.open('GET', url);
-    xhr.send();
-  
-
-    // Or inserted into an <img> element
-    
-
-  })
-  .catch((error) => {
-    // Handle any errors
-  });
- 
-  
-  
-
-    },
-    chooseChallenge:async function(){
-      this.codeFilePathEnd = "1-1.py"
-  
- this.filePath = "Challenges/Python/Challenge-1/"+"1-1.py"
-
-   //personal notes for this page
-   //-make array containing different locations so its easy to change?
-   //implement way of switcching between c and python right now no point because we only have python challenges
-   //remove insert code function and add it to the end of the readTextFile function
-   //properly indent code here
-      var language = ["Python","C"]//this array is uselss until we have both c and python challenges.
-
-      var challenges =["1","2","3"]
-
-      this.challengeNum = challenges[this.challengesCompleted]
-
-      this.pythonC = "Python"
-     // var item = items[Math.floor(Math.random()*items.length)];
-       this.filePath
-       this.codeFilePathEnd
-     
-this.filePath = "Challenges/"+this.pythonC+"/Challenge-"+this.challengeNum+"/"+this.challengeNum+"-1.py"
-this.locationofReadText = "holder"
-console.log(this.filePath)
- this.readTextFile()
-
-
-//these time outs are necessary to ensure thet the data is read correctly form the database they are not at their lowest possible values and could psissbly be more effficient than they are now there must.
-//please note thet their must be sufficient difference between the two times or the data will not be read correctly.
-setTimeout(() => {//the set timeout is here to ensure that the filepath variable is changed in time for the readtext function without this the data will not be read correctly.
-  console.log("inside set")
-   this.filePath = "Challenges/"+this.pythonC+"/Challenge-"+this.challengeNum+"/Description.text"
-this.locationofReadText = "description"
-this.readTextFile()
-  }, 650)
-  setTimeout(() => {//the set timeout is here to ensure that the filepath variable is changed in time 
-  console.log("inside set")
-   this.filePath = "Challenges/"+this.pythonC+"/Challenge-"+this.challengeNum+"/Outputs.text"
-this.locationofReadText = "desiredCodeOutput"
-this.readTextFile()
-  }, 1250)
-
-
-    },
     getNumPlayers:function(){
 
 const db = getDatabase()
@@ -384,21 +497,21 @@ const playerRef = sref(db,'Online/')
 
 onValue(playerRef,(snapshot) =>{
   var holder=0
-  snapshot.forEach(function (snapshot){//goes through each entry andc ounts the number of entries whose current page is the IDE page
+  snapshot.forEach(function (snapshot){
   
 var name = snapshot.child('Name')   
 var onThisPage = snapshot.child('CurrentPage') 
 
-//if current page is ide page then increment number of players
-if(onThisPage.val() == "http://localhost:5173/ideTest" || onThisPage.val() =='http://127.0.0.1:5173/ideTest' ){//needs to be switched to online url
+
+if(onThisPage.val() == "http://localhost:5173/ideTest" || onThisPage.val() =='http://127.0.0.1:5173/ideTest' ||  'https://software-engineering-d3376.web.app/ideTest'){//needs to be switched to online url
   console.log("THe main val is "+name.val())
 console.log("Current Page is "+onThisPage.val())
-  holder+=1  //counts number of players with correct url and increment variable to update the database with
+  holder+=1
   document.getElementById('numPlayers').innerHTML = holder
   const playerRef1 = sref(db,'Online/'+document.getElementById('name').innerHTML)
   off(playerRef1)
 
-  update(sref(db,'GameData/'),{//updates database with new value
+  update(sref(db,'GameData/'),{
           numPlayers:document.getElementById('numPlayers').innerHTML
         
         })
@@ -413,8 +526,6 @@ console.log("Current Page is "+onThisPage.val())
 
 },
 instance:function(){
-//PLEASE IGNORE THIS CODE IT IS NOT RELEVANT AND WONT BE NEEDED IN FINAL PROJECT
-
 
 //   var db = getDatabase()
 //   const currentUserRef = sref(db,'GameData');
@@ -470,25 +581,29 @@ instance:function(){
 
 
 
-
+// //Important notes for when i start again
 
         
 },
-testingRealTime:function(){//this function updates the databse with the current iteration of the user's code
+testingRealTime:function(){
 
   var db = getDatabase()
-     var text = document.getElementById("code").value //code html tag is invisible text area which takes in the code from the moncaco editor
-      
-     this.currentDatabaseEditor =   document.getElementById('editorIncrement').innerHTML//gets players current editor
+     var text = document.getElementById("code").value
+     console.log("THE BEGUN VALUE IS"+this.begun)
+     if(this.begun == 0){
+      text="Waiting For Game Start. All players must be Ready"
+     } 
+
+     this.currentDatabaseEditor =   document.getElementById('editorIncrement').innerHTML
        update(sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-'+this.currentDatabaseEditor),{
        Name:document.getElementById('name').innerHTML,//this probably needs to be moved.
-       Value: text,//updates code in the database
+       Value: text,
         
       })
     
   
   },
-  chooseEditor:function(){ //no longer used needs to be removed
+  chooseEditor:function(){
     const db = getDatabase();
   const editorNumber = sref(db,'GameData/numPlayers');
     get(editorNumber).then((snapshot) =>{
@@ -499,24 +614,29 @@ testingRealTime:function(){//this function updates the databse with the current 
 
   // this.currentDatabaseEditor = document.getElementById('numPlayers').innerHTML
 console.log("we are checking instance "+this.incrementInstanceProperty)
-  var checkEntryExistence = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty);//path to entry in database
+  var checkEntryExistence = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty);
 
 
-//the following code decided which editor the player should connect to
+
   get(checkEntryExistence).then((snapshot =>{
     var currentIncrement=0;
-    snapshot.forEach(function (snapshot){ 
-      currentIncrement+=1;//incrememnts every time that a editor is connected
+    snapshot.forEach(function (snapshot){
+      currentIncrement+=1;
       console.log(currentIncrement);
-if(snapshot.child('Connected').val() == false){ //when editor is found that is not taken then it 'connects' to that editor
+if(snapshot.child('Connected').val() == false){
   console.log("The disconnected increment is"+currentIncrement)
-  document.getElementById('editorIncrement').innerHTML = currentIncrement //saves value of editor it has connected to
+  document.getElementById('editorIncrement').innerHTML = currentIncrement
+  update(sref(db,'GameData/Instances/Instance-'+document.getElementById('instanceIncrement').innerHTML+'/Editor-'+document.getElementById('editorIncrement').innerHTML),{
+      Connected:true
+        
+      })
+    
 
   return true;
 }
 else{
 
-//no longer needed after ready up added will remove once im sure
+
   // update(checkEntryExistence,{
    
   //        Started:true
@@ -529,7 +649,7 @@ else{
   }).bind(this)
 
   ) },
-  incrementInstance:function(){//should also no longer be needed
+  incrementInstance:function(){
     const db = getDatabase()
 console.log("number of players inside incrementinstance function "+this.numPlayers)
 onValue(sref(db,'GameData/numPlayers'),(snapshot) => {
@@ -544,20 +664,21 @@ if(snapshot.val() % 4 == 0 ){
 }).bind(this)
 
   },
-checkInstanceCorrect:function(){//makes sure that the instance you're connecting too has not  yet started 
+checkInstanceCorrect:function(){
   const db = getDatabase();
 var instanceCheck = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty)
 
 get(instanceCheck).then((snapshot =>{
-  if(snapshot.child('Started').val() == true){ //if instance started then move into next instance
+  if(snapshot.child('Started').val() == true){
   
-  this.incrementInstanceProperty++; //increments the instance the user should connect to
+  this.incrementInstanceProperty++;
   console.log("adter instance increment"+this.incrementInstanceProperty)
   this.instance()//creates new instance need to add check of the instance already exists or not
  
 console.log("inside value check "+this.currentDatabaseEditor)
-  this.checkInstanceCorrect()//uses recursion to continue iterating through instances if one that has not started has not been found
+  this.checkInstanceCorrect()
   }
+  document.getElementById('instanceIncrement').innerHTML = this.incrementInstanceProperty
   this.chooseEditor()//checks all the 'connected' of the individual editors
  
 }).bind(this)
@@ -568,9 +689,6 @@ console.log("inside value check "+this.currentDatabaseEditor)
 
 },
 
-
-//this code correctly assigns each ide 'screen' i.e. ensures each user has access to the left ide and that the other 3 
-//belong to the other 3 players 
 
   createOtherEditors:function(){
     const db = getDatabase()
@@ -588,36 +706,77 @@ if(document.getElementById('editorIncrement').innerHTML == 'Null'){
 console.log(this.currentDatabaseEditor +'current database ditor is')
             var editorHolder = this.currentDatabaseEditor;
             this.testingRealTime()//updates database with user name and the value of the IDE
-           if(this.currentDatabaseEditor ==1){//if your editor is one
+           if(this.currentDatabaseEditor ==1){
             console.log("adter instance increment after incrmeent"+this.incrementInstanceProperty)
             var setBool = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-1/Connected')
             set(setBool,true)
-            console.log("INSIDE EDIOTR ONE")
-            var editorTwoValue = snapshot.child('Editor-2/Value').val() //assigns other 3 ides to editors 2 3 4. if you ide was 2 other 3 ides would be 1,3,4
+            checkReady(snapshot.child('Editor-1/Ready').val(),0)
+
+         
+            var editorTwoValue = snapshot.child('Editor-2/Value').val()
        
             var editorThreeValue = snapshot.child('Editor-3/Value').val()
             var editorFourValue = snapshot.child('Editor-4/Value').val()
-         console.log(editorTwoValue)
-          
-       //picks out name associated with each respective editor so each player can see the names of the other players who are playing and the code they are writing
+            document.getElementById('labelOne').innerHTML = document.getElementById('name').innerHTML
+            
+
+           //synchronises naming correctly across different editors
            document.getElementById('name1').innerHTML  = snapshot.child('Editor-2/Name').val() 
+           document.getElementById('labelTwo').innerHTML = snapshot.child('Editor-2/Name').val() 
+         // adjustLabel('Two', document.getElementById('labelTwo').innerHTML)
            monaco.editor.getModels()[1].setValue(editorTwoValue)
       
            document.getElementById('name2').innerHTML  = snapshot.child('Editor-3/Name').val() 
+           document.getElementById('labelThree').innerHTML = snapshot.child('Editor-3/Name').val() 
            monaco.editor.getModels()[2].setValue(editorThreeValue)
            
            document.getElementById('name3').innerHTML  = snapshot.child('Editor-4/Name').val() 
+           document.getElementById('labelFour').innerHTML = snapshot.child('Editor-4/Name').val() 
            monaco.editor.getModels()[3].setValue(editorFourValue)
+
+
+           document.getElementById('scoreOne').innerHTML  = snapshot.child('Editor-1/Score').val() 
+           adjustBarChart('One',document.getElementById('scoreOne').innerHTML)
+           this.score= snapshot.child('Editor-1/Score').val();
+          this.editorWinner=1
+          this.scoreChecker()
+           
+          //correctly synchronises scoring across different players
+          document.getElementById('scoreTwo').innerHTML  = snapshot.child('Editor-2/Score').val() 
+          adjustBarChart('Two',document.getElementById('scoreTwo').innerHTML)
+          this.score= snapshot.child('Editor-2/Score').val();
+          this.editorWinner=2
+          this.scoreChecker()
+           
+          document.getElementById('scoreThree').innerHTML  = snapshot.child('Editor-3/Score').val() 
+          adjustBarChart('Three',document.getElementById('scoreThree').innerHTML)
+          this.score= snapshot.child('Editor-3/Score').val();
+          this.editorWinner=3
+          this.scoreChecker()
+       
+          document.getElementById('scoreFour').innerHTML  = snapshot.child('Editor-4/Score').val() 
+          adjustBarChart('Four',document.getElementById('scoreFour').innerHTML)
+          this.score= snapshot.child('Editor-4/Score').val();
+          this.editorWinner=4
+          this.scoreChecker()
+        
+          
+           //correctly adjusts and keeps track of other user's ready status from the database
+           checkReady(snapshot.child('Editor-2/Ready').val(),1)
+           checkReady(snapshot.child('Editor-3/Ready').val(),2)
+           checkReady(snapshot.child('Editor-4/Ready').val(),3)
+
 
            var removeName = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-1/Name')
            var removeValue = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-1/Value')
            var removeBool = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-1/Connected')
            var resetReady = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-1/Ready')
+           var resetScore = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-1/Score')
            onDisconnect(removeName).set('Waiting For Player')
            onDisconnect(removeValue).set('Waiting For Player')
            onDisconnect(removeBool).set(false)
            onDisconnect(resetReady).set(false)
-           //resets values to default when user disconnects and prepares for next game
+           onDisconnect(resetScore).set(0)
            }
 
 
@@ -625,7 +784,8 @@ console.log(this.currentDatabaseEditor +'current database ditor is')
             console.log("INSIDE EDIOTR two")
             var setBool2 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-2/Connected')
             set(setBool2,true)
-            
+            checkReady(snapshot.child('Editor-2/Ready').val(),0)
+        
 
             var editorOneValue = snapshot.child('Editor-1/Value').val()
              editorThreeValue = snapshot.child('Editor-3/Value').val()
@@ -633,78 +793,199 @@ console.log(this.currentDatabaseEditor +'current database ditor is')
        
           
            //this.editorOne.getModel().setValue('some value');
+      
+           document.getElementById('labelOne').innerHTML = document.getElementById('name').innerHTML
 
            document.getElementById('name1').innerHTML  = snapshot.child('Editor-1/Name').val() 
+           document.getElementById('labelTwo').innerHTML = snapshot.child('Editor-1/Name').val() 
            monaco.editor.getModels()[1].setValue(editorOneValue)
 
            document.getElementById('name2').innerHTML  = snapshot.child('Editor-3/Name').val() 
+           document.getElementById('labelThree').innerHTML = snapshot.child('Editor-3/Name').val() 
            monaco.editor.getModels()[2].setValue(editorThreeValue)
 
            document.getElementById('name3').innerHTML  = snapshot.child('Editor-4/Name').val() 
+           document.getElementById('labelFour').innerHTML = snapshot.child('Editor-4/Name').val() 
            monaco.editor.getModels()[3].setValue(editorFourValue)
+ 
+           //adjusting the logged in players score
+           document.getElementById('scoreOne').innerHTML  = snapshot.child('Editor-2/Score').val() 
+           adjustBarChart('One',document.getElementById('scoreOne').innerHTML)
+           this.score= snapshot.child('Editor-2/Score').val();
+          this.editorWinner=2
+          this.scoreChecker()
+          //correctly synchronises scoring across different players
+          document.getElementById('scoreTwo').innerHTML  = snapshot.child('Editor-1/Score').val() 
+          adjustBarChart('Two',document.getElementById('scoreTwo').innerHTML)
+          this.score= snapshot.child('Editor-1/Score').val();
+          this.editorWinner=1
+          this.scoreChecker()
+         // scoreChecker(snapshot.child('Editor-1/Score').val(),2)
+
+          document.getElementById('scoreThree').innerHTML  = snapshot.child('Editor-3/Score').val() 
+          adjustBarChart('Three',document.getElementById('scoreThree').innerHTML)
+          this.score= snapshot.child('Editor-3/Score').val();
+          this.editorWinner=3
+          this.scoreChecker()
+         // scoreChecker(snapshot.child('Editor-2/Score').val(),3)
+
+          document.getElementById('scoreFour').innerHTML  = snapshot.child('Editor-4/Score').val() 
+          adjustBarChart('Four',document.getElementById('scoreFour').innerHTML)
+          this.score= snapshot.child('Editor-4/Score').val();
+          this.editorWinner=4
+          this.scoreChecker()
+        //  scoreChecker(snapshot.child('Editor-2/Score').val(),4)
 
 
 
+          //updates ready values correctly
+          console.log("Editor One value "+snapshot.child('Editor-1/Ready').val())
+          checkReady(snapshot.child('Editor-1/Ready').val(),1)
+           checkReady(snapshot.child('Editor-3/Ready').val(),2)
+           checkReady(snapshot.child('Editor-4/Ready').val(),3)
 
            var removeName2 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-2/Name')
            var removeValue2= sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-2/Value')
            var removeBool2 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-2/Connected')
            var resetReady2 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-2/Ready')
+           var resetScore2 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-2/Score')
            onDisconnect(removeName2).set('Waiting For Player')
            onDisconnect(removeValue2).set('Waiting For Player')
            onDisconnect(removeBool2).set(false)
            onDisconnect(resetReady2).set(false)
-
+           onDisconnect(resetScore2).set(0)
 
            }
            if(this.currentDatabaseEditor ==3){
             var setBool3 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-3/Connected')
             set(setBool3,true)
-            
-            console.log("mmmmmmmmmmm")
+            checkReady(snapshot.child('Editor-3/Ready').val(),0)
+         
              editorOneValue = snapshot.child('Editor-1/Value').val()
              editorTwoValue = snapshot.child('Editor-2/Value').val()
              editorFourValue = snapshot.child('Editor-4/Value').val()
        
-          
+             document.getElementById('labelOne').innerHTML = document.getElementById('name').innerHTML
            //this.editorOne.getModel().setValue('some value');
            document.getElementById('name1').innerHTML  = snapshot.child('Editor-1/Name').val() 
+           document.getElementById('labelTwo').innerHTML = snapshot.child('Editor-1/Name').val() 
            monaco.editor.getModels()[1].setValue(editorOneValue)
 
            document.getElementById('name1').innerHTML  = snapshot.child('Editor-2/Name').val() 
+           document.getElementById('labelThree').innerHTML = snapshot.child('Editor-2/Name').val() 
            monaco.editor.getModels()[2].setValue(editorTwoValue)
 
            document.getElementById('name3').innerHTML  = snapshot.child('Editor-4/Name').val() 
+           document.getElementById('labelFour').innerHTML = snapshot.child('Editor-4/Name').val() 
            monaco.editor.getModels()[3].setValue(editorFourValue)
+
+
+           document.getElementById('scoreOne').innerHTML  = snapshot.child('Editor-3/Score').val() 
+          adjustBarChart('One',document.getElementById('scoreOne').innerHTML)
+            this.score= snapshot.child('Editor-3/Score').val();
+          this.editorWinner=3
+          this.scoreChecker()
+
+
+          //correctly synchronises scoring across different players
+          document.getElementById('scoreTwo').innerHTML  = snapshot.child('Editor-1/Score').val() 
+          adjustBarChart('Two',document.getElementById('scoreTwo').innerHTML)
+            this.score= snapshot.child('Editor-1/Score').val();
+          this.editorWinner=1
+          this.scoreChecker()
+
+
+          document.getElementById('scoreThree').innerHTML  = snapshot.child('Editor-2/Score').val() 
+          adjustBarChart('Three',document.getElementById('scoreThree').innerHTML)
+          this.score= snapshot.child('Editor-2/Score').val();
+          this.editorWinner=2
+          this.scoreChecker()
+
+
+          document.getElementById('scoreFour').innerHTML  = snapshot.child('Editor-4/Score').val() 
+          adjustBarChart('Four',document.getElementById('scoreFour').innerHTML)
+          this.score= snapshot.child('Editor-4/Score').val();
+          this.editorWinner=4
+          this.scoreChecker()
+
+
+
+
+           checkReady(snapshot.child('Editor-1/Ready').val(),1)
+           checkReady(snapshot.child('Editor-2/Ready').val(),2)
+           checkReady(snapshot.child('Editor-4/Ready').val(),3)
+
+
 
            var removeName3 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-3/Name')
            var removeValue3= sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-3/Value')
            var removeBool3 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-3/Connected')
            var resetReady3 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-3/Ready')
+           var resetScore3 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-3/Score')
            onDisconnect(removeName3).set('Waiting For Player')
            onDisconnect(removeValue3).set('Waiting For Player')
            onDisconnect(removeBool3).set(false)
            onDisconnect(resetReady3).set(false)
+           onDisconnect(resetScore3).set(0)
 
 
            }
            if(this.currentDatabaseEditor ==4){
             var setBool4 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-4/Connected')
             set(setBool4,true)
-            console.log("mmmmmmmmmmm")
+            checkReady(snapshot.child('Editor-4/Ready').val(),0)
              editorOneValue = snapshot.child('Editor-1/Value').val()
              editorTwoValue = snapshot.child('Editor-2/Value').val()
              editorThreeValue = snapshot.child('Editor-3/Value').val()
+
+
+
+             document.getElementById('scoreTwo').innerHTML  = snapshot.child('Editor-1/Score').val() 
+          adjustBarChart('One',document.getElementById('scoreOne').innerHTML)
+          this.score= snapshot.child('Editor-4/Score').val();
+          this.editorWinner=4
+          this.scoreChecker()
+
        
+
+           //correctly synchronises scoring across different players
+          document.getElementById('scoreTwo').innerHTML  = snapshot.child('Editor-1/Score').val() 
+          adjustBarChart('Two',document.getElementById('scoreTwo').innerHTML)
+          this.score= snapshot.child('Editor-1/Score').val();
+          this.editorWinner=1
+          this.scoreChecker()
+
+          document.getElementById('scoreThree').innerHTML  = snapshot.child('Editor-2/Score').val() 
+          adjustBarChart('Three',document.getElementById('scoreThree').innerHTML)
+          this.score= snapshot.child('Editor-2/Score').val();
+          this.editorWinner=2
+          this.scoreChecker()
           
+          document.getElementById('scoreFour').innerHTML  = snapshot.child('Editor-3/Score').val() 
+          adjustBarChart('Four',document.getElementById('scoreFour').innerHTML)
+          this.score= snapshot.child('Editor-3/Score').val();
+          this.editorWinner=3
+          this.scoreChecker()
+          
+
+
+           checkReady(snapshot.child('Editor-1/Ready').val(),1)
+           checkReady(snapshot.child('Editor-2/Ready').val(),2)
+           checkReady(snapshot.child('Editor-3/Ready').val(),3)
+          
+
+           document.getElementById('labelOne').innerHTML = document.getElementById('name').innerHTML
            //this.editorOne.getModel().setValue('some value');
            document.getElementById('name1').innerHTML  = snapshot.child('Editor-1/Name').val() 
+           document.getElementById('labelTwo').innerHTML = snapshot.child('Editor-1/Name').val() 
            monaco.editor.getModels()[1].setValue(editorOneValue)
 
            document.getElementById('name1').innerHTML  = snapshot.child('Editor-2/Name').val() 
+           document.getElementById('labelThree').innerHTML = snapshot.child('Editor-1/Name').val() 
            monaco.editor.getModels()[2].setValue(editorTwoValue)
 
            document.getElementById('name2').innerHTML  = snapshot.child('Editor-3/Name').val() 
+           document.getElementById('labelFour').innerHTML = snapshot.child('Editor-1/Name').val() 
            monaco.editor.getModels()[3].setValue(editorValue)
 
            
@@ -712,10 +993,12 @@ console.log(this.currentDatabaseEditor +'current database ditor is')
            var removeValue4= sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-4/Value')
            var removeBool4 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-4/Connected')
            var resetReady4 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-4/Ready')
+           var resetScore4 = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-4/Score')
            onDisconnect(removeName4).set('Waiting For Player')
            onDisconnect(removeValue4).set('Waiting For Player')
            onDisconnect(removeBool4).set(false)
            onDisconnect(resetReady4).set(false)
+           onDisconnect(resetScore4).set(0)
            }
      
 
@@ -728,15 +1011,21 @@ for(var i=1; i<4;i++){
 if( document.getElementById('editor'+i).style.visibility == 'visible'){
   document.getElementById('editor'+i).style.visibility = 'hidden'
 }
-if( document.getElementById('name'+i).style.visibility == 'visible'){
-  document.getElementById('name'+i).style.visibility = 'hidden'
+if( document.getElementById('name'+i).style.backgroundColor == 'green'){
+  document.getElementById('name'+i).style.backgroundColor = ''
+}
+console.log("ARROWARROWS")
+if( document.getElementById('arrow'+i).style.visibility == 'visible'){
+document.getElementById('arrow'+i).style.visibility = 'hidden'
 }
 
 }
+
 
 console.log(this.editorCycle)
+document.getElementById('arrow'+this.editorCycle).style.visibility = 'visible'
 document.getElementById('editor'+this.editorCycle).style.visibility = 'visible'
-document.getElementById('name'+this.editorCycle).style.visibility = 'visible'
+document.getElementById('name'+this.editorCycle).style.backgroundColor = 'green'
 //isibilityHolder = 'visible'
 this.editorCycle++;
 
@@ -744,7 +1033,7 @@ if(this.editorCycle == 4){
   this.editorCycle=1;
 }
 
-
+  
   },
   readyUp:function(){
     const db = getDatabase()
@@ -754,9 +1043,11 @@ if(this.editorCycle == 4){
 
 if(this.ready == false){
   document.getElementById('readyButton').innerHTML = "Cancel"
+  document.getElementById('ready1').innerHTML = "Ready"
 }
 else{
   document.getElementById('readyButton').innerHTML = "Ready Up"
+  document.getElementById('ready1').innerHTML = ""
 }
 this.ready = !this.ready
 console.log("inside ready function")
@@ -786,12 +1077,202 @@ if(snapshot.child('Connected').val() == true){
 
  
 }).bind(this)
-  }
-   
-  
-  }
-};
+  },
+  begin:async function(){
+    //randomChallengeNumber = random();
+    this.chall = this.random();
+console.log("The random number is"+this.chall)
+  var temp = await readFile("Challenges/"+this.chall+"/description.txt");
+  document.getElementById("description").innerHTML = temp;
 
+  temp = await readFile("Challenges/"+this.chall+"/startCode.txt");
+  console.log("INSIDE NEW FUNCTION")
+  
+  document.getElementById("code").innerHTML = temp;//whwere final value is used
+  this.editorObject.setValue(temp)
+
+  setTimeout(() => {
+    this.updateCodeAPIArea()
+  this.testingRealTime()
+
+ },500)
+},
+
+test:async function() {
+  document.getElementById("info").innerHTML="";
+    let code = document.getElementById("code").value;
+
+    if (code === "") {
+        document.getElementById("info").innerHTML = "Please enter code";
+        return null;
+    }
+console.log("inside the test")
+    let input;
+    let output;
+
+    input = await readFile("Challenges/"+this.chall+"inputs.txt");
+    output = await readFile("Challenges/"+this.chall+"testOutputs.txt");
+
+    input = input.split(/\r?\n/);
+    output = output.split(/\r?\n/);
+
+    let pass = 0
+var passed=  false;
+    for(let i = 0; i<5; i++) {
+        if(await this.build(input[i],output[i])){
+            document.getElementById("info").insertAdjacentHTML('beforeend', "Test "+(i+1)+" passed\n");
+            pass++;
+        }
+        else{
+            document.getElementById("info").insertAdjacentHTML('beforeend', "Test " + (i + 1) + " failed\n");
+            //await this.next()
+            passed=true;
+        }
+        if(pass===5){
+            document.getElementById("info").textContent="All tests passed, next challenge!";
+            passed= true;
+        }
+    }
+    if(passed == true){
+      await this.next();
+    }
+    },
+   random:function(){
+    console.log("The challenges array test"+this.challenges[2])
+    
+    //Picks a random challenge number from the global array challenges
+    const randomIndex = Math.floor(Math.random() * this.challenges.length);
+    //Store that random challenge number and delete it from the array so no repetition occurs
+    const randomChallenge = this.challenges.splice(randomIndex, 1)[0];
+    console.log(this.challenges);
+    return randomChallenge+"_Challenge/";
+},
+next: async function() {
+  const db = getDatabase()
+  console.log("inside the next funciton")
+  this.challCompleted++;
+    document.getElementById("score").innerHTML=this.challCompleted;
+  update(sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-'+this.currentDatabaseEditor),{
+           Score: document.getElementById("score").innerHTML
+      })
+
+
+
+    if (this.challCompleted === 5) {
+        //Resetting play data if user wants to play again
+        this.challCompleted = 0;
+        this.challenges = ['1', '2', '3', '4', '5'];
+
+        //let h1 = document.createElement("H1");
+       // //h1.textContent="Congratulations noob, you've passed all the challenges, consider yourself a true MAGA Python pro!"
+       // nBody.appendChild(h1);
+
+       // let bt = document.createElement("button");
+       // bt.textContent = "Play Again?";
+       // bt.onclick = begin;
+       // bt.style.fontSize="50px";
+
+       // nBody.style.textAlign="center"
+       // nBody.appendChild(bt);
+
+    } else {
+        this.chall = this.random();
+       // document.getElementById("intro").textContent = "Challenge " + this.chall.charAt(0) + ": ";
+
+        var temp = await readFile("Challenges/"+this.chall + "description.txt");
+        document.getElementById("info").insertAdjacentHTML('beforeend', temp);
+
+        temp = await readFile("Challenges/"+this.chall + "startCode.txt");
+        
+
+  }
+},
+scoreChecker:function(){
+  const db = getDatabase()
+  console.log("inside score checker")
+  var instanceCheck = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor'+this.editorWinner)
+if(this.score == 5|| this.score > 5 ){
+  console.log("before the end of the game")
+this.endGame()
+update(sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty),{
+           Won:true,
+           Started:false
+      })
+
+      get(instanceCheck).then((snapshot =>{
+
+ this.editorWinnerName = snapshot.child('Name').val()
+}).bind(this)
+)
+console.log("anem of winner is "+this.editorWinnerName)
+
+}
+},
+endGame:function(){
+
+  document.getElementById("personalEditor").style.pointerEvents ="none"
+//document.getElementById("winner").innerHTML = this.editor
+
+
+},
+winListener:function(){
+  const db = getDatabase()
+  console.log("inside the winner function")
+  var winCheck = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty)
+  onValue(winCheck,(snapshot) =>{
+  if(snapshot.child('Won').val() == true){
+    document.getElementById("personalEditor").style.pointerEvents ="none"
+  //document.getElementById('winner').innerHTML += this.editorWinnerName
+   window.alert("x has won the game")
+   this.windowVisible =true;
+
+  }
+
+
+}).bind(this)
+
+
+
+
+},
+startListener:function(){
+
+  if(this.begun == 0){
+  const db = getDatabase()
+  console.log("inside the beginning function.INstance propert")
+  var winCheck = sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty)
+  var valueUpdate =sref(db,'GameData/Instances/Instance-'+this.incrementInstanceProperty+'/Editor-'+this.currentDatabaseEditor)
+  // update(valueUpdate,{
+  //         Value:"Waiting For Game Start. All players must be ready"
+        
+  //       })
+        monaco.editor.getModels()[0].setValue("Waiting For Game Start. All players must be ready")
+  onValue(winCheck,(snapshot) =>{
+  
+    console.log("before started check")
+  if(snapshot.child('Started').val() == true && this.begun==0){
+//window.alert("game has started")
+this.begin()
+this.testingRealTime()
+this.begun=1;
+document.getElementById('readyButton').innerHTML = 'Game Started'
+document.getElementById('readyButton').style.pointerEvents = 'none'
+  }
+
+
+}).bind(this)
+  }
+
+  
+}
+
+
+
+
+}
+
+
+}
 
 
 
