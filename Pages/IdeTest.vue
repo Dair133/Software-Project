@@ -1,7 +1,6 @@
 <template>
 <Sidenavbar></Sidenavbar>
 <body style="background-color: aqua;height: 100vh;margin-left: 30vh;background: linear-gradient(135.8deg, rgb(26, 26, 29) 27.1%, rgb(111, 34, 50) 77.5%);">
-<p  id = holder >Example paragraph</p>
 
 <div id="info"></div>
 <div id="score"></div>
